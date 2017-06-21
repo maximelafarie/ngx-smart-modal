@@ -6,13 +6,6 @@
   "jsnext:main": "ngx-smart-modal.esm.js",
   "module": "ngx-smart-modal.esm.js",
   "types": "ngx-smart-modal.d.ts",
-  "scripts": {
-    "copy": "node tools/copy-package.js && node tools/cleanup.js",
-    "bundle": "rimraf dist && rollup -c rollup.config.umd.js && rollup -c rollup.config.esm.js && tsc",
-    "postbundle": "node tools/removecode.js",
-    "build": "npm run bundle && npm run copy",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/maximelafarie/ngx-smart-modal.git"
@@ -29,17 +22,6 @@
   ],
   "author": "Maxime LAFARIE",
   "license": "ISC",
-  "devDependencies": {
-    "@types/core-js": "^0.9.41",
-    "del": "^3.0.0",
-    "node-sass": "^4.5.3",
-    "rimraf": "^2.6.1",
-    "rollup-plugin-angular": "^0.4.4",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-typescript": "^0.8.1",
-    "typescript": "^2.3.4"
-  },
   "dependencies": {
     "@angular/animations": "^4.2.3",
     "@angular/common": "^4.2.3",

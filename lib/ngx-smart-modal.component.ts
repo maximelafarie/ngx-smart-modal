@@ -2,7 +2,7 @@ import {Component, OnInit, Input, Output, OnChanges, EventEmitter, trigger, stat
 
 @Component({
   selector: 'ngx-smart-modal',
-  templateUrl: './dialog.component.html',
+  templateUrl: './ngx-smart-modal.component.html',
   styleUrls: ['./styles/style.scss'],
   animations: [
     trigger('dialog', [
@@ -21,7 +21,7 @@ export class NgxSmartModalComponent implements OnInit {
   @Input() closable = true;
   @Input() visible: boolean;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  
+
   constructor() { }
 
   ngOnInit() { }
