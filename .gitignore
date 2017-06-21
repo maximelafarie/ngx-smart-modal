@@ -1,0 +1,14 @@
+.bash_history
+.env
+.npm
+apps/*/node_modules
+apps/*/vendor
+apps/*/web/bundles
+lib/*/node_modules
+lib/*/vendor
+lib/*/composer.lock
+node_modules
+npm-debug.log
+out
+gen
+.idea
