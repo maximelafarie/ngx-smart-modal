@@ -1,6 +1,6 @@
 {
   "name": "ngx-smart-modal",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Smart modal handler to manage modals and data everywhere in Angular apps.",
   "main": "ngx-smart-modal.umd.js",
   "jsnext:main": "ngx-smart-modal.esm.js",
@@ -11,7 +11,8 @@
     "bundle": "rimraf dist && rollup -c rollup.config.umd.js && rollup -c rollup.config.esm.js && tsc",
     "postbundle": "node tools/removecode.js",
     "build": "npm run bundle && npm run copy",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "cd ./dist && npm publish"
   },
   "repository": {
     "type": "git",
