@@ -5,7 +5,7 @@ import { NgxSmartModalService } from './ngx-smart-modal.service';
 import { NgxSmartModalComponent } from './ngx-smart-modal.component';
 @NgModule({
   imports: [ BrowserModule, BrowserAnimationsModule ],
-  exports: [],
+  exports: [NgxSmartModalComponent],
   declarations: [NgxSmartModalComponent],
   providers: [NgxSmartModalService],
 })
