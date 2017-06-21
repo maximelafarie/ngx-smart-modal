@@ -5613,7 +5613,7 @@ var NgxSmartModalModule = (function () {
 NgxSmartModalModule = __decorate$1([
     NgModule({
         imports: [BrowserModule, BrowserAnimationsModule],
-        exports: [],
+        exports: [NgxSmartModalComponent],
         declarations: [NgxSmartModalComponent],
         providers: [NgxSmartModalService],
     })

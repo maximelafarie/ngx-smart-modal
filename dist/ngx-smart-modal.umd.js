@@ -5615,7 +5615,7 @@ exports.NgxSmartModalModule = (function () {
 exports.NgxSmartModalModule = __decorate$1([
     _angular_core.NgModule({
         imports: [_angular_platformBrowser.BrowserModule, BrowserAnimationsModule],
-        exports: [],
+        exports: [exports.NgxSmartModalComponent],
         declarations: [exports.NgxSmartModalComponent],
         providers: [exports.NgxSmartModalService],
     })
