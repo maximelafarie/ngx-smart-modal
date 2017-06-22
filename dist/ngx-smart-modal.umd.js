@@ -5594,12 +5594,13 @@ exports.NgxSmartModalService = (function () {
      * @returns {boolean} Returns true if data association succeeded, else returns false.
      */
     NgxSmartModalService.prototype.setModalData = function (data, id) {
+        var _this = this;
         if (!!this.modalStack.find(function (o) { return o.id === id; })) {
             if (!!this.modalData.find(function (o) { return o.id === id; })) {
-                this.modalData[this.modalData.findIndex(function (o) { return o.id === id; })].data = data;
+                setTimeout(function () { return _this.modalData[_this.modalData.findIndex(function (o) { return o.id === id; })].data = data; });
             }
             else {
-                this.modalData.push({ data: data, id: id });
+                setTimeout(function () { return _this.modalData.push({ data: data, id: id }); });
             }
             return true;
         }
