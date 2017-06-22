@@ -27,9 +27,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     @Input() public backdrop: boolean = true;
     @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @Output() public onClose: EventEmitter<any> = new EventEmitter(false);
-    @Output() public onDismiss: EventEmitter<any> = new EventEmitter(false);
-    @Output() public onOpen: EventEmitter<any> = new EventEmitter(false);
+    @Output() public onClose: EventEmitter<any> = new EventEmitter();
+    @Output() public onDismiss: EventEmitter<any> = new EventEmitter();
+    @Output() public onOpen: EventEmitter<any> = new EventEmitter();
 
     layerPosition: number = 1041;
 
@@ -45,21 +45,24 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         this.ngxSmartModalService.removeModal(this.identifier);
     }
 
-    public open() {
+    public open(top?:boolean) {
+        if (top) {
+            this.layerPosition = this.ngxSmartModalService.getHigherIndex();
+        }
         this.visible = true;
-        this.onOpen.emit(undefined);
+        this.onOpen.emit(this);
     }
 
     public close() {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onClose.emit(undefined);
+        this.onClose.emit(this);
     }
 
     public dismiss() {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onDismiss.emit(undefined)
+        this.onDismiss.emit(this)
     }
 
     public addCustomClass(className: string) {
@@ -69,6 +72,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         else {
             this.customClass += ' ' + className;
         }
+    }
+
+    public isVisible(): boolean {
+        return this.visible;
     }
 
     public hasData(): boolean {

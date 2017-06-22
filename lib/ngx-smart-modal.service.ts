@@ -24,11 +24,30 @@ export class NgxSmartModalService {
     getModal(id: string): NgxSmartModalComponent {
         return _.find(this.modalStack, function (o: ModalInstance) {
             return o.id === id;
-        })
+        }).modal;
     }
 
     getModalStack(): Array<ModalInstance> {
         return this.modalStack;
+    }
+
+    getOpenedModals(): Array<ModalInstance> {
+        let modals: Array<ModalInstance> = [];
+        _.each(this.modalStack, (o: ModalInstance) => {
+            if (o.modal.visible) {
+                modals.push(o);
+            }
+        });
+        return modals;
+    }
+
+    getHigherIndex(): number {
+        let index: Array<number> = [];
+        const modals: Array<ModalInstance> = this.getOpenedModals();
+        _.each(modals, (o: ModalInstance) => {
+            index.push(o.modal.layerPosition);
+        });
+        return Math.max(...index) + 1;
     }
 
     getModalStackCount(): number {
