@@ -5567,14 +5567,29 @@ exports.NgxSmartModalService = (function () {
     NgxSmartModalService.prototype.addModal = function (modalInstance) {
         this.modalStack.push(modalInstance);
     };
+    /**
+     * Retrieve a modal instance by its identifier.
+     *
+     * @param {string} id The modal identifier used at creation time.
+     */
     NgxSmartModalService.prototype.getModal = function (id) {
         return _.find(this.modalStack, function (o) {
             return o.id === id;
         }).modal;
     };
+    /**
+     * Retrieve all the created modals.
+     *
+     * @returns {Array} Returns an array that contains all modal instances.
+     */
     NgxSmartModalService.prototype.getModalStack = function () {
         return this.modalStack;
     };
+    /**
+     * Retrieve all the opened modals. It looks for all modal instances with their `visible` property set to `true`.
+     *
+     * @returns {Array} Returns an array that contains all the opened modals.
+     */
     NgxSmartModalService.prototype.getOpenedModals = function () {
         var modals = [];
         _.each(this.modalStack, function (o) {
@@ -5584,6 +5599,13 @@ exports.NgxSmartModalService = (function () {
         });
         return modals;
     };
+    /**
+     * Get the higher `z-index` value between all the modal instances. It iterates over the `ModalStack` array and
+     * calculates a higher value (it takes the highest index value between all the modal instances and adds 1).
+     * Use it to make a modal appear foreground.
+     *
+     * @returns {number} Returns a higher index from all the existing modal instances.
+     */
     NgxSmartModalService.prototype.getHigherIndex = function () {
         var index = [];
         var modals = this.getOpenedModals();
@@ -5592,9 +5614,20 @@ exports.NgxSmartModalService = (function () {
         });
         return Math.max.apply(Math, index) + 1;
     };
+    /**
+     * It gives the number of modal instances. It's helpful to know if the modal stack is empty or not.
+     *
+     * @returns {number} Returns the number of modal instances.
+     */
     NgxSmartModalService.prototype.getModalStackCount = function () {
         return this.modalStack.length;
     };
+    /**
+     * Remove a modal instance from the modal stack.
+     *
+     * @param {string} id The modal identifier.
+     * @returns {Array} Returns the removed modal instance.
+     */
     NgxSmartModalService.prototype.removeModal = function (id) {
         return _.remove(this.modalStack, function (o) {
             return o.id === id;
@@ -5719,6 +5752,14 @@ exports.NgxSmartModalComponent = (function () {
         }
         else {
             this.customClass += ' ' + className;
+        }
+    };
+    NgxSmartModalComponent.prototype.removeCustomClass = function (className) {
+        if (className) {
+            this.customClass = this.customClass.replace(className, '').trim();
+        }
+        else {
+            this.customClass = '';
         }
     };
     NgxSmartModalComponent.prototype.isVisible = function () {

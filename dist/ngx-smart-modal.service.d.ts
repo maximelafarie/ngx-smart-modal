@@ -11,11 +11,44 @@ export declare class NgxSmartModalService {
      * @returns {void} Returns nothing special.
      */
     addModal(modalInstance: ModalInstance): void;
+    /**
+     * Retrieve a modal instance by its identifier.
+     *
+     * @param {string} id The modal identifier used at creation time.
+     */
     getModal(id: string): NgxSmartModalComponent;
+    /**
+     * Retrieve all the created modals.
+     *
+     * @returns {Array} Returns an array that contains all modal instances.
+     */
     getModalStack(): Array<ModalInstance>;
+    /**
+     * Retrieve all the opened modals. It looks for all modal instances with their `visible` property set to `true`.
+     *
+     * @returns {Array} Returns an array that contains all the opened modals.
+     */
     getOpenedModals(): Array<ModalInstance>;
+    /**
+     * Get the higher `z-index` value between all the modal instances. It iterates over the `ModalStack` array and
+     * calculates a higher value (it takes the highest index value between all the modal instances and adds 1).
+     * Use it to make a modal appear foreground.
+     *
+     * @returns {number} Returns a higher index from all the existing modal instances.
+     */
     getHigherIndex(): number;
+    /**
+     * It gives the number of modal instances. It's helpful to know if the modal stack is empty or not.
+     *
+     * @returns {number} Returns the number of modal instances.
+     */
     getModalStackCount(): number;
+    /**
+     * Remove a modal instance from the modal stack.
+     *
+     * @param {string} id The modal identifier.
+     * @returns {Array} Returns the removed modal instance.
+     */
     removeModal(id: string): Array<ModalInstance>;
     /**
      * Associate data to an identified modal. If the modal isn't already associated to some data, it creates a new
