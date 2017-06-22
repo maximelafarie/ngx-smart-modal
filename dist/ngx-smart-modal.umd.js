@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser'), require('@angular/animations'), require('lodash')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser', '@angular/animations', 'lodash'], factory) :
-	(factory((global['ngx-smart-modal'] = global['ngx-smart-modal'] || {}),global._angular_core,global._angular_platformBrowser,global._angular_animations,global._));
-}(this, (function (exports,_angular_core,_angular_platformBrowser,_angular_animations,_) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/platform-browser'), require('@angular/animations'), require('lodash')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/common', '@angular/platform-browser', '@angular/animations', 'lodash'], factory) :
+	(factory((global['ngx-smart-modal'] = global['ngx-smart-modal'] || {}),global._angular_core,global._angular_common,global._angular_platformBrowser,global._angular_animations,global._));
+}(this, (function (exports,_angular_core,_angular_common,_angular_platformBrowser,_angular_animations,_) { 'use strict';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -5662,6 +5662,7 @@ exports.NgxSmartModalComponent = (function () {
         this.closable = true;
         this.customClass = '';
         this.visible = false;
+        this.backdrop = true;
         this.visibleChange = new _angular_core.EventEmitter();
         this.onClose = new _angular_core.EventEmitter(false);
         this.onDismiss = new _angular_core.EventEmitter(false);
@@ -5677,17 +5678,17 @@ exports.NgxSmartModalComponent = (function () {
     };
     NgxSmartModalComponent.prototype.open = function () {
         this.visible = true;
-        this.onOpen.emit(this);
+        this.onOpen.emit(undefined);
     };
     NgxSmartModalComponent.prototype.close = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onClose.emit(this);
+        this.onClose.emit(undefined);
     };
     NgxSmartModalComponent.prototype.dismiss = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onDismiss.emit(this);
+        this.onDismiss.emit(undefined);
     };
     NgxSmartModalComponent.prototype.addCustomClass = function (className) {
         if (!this.customClass.length) {
@@ -5716,6 +5717,10 @@ __decorate$1([
     __metadata$1("design:type", Boolean)
 ], exports.NgxSmartModalComponent.prototype, "visible", void 0);
 __decorate$1([
+    _angular_core.Input(),
+    __metadata$1("design:type", Boolean)
+], exports.NgxSmartModalComponent.prototype, "backdrop", void 0);
+__decorate$1([
     _angular_core.Output(),
     __metadata$1("design:type", typeof (_a = typeof _angular_core.EventEmitter !== "undefined" && _angular_core.EventEmitter) === "function" && _a || Object)
 ], exports.NgxSmartModalComponent.prototype, "visibleChange", void 0);
@@ -5734,7 +5739,7 @@ __decorate$1([
 exports.NgxSmartModalComponent = __decorate$1([
     _angular_core.Component({
         selector: 'ngx-smart-modal',
-        template: "<div [@dialog] *ngIf=\"visible\" [style.z-index]=\"layerPosition\" class=\"dialog\">\n  <ng-content></ng-content>\n  <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay transparent\" (click)=\"dismiss()\"></div>\n",
+        template: "<div [@dialog] *ngIf=\"visible\" [style.z-index]=\"layerPosition\" class=\"dialog\">\n    <ng-content></ng-content>\n    <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay\" [ngClass]=\"{'transparent':!backdrop}\" (click)=\"dismiss()\"></div>\n",
         styles: [".overlay {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999; }\n  .overlay.transparent {\n    background-color: transparent; }\n\n.dialog {\n  z-index: 1040;\n  position: fixed;\n  right: 0;\n  left: 0;\n  top: 20px;\n  margin-right: auto;\n  margin-left: auto;\n  min-height: 200px;\n  width: 90%;\n  max-width: 520px;\n  background-color: #fff;\n  padding: 12px;\n  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12); }\n\n@media (min-width: 768px) {\n  .dialog {\n    top: 40px; } }\n\n.dialog__close-btn {\n  border: 0;\n  background: none;\n  color: #2d2d2d;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 1.2em; }\n"],
         animations: [
             _angular_animations.trigger('dialog', [
@@ -5763,7 +5768,7 @@ exports.NgxSmartModalModule = (function () {
 }());
 exports.NgxSmartModalModule = __decorate$1([
     _angular_core.NgModule({
-        imports: [_angular_platformBrowser.BrowserModule, BrowserAnimationsModule],
+        imports: [_angular_common.CommonModule, _angular_platformBrowser.BrowserModule, BrowserAnimationsModule],
         declarations: [exports.NgxSmartModalComponent],
         exports: [exports.NgxSmartModalComponent],
         providers: [exports.NgxSmartModalService],
