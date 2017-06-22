@@ -45,7 +45,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         this.ngxSmartModalService.removeModal(this.identifier);
     }
 
-    public open(top?:boolean) {
+    public open(top?: boolean) {
         if (top) {
             this.layerPosition = this.ngxSmartModalService.getHigherIndex();
         }
@@ -71,6 +71,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         }
         else {
             this.customClass += ' ' + className;
+        }
+    }
+
+    public removeCustomClass(className?: string) {
+        if (className) {
+            this.customClass = this.customClass.replace(className, '').trim();
+        } else {
+            this.customClass = '';
         }
     }
 
