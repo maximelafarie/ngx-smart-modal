@@ -20,15 +20,15 @@ import {NgxSmartModalService} from "./ngx-smart-modal.service";
 
 })
 export class NgxSmartModalComponent implements OnInit, OnDestroy {
-    @Input() closable: boolean = true;
-    @Input() identifier: string;
-    @Input() customClass: string = '';
-    @Input() visible: boolean = false;
-    @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() public closable: boolean = true;
+    @Input() public identifier: string;
+    @Input() public customClass: string = '';
+    @Input() public visible: boolean = false;
+    @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @Output() onClose: EventEmitter<any> = new EventEmitter(false);
-    @Output() onDismiss: EventEmitter<any> = new EventEmitter(false);
-    @Output() onOpen: EventEmitter<any> = new EventEmitter(false);
+    @Output() public onClose: EventEmitter<any> = new EventEmitter(false);
+    @Output() public onDismiss: EventEmitter<any> = new EventEmitter(false);
+    @Output() public onOpen: EventEmitter<any> = new EventEmitter(false);
 
     layerPosition: number = 1041;
 

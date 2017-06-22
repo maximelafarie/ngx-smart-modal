@@ -13,6 +13,9 @@
       "dom"
     ]
   },
+  "exclude": [
+    "node_modules"
+  ],
   "files": [
     "./lib/ngx-smart-modal.ts"
   ]
