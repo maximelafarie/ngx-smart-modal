@@ -5552,7 +5552,7 @@ function __metadata$1(k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 }
 
-var NgxSmartModalService = (function () {
+exports.NgxSmartModalService = (function () {
     function NgxSmartModalService() {
         this.modalStack = [];
         this.modalData = [];
@@ -5646,10 +5646,15 @@ var NgxSmartModalService = (function () {
     };
     return NgxSmartModalService;
 }());
-NgxSmartModalService = __decorate$1([
+exports.NgxSmartModalService = __decorate$1([
     _angular_core.Injectable(),
     __metadata$1("design:paramtypes", [])
-], NgxSmartModalService);
+], exports.NgxSmartModalService);
+var ModalInstance = (function () {
+    function ModalInstance() {
+    }
+    return ModalInstance;
+}());
 
 exports.NgxSmartModalComponent = (function () {
     function NgxSmartModalComponent(ngxSmartModalService) {
@@ -5743,7 +5748,7 @@ exports.NgxSmartModalComponent = __decorate$1([
             ])
         ]
     }),
-    __metadata$1("design:paramtypes", [typeof (_e = typeof NgxSmartModalService !== "undefined" && NgxSmartModalService) === "function" && _e || Object])
+    __metadata$1("design:paramtypes", [typeof (_e = typeof exports.NgxSmartModalService !== "undefined" && exports.NgxSmartModalService) === "function" && _e || Object])
 ], exports.NgxSmartModalComponent);
 var _a;
 var _b;
@@ -5761,9 +5766,11 @@ exports.NgxSmartModalModule = __decorate$1([
         imports: [_angular_platformBrowser.BrowserModule, BrowserAnimationsModule],
         declarations: [exports.NgxSmartModalComponent],
         exports: [exports.NgxSmartModalComponent],
-        providers: [NgxSmartModalService],
+        providers: [exports.NgxSmartModalService],
     })
 ], exports.NgxSmartModalModule);
+
+exports.ModalInstance = ModalInstance;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
