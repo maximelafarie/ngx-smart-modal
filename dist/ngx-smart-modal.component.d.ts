@@ -15,10 +15,11 @@ export declare class NgxSmartModalComponent implements OnInit, OnDestroy {
     constructor(ngxSmartModalService: NgxSmartModalService);
     ngOnInit(): void;
     ngOnDestroy(): void;
-    open(): void;
+    open(top?: boolean): void;
     close(): void;
     dismiss(): void;
     addCustomClass(className: string): void;
+    isVisible(): boolean;
     hasData(): boolean;
     setData(data: Object | Array<any> | number | string | boolean): boolean;
     getData(): Object;

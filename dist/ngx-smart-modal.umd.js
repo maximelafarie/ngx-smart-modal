@@ -5570,10 +5570,27 @@ exports.NgxSmartModalService = (function () {
     NgxSmartModalService.prototype.getModal = function (id) {
         return _.find(this.modalStack, function (o) {
             return o.id === id;
-        });
+        }).modal;
     };
     NgxSmartModalService.prototype.getModalStack = function () {
         return this.modalStack;
+    };
+    NgxSmartModalService.prototype.getOpenedModals = function () {
+        var modals = [];
+        _.each(this.modalStack, function (o) {
+            if (o.modal.visible) {
+                modals.push(o);
+            }
+        });
+        return modals;
+    };
+    NgxSmartModalService.prototype.getHigherIndex = function () {
+        var index = [];
+        var modals = this.getOpenedModals();
+        _.each(modals, function (o) {
+            index.push(o.modal.layerPosition);
+        });
+        return Math.max.apply(Math, index) + 1;
     };
     NgxSmartModalService.prototype.getModalStackCount = function () {
         return this.modalStack.length;
@@ -5667,9 +5684,9 @@ exports.NgxSmartModalComponent = (function () {
         this.visible = false;
         this.backdrop = true;
         this.visibleChange = new _angular_core.EventEmitter();
-        this.onClose = new _angular_core.EventEmitter(false);
-        this.onDismiss = new _angular_core.EventEmitter(false);
-        this.onOpen = new _angular_core.EventEmitter(false);
+        this.onClose = new _angular_core.EventEmitter();
+        this.onDismiss = new _angular_core.EventEmitter();
+        this.onOpen = new _angular_core.EventEmitter();
         this.layerPosition = 1041;
     }
     NgxSmartModalComponent.prototype.ngOnInit = function () {
@@ -5679,19 +5696,22 @@ exports.NgxSmartModalComponent = (function () {
     NgxSmartModalComponent.prototype.ngOnDestroy = function () {
         this.ngxSmartModalService.removeModal(this.identifier);
     };
-    NgxSmartModalComponent.prototype.open = function () {
+    NgxSmartModalComponent.prototype.open = function (top) {
+        if (top) {
+            this.layerPosition = this.ngxSmartModalService.getHigherIndex();
+        }
         this.visible = true;
-        this.onOpen.emit(undefined);
+        this.onOpen.emit(this);
     };
     NgxSmartModalComponent.prototype.close = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onClose.emit(undefined);
+        this.onClose.emit(this);
     };
     NgxSmartModalComponent.prototype.dismiss = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onDismiss.emit(undefined);
+        this.onDismiss.emit(this);
     };
     NgxSmartModalComponent.prototype.addCustomClass = function (className) {
         if (!this.customClass.length) {
@@ -5700,6 +5720,9 @@ exports.NgxSmartModalComponent = (function () {
         else {
             this.customClass += ' ' + className;
         }
+    };
+    NgxSmartModalComponent.prototype.isVisible = function () {
+        return this.visible;
     };
     NgxSmartModalComponent.prototype.hasData = function () {
         return !!this.ngxSmartModalService.getModalData(this.identifier);

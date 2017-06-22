@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injectable, Input, NgModule, NgZone, Output, R
 import { CommonModule } from '@angular/common';
 import { BrowserModule, ɵDomRendererFactory2 } from '@angular/platform-browser';
 import { AUTO_STYLE, AnimationBuilder, AnimationFactory, NoopAnimationPlayer, animate, sequence, style, transition, trigger, ɵAnimationGroupPlayer, ɵPRE_STYLE } from '@angular/animations';
-import { find, remove } from 'lodash';
+import { each, find, remove } from 'lodash';
 import * as _ from 'lodash';
 
 /*! *****************************************************************************
@@ -5571,10 +5571,27 @@ var NgxSmartModalService = (function () {
     NgxSmartModalService.prototype.getModal = function (id) {
         return find(this.modalStack, function (o) {
             return o.id === id;
-        });
+        }).modal;
     };
     NgxSmartModalService.prototype.getModalStack = function () {
         return this.modalStack;
+    };
+    NgxSmartModalService.prototype.getOpenedModals = function () {
+        var modals = [];
+        each(this.modalStack, function (o) {
+            if (o.modal.visible) {
+                modals.push(o);
+            }
+        });
+        return modals;
+    };
+    NgxSmartModalService.prototype.getHigherIndex = function () {
+        var index = [];
+        var modals = this.getOpenedModals();
+        each(modals, function (o) {
+            index.push(o.modal.layerPosition);
+        });
+        return Math.max.apply(Math, index) + 1;
     };
     NgxSmartModalService.prototype.getModalStackCount = function () {
         return this.modalStack.length;
@@ -5668,9 +5685,9 @@ var NgxSmartModalComponent = (function () {
         this.visible = false;
         this.backdrop = true;
         this.visibleChange = new EventEmitter();
-        this.onClose = new EventEmitter(false);
-        this.onDismiss = new EventEmitter(false);
-        this.onOpen = new EventEmitter(false);
+        this.onClose = new EventEmitter();
+        this.onDismiss = new EventEmitter();
+        this.onOpen = new EventEmitter();
         this.layerPosition = 1041;
     }
     NgxSmartModalComponent.prototype.ngOnInit = function () {
@@ -5680,19 +5697,22 @@ var NgxSmartModalComponent = (function () {
     NgxSmartModalComponent.prototype.ngOnDestroy = function () {
         this.ngxSmartModalService.removeModal(this.identifier);
     };
-    NgxSmartModalComponent.prototype.open = function () {
+    NgxSmartModalComponent.prototype.open = function (top) {
+        if (top) {
+            this.layerPosition = this.ngxSmartModalService.getHigherIndex();
+        }
         this.visible = true;
-        this.onOpen.emit(undefined);
+        this.onOpen.emit(this);
     };
     NgxSmartModalComponent.prototype.close = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onClose.emit(undefined);
+        this.onClose.emit(this);
     };
     NgxSmartModalComponent.prototype.dismiss = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onDismiss.emit(undefined);
+        this.onDismiss.emit(this);
     };
     NgxSmartModalComponent.prototype.addCustomClass = function (className) {
         if (!this.customClass.length) {
@@ -5701,6 +5721,9 @@ var NgxSmartModalComponent = (function () {
         else {
             this.customClass += ' ' + className;
         }
+    };
+    NgxSmartModalComponent.prototype.isVisible = function () {
+        return this.visible;
     };
     NgxSmartModalComponent.prototype.hasData = function () {
         return !!this.ngxSmartModalService.getModalData(this.identifier);

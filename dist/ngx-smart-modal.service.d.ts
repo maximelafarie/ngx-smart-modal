@@ -13,6 +13,8 @@ export declare class NgxSmartModalService {
     addModal(modalInstance: ModalInstance): void;
     getModal(id: string): NgxSmartModalComponent;
     getModalStack(): Array<ModalInstance>;
+    getOpenedModals(): Array<ModalInstance>;
+    getHigherIndex(): number;
     getModalStackCount(): number;
     removeModal(id: string): Array<ModalInstance>;
     /**
