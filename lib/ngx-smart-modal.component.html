@@ -1,4 +1,4 @@
-<div [@dialog] *ngIf="visible" [style.z-index]="layerPosition" [customClass]="customClass" class="dialog">
+<div [@dialog] *ngIf="visible" [style.z-index]="layerPosition" class="dialog">
   <ng-content></ng-content>
   <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
 </div>
