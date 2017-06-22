@@ -24,6 +24,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     @Input() public identifier: string;
     @Input() public customClass: string = '';
     @Input() public visible: boolean = false;
+    @Input() public backdrop: boolean = true;
     @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Output() public onClose: EventEmitter<any> = new EventEmitter(false);
@@ -46,19 +47,19 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
     public open() {
         this.visible = true;
-        this.onOpen.emit(this);
+        this.onOpen.emit(undefined);
     }
 
     public close() {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onClose.emit(this);
+        this.onClose.emit(undefined);
     }
 
     public dismiss() {
         this.visible = false;
         this.visibleChange.emit(this.visible);
-        this.onDismiss.emit(this)
+        this.onDismiss.emit(undefined)
     }
 
     public addCustomClass(className: string) {
