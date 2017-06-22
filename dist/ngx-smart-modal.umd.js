@@ -5554,20 +5554,99 @@ function __metadata$1(k, v) {
 
 exports.NgxSmartModalService = (function () {
     function NgxSmartModalService() {
+        this.modalStack = [];
+        this.modalData = [];
     }
+    /**
+     * Add a new modal instance. This step is essential and allows to retrieve any modal at any time.
+     * It stores an object that contains the given modal identifier and the modal itself directly in the `modalStack`.
+     *
+     * @param {ModalInstance} modalInstance The object that contains the given modal identifier and the modal itself.
+     * @returns {void} Returns nothing special.
+     */
+    NgxSmartModalService.prototype.addModalInstance = function (modalInstance) {
+        this.modalStack.push(modalInstance);
+    };
+    /**
+     * Associate data to an identified modal. If the modal isn't already associated to some data, it creates a new
+     * entry in the `modalData` array with its `id` and the given `data`. If the modal already has data, it rewrites
+     * them with the new ones. Finally if no modal found it returns an error message in the console and false value
+     * as method output.
+     *
+     * @param {Object | Array | number | string | boolean} data The data you want to associate to the modal.
+     * @param {string} id The modal identifier.
+     * @returns {boolean} Returns true if data association succeeded, else returns false.
+     */
+    NgxSmartModalService.prototype.setModalData = function (data, id) {
+        if (!!this.modalStack.find(function (o) { return o.id === id; })) {
+            if (!!this.modalData.find(function (o) { return o.id === id; })) {
+                this.modalData[this.modalData.findIndex(function (o) { return o.id === id; })].data = data;
+            }
+            else {
+                this.modalData.push({ data: data, id: id });
+            }
+            return true;
+        }
+        else {
+            console.error('No modal with the id ' + id + 'exist. Please retry.');
+            console.warn('To assign data to a modal, it should exists.');
+            return false;
+        }
+    };
+    /**
+     * Retrieve modal data by its identifier.
+     *
+     * @param {string} id The modal identifier used at creation time.
+     * @returns {Object|Array|number|string|boolean|null} Returns the associated modal data.
+     */
+    NgxSmartModalService.prototype.getModalData = function (id) {
+        return this.modalData.find(function (o) { return o.id === id; }) ? this.modalData.find(function (o) { return o.id === id; }).data : null;
+    };
+    /**
+     * Retrieve all data associated to any modal.
+     *
+     * @returns {Array} Returns all modal data.
+     */
+    NgxSmartModalService.prototype.getAllModalData = function () {
+        return this.modalData;
+    };
+    /**
+     * Reset the data attached to a given modal.
+     *
+     * @param {string} id The modal identifier used at creation time.
+     */
+    NgxSmartModalService.prototype.resetModalData = function (id) {
+        delete this.modalData[this.modalData.findIndex(function (o) { return o.id === id; })];
+    };
+    /**
+     * Reset all the modal data.
+     * Be careful, it could be very dangerous.
+     */
+    NgxSmartModalService.prototype.resetAllModalData = function () {
+        this.modalData = [];
+    };
     return NgxSmartModalService;
 }());
 exports.NgxSmartModalService = __decorate$1([
     _angular_core.Injectable(),
     __metadata$1("design:paramtypes", [])
 ], exports.NgxSmartModalService);
+var ModalInstance = (function () {
+    function ModalInstance() {
+    }
+    return ModalInstance;
+}());
 
 exports.NgxSmartModalComponent = (function () {
-    function NgxSmartModalComponent() {
+    function NgxSmartModalComponent(ngxSmartModalService) {
+        this.ngxSmartModalService = ngxSmartModalService;
         this.closable = true;
         this.visibleChange = new _angular_core.EventEmitter();
+        console.log(this);
     }
-    NgxSmartModalComponent.prototype.ngOnInit = function () { };
+    NgxSmartModalComponent.prototype.ngOnInit = function () {
+        var me = this;
+    };
     NgxSmartModalComponent.prototype.close = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
@@ -5592,20 +5671,21 @@ exports.NgxSmartModalComponent = __decorate$1([
         template: "<div [@dialog] *ngIf=\"visible\" class=\"dialog\">\n  <ng-content></ng-content>\n  <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay\" (click)=\"close()\"></div>\n",
         styles: [".overlay {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999; }\n\n.dialog {\n  z-index: 1000;\n  position: fixed;\n  right: 0;\n  left: 0;\n  top: 20px;\n  margin-right: auto;\n  margin-left: auto;\n  min-height: 200px;\n  width: 90%;\n  max-width: 520px;\n  background-color: #fff;\n  padding: 12px;\n  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12); }\n\n@media (min-width: 768px) {\n  .dialog {\n    top: 40px; } }\n\n.dialog__close-btn {\n  border: 0;\n  background: none;\n  color: #2d2d2d;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 1.2em; }\n"],
         animations: [
-            _angular_core.trigger('dialog', [
-                _angular_core.transition('void => *', [
-                    _angular_core.style({ transform: 'scale3d(.3, .3, .3)' }),
-                    _angular_core.animate(100)
+            _angular_animations.trigger('dialog', [
+                _angular_animations.transition('void => *', [
+                    _angular_animations.style({ transform: 'scale3d(.3, .3, .3)' }),
+                    _angular_animations.animate(100)
                 ]),
-                _angular_core.transition('* => void', [
-                    _angular_core.animate(100, _angular_core.style({ transform: 'scale3d(.0, .0, .0)' }))
+                _angular_animations.transition('* => void', [
+                    _angular_animations.animate(100, _angular_animations.style({ transform: 'scale3d(.0, .0, .0)' }))
                 ])
             ])
         ]
     }),
-    __metadata$1("design:paramtypes", [])
+    __metadata$1("design:paramtypes", [typeof (_b = typeof exports.NgxSmartModalService !== "undefined" && exports.NgxSmartModalService) === "function" && _b || Object])
 ], exports.NgxSmartModalComponent);
 var _a;
+var _b;
 
 exports.NgxSmartModalModule = (function () {
     function NgxSmartModalModule() {
@@ -5620,6 +5700,8 @@ exports.NgxSmartModalModule = __decorate$1([
         providers: [exports.NgxSmartModalService],
     })
 ], exports.NgxSmartModalModule);
+
+exports.ModalInstance = ModalInstance;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
