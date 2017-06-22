@@ -1,5 +1,5 @@
-import { BrowserModule, ɵDomRendererFactory2 } from '@angular/platform-browser';
 import { Component, EventEmitter, Injectable, Input, NgModule, NgZone, Output, RendererFactory2, ViewEncapsulation } from '@angular/core';
+import { BrowserModule, ɵDomRendererFactory2 } from '@angular/platform-browser';
 import { AUTO_STYLE, AnimationBuilder, AnimationFactory, NoopAnimationPlayer, animate, sequence, style, transition, trigger, ɵAnimationGroupPlayer, ɵPRE_STYLE } from '@angular/animations';
 import { find, remove } from 'lodash';
 import * as _ from 'lodash';
@@ -5764,7 +5764,7 @@ var NgxSmartModalModule = (function () {
 NgxSmartModalModule = __decorate$1([
     NgModule({
         imports: [BrowserModule, BrowserAnimationsModule],
-        exports: [NgxSmartModalComponent, NgxSmartModalService],
+        exports: [NgxSmartModalComponent],
         declarations: [NgxSmartModalComponent],
         providers: [NgxSmartModalService],
     })

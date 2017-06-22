@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser'), require('@angular/core'), require('@angular/animations'), require('lodash')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser', '@angular/core', '@angular/animations', 'lodash'], factory) :
-	(factory((global['ngx-smart-modal'] = global['ngx-smart-modal'] || {}),global._angular_platformBrowser,global._angular_core,global._angular_animations,global._));
-}(this, (function (exports,_angular_platformBrowser,_angular_core,_angular_animations,_) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser'), require('@angular/animations'), require('lodash')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser', '@angular/animations', 'lodash'], factory) :
+	(factory((global['ngx-smart-modal'] = global['ngx-smart-modal'] || {}),global._angular_core,global._angular_platformBrowser,global._angular_animations,global._));
+}(this, (function (exports,_angular_core,_angular_platformBrowser,_angular_animations,_) { 'use strict';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -5764,7 +5764,7 @@ exports.NgxSmartModalModule = (function () {
 exports.NgxSmartModalModule = __decorate$1([
     _angular_core.NgModule({
         imports: [_angular_platformBrowser.BrowserModule, BrowserAnimationsModule],
-        exports: [exports.NgxSmartModalComponent, exports.NgxSmartModalService],
+        exports: [exports.NgxSmartModalComponent],
         declarations: [exports.NgxSmartModalComponent],
         providers: [exports.NgxSmartModalService],
     })
