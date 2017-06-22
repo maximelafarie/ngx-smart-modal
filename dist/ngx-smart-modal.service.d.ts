@@ -1,6 +1,6 @@
 import { NgxSmartModalComponent } from "./ngx-smart-modal.component";
 export declare class NgxSmartModalService {
-    modalStack: Array<Object>;
+    modalStack: Array<ModalInstance>;
     modalData: Array<any>;
     constructor();
     /**
@@ -10,7 +10,11 @@ export declare class NgxSmartModalService {
      * @param {ModalInstance} modalInstance The object that contains the given modal identifier and the modal itself.
      * @returns {void} Returns nothing special.
      */
-    addModalInstance(modalInstance: ModalInstance): void;
+    addModal(modalInstance: ModalInstance): void;
+    getModal(id: string): NgxSmartModalComponent;
+    getModalStack(): Array<ModalInstance>;
+    getModalStackCount(): number;
+    removeModal(id: string): Array<ModalInstance>;
     /**
      * Associate data to an identified modal. If the modal isn't already associated to some data, it creates a new
      * entry in the `modalData` array with its `id` and the given `data`. If the modal already has data, it rewrites
@@ -39,8 +43,9 @@ export declare class NgxSmartModalService {
      * Reset the data attached to a given modal.
      *
      * @param {string} id The modal identifier used at creation time.
+     * @returns {Array} Returns the removed data.
      */
-    resetModalData(id: string): void;
+    resetModalData(id: string): Array<any>;
     /**
      * Reset all the modal data.
      * Be careful, it could be very dangerous.

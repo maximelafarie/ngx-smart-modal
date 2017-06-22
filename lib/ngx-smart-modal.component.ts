@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, OnChanges, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, OnChanges, EventEmitter, OnDestroy} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {NgxSmartModalService} from "./ngx-smart-modal.service";
 
@@ -19,21 +19,54 @@ import {NgxSmartModalService} from "./ngx-smart-modal.service";
     ]
 
 })
-export class NgxSmartModalComponent implements OnInit {
-    @Input() closable = true;
-    @Input() visible: boolean;
+export class NgxSmartModalComponent implements OnInit, OnDestroy {
+    @Input() closable: boolean = true;
+    @Input() identifier: string;
+    @Input() customClass: string = '';
+    @Input() visible: boolean = false;
     @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @Output() onClose: EventEmitter<any> = new EventEmitter(false);
+    @Output() onDismiss: EventEmitter<any> = new EventEmitter(false);
+    @Output() onOpen: EventEmitter<any> = new EventEmitter(false);
+
+    layerPosition: number = 1041;
+
     constructor(private ngxSmartModalService: NgxSmartModalService) {
-        console.log(this);
     }
 
     ngOnInit() {
-        const me = this;
+        this.layerPosition += this.ngxSmartModalService.getModalStackCount();
+        this.ngxSmartModalService.addModal({id: this.identifier, modal: this});
     }
 
-    close() {
+    ngOnDestroy() {
+        this.ngxSmartModalService.removeModal(this.identifier);
+    }
+
+    public open() {
+        this.visible = true;
+        this.onOpen.emit(this);
+    }
+
+    public close() {
         this.visible = false;
         this.visibleChange.emit(this.visible);
+        this.onClose.emit(this);
+    }
+
+    public dismiss() {
+        this.visible = false;
+        this.visibleChange.emit(this.visible);
+        this.onDismiss.emit(this)
+    }
+
+    public addCustomClass(className: string) {
+        if (!this.customClass.length) {
+            this.customClass = className;
+        }
+        else {
+            this.customClass += ' ' + className;
+        }
     }
 }

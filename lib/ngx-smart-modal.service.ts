@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {NgxSmartModalComponent} from "./ngx-smart-modal.component";
+import * as _ from "lodash";
+
 @Injectable()
 export class NgxSmartModalService {
-    modalStack: Array<Object> = [];
+    modalStack: Array<ModalInstance> = [];
     modalData: Array<any> = [];
 
     constructor() {
@@ -15,8 +17,28 @@ export class NgxSmartModalService {
      * @param {ModalInstance} modalInstance The object that contains the given modal identifier and the modal itself.
      * @returns {void} Returns nothing special.
      */
-    addModalInstance(modalInstance: ModalInstance): void {
+    addModal(modalInstance: ModalInstance): void {
         this.modalStack.push(modalInstance);
+    }
+
+    getModal(id: string): NgxSmartModalComponent {
+        return _.find(this.modalStack, function (o: ModalInstance) {
+            return o.id === id;
+        })
+    }
+
+    getModalStack(): Array<ModalInstance> {
+        return this.modalStack;
+    }
+
+    getModalStackCount(): number {
+        return this.modalStack.length;
+    }
+
+    removeModal(id: string): Array<ModalInstance> {
+        return _.remove(this.modalStack, function (o: ModalInstance) {
+            return o.id === id;
+        });
     }
 
     /**
@@ -67,16 +89,19 @@ export class NgxSmartModalService {
      * Reset the data attached to a given modal.
      *
      * @param {string} id The modal identifier used at creation time.
+     * @returns {Array} Returns the removed data.
      */
-    resetModalData(id: string) {
-        delete this.modalData[this.modalData.findIndex((o) => o.id === id)];
+    resetModalData(id: string): Array<any> {
+        return _.remove(this.modalData, function (o) {
+            return o.id === id;
+        });
     }
 
     /**
      * Reset all the modal data.
      * Be careful, it could be very dangerous.
      */
-    resetAllModalData() {
+    resetAllModalData(): void {
         this.modalData = [];
     }
 }

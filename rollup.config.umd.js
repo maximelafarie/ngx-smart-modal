@@ -14,6 +14,7 @@ export default {
     '@angular/common',
     '@angular/animations',
     '@angular/platform-browser',
+    'lodash',
     'rxjs',
     'zone.js'
   ],

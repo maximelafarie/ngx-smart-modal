@@ -6,10 +6,14 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+
+  &.transparent {
+    background-color: transparent;
+  }
 }
 
 .dialog {
-  z-index: 1000;
+  z-index: 1040;
   position: fixed;
   right: 0;
   left: 0;

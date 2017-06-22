@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser'), require('@angular/core'), require('@angular/animations')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser', '@angular/core', '@angular/animations'], factory) :
-	(factory((global['ngx-smart-modal'] = global['ngx-smart-modal'] || {}),global._angular_platformBrowser,global._angular_core,global._angular_animations));
-}(this, (function (exports,_angular_platformBrowser,_angular_core,_angular_animations) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser'), require('@angular/core'), require('@angular/animations'), require('lodash')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser', '@angular/core', '@angular/animations', 'lodash'], factory) :
+	(factory((global['ngx-smart-modal'] = global['ngx-smart-modal'] || {}),global._angular_platformBrowser,global._angular_core,global._angular_animations,global._));
+}(this, (function (exports,_angular_platformBrowser,_angular_core,_angular_animations,_) { 'use strict';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -407,7 +407,7 @@ var PARAM_REGEX = /\{\{\s*(.+?)\s*\}\}/g;
  */
 function interpolateParams(value, params, errors) {
     var /** @type {?} */ original = value.toString();
-    var /** @type {?} */ str = original.replace(PARAM_REGEX, function (_, varName) {
+    var /** @type {?} */ str = original.replace(PARAM_REGEX, function (_$$1, varName) {
         var /** @type {?} */ localVal = params[varName];
         // this means that the value was never overidden by the data passed in by the user
         if (!params.hasOwnProperty(varName)) {
@@ -5564,8 +5564,24 @@ exports.NgxSmartModalService = (function () {
      * @param {ModalInstance} modalInstance The object that contains the given modal identifier and the modal itself.
      * @returns {void} Returns nothing special.
      */
-    NgxSmartModalService.prototype.addModalInstance = function (modalInstance) {
+    NgxSmartModalService.prototype.addModal = function (modalInstance) {
         this.modalStack.push(modalInstance);
+    };
+    NgxSmartModalService.prototype.getModal = function (id) {
+        return _.find(this.modalStack, function (o) {
+            return o.id === id;
+        });
+    };
+    NgxSmartModalService.prototype.getModalStack = function () {
+        return this.modalStack;
+    };
+    NgxSmartModalService.prototype.getModalStackCount = function () {
+        return this.modalStack.length;
+    };
+    NgxSmartModalService.prototype.removeModal = function (id) {
+        return _.remove(this.modalStack, function (o) {
+            return o.id === id;
+        });
     };
     /**
      * Associate data to an identified modal. If the modal isn't already associated to some data, it creates a new
@@ -5614,9 +5630,12 @@ exports.NgxSmartModalService = (function () {
      * Reset the data attached to a given modal.
      *
      * @param {string} id The modal identifier used at creation time.
+     * @returns {Array} Returns the removed data.
      */
     NgxSmartModalService.prototype.resetModalData = function (id) {
-        delete this.modalData[this.modalData.findIndex(function (o) { return o.id === id; })];
+        return _.remove(this.modalData, function (o) {
+            return o.id === id;
+        });
     };
     /**
      * Reset all the modal data.
@@ -5641,22 +5660,57 @@ exports.NgxSmartModalComponent = (function () {
     function NgxSmartModalComponent(ngxSmartModalService) {
         this.ngxSmartModalService = ngxSmartModalService;
         this.closable = true;
+        this.customClass = '';
+        this.visible = false;
         this.visibleChange = new _angular_core.EventEmitter();
-        console.log(this);
+        this.onClose = new _angular_core.EventEmitter(false);
+        this.onDismiss = new _angular_core.EventEmitter(false);
+        this.onOpen = new _angular_core.EventEmitter(false);
+        this.layerPosition = 1041;
     }
     NgxSmartModalComponent.prototype.ngOnInit = function () {
-        var me = this;
+        this.layerPosition += this.ngxSmartModalService.getModalStackCount();
+        this.ngxSmartModalService.addModal({ id: this.identifier, modal: this });
+    };
+    NgxSmartModalComponent.prototype.ngOnDestroy = function () {
+        this.ngxSmartModalService.removeModal(this.identifier);
+    };
+    NgxSmartModalComponent.prototype.open = function () {
+        this.visible = true;
+        this.onOpen.emit(this);
     };
     NgxSmartModalComponent.prototype.close = function () {
         this.visible = false;
         this.visibleChange.emit(this.visible);
+        this.onClose.emit(this);
+    };
+    NgxSmartModalComponent.prototype.dismiss = function () {
+        this.visible = false;
+        this.visibleChange.emit(this.visible);
+        this.onDismiss.emit(this);
+    };
+    NgxSmartModalComponent.prototype.addCustomClass = function (className) {
+        if (!this.customClass.length) {
+            this.customClass = className;
+        }
+        else {
+            this.customClass += ' ' + className;
+        }
     };
     return NgxSmartModalComponent;
 }());
 __decorate$1([
     _angular_core.Input(),
-    __metadata$1("design:type", Object)
+    __metadata$1("design:type", Boolean)
 ], exports.NgxSmartModalComponent.prototype, "closable", void 0);
+__decorate$1([
+    _angular_core.Input(),
+    __metadata$1("design:type", String)
+], exports.NgxSmartModalComponent.prototype, "identifier", void 0);
+__decorate$1([
+    _angular_core.Input(),
+    __metadata$1("design:type", String)
+], exports.NgxSmartModalComponent.prototype, "customClass", void 0);
 __decorate$1([
     _angular_core.Input(),
     __metadata$1("design:type", Boolean)
@@ -5665,11 +5719,23 @@ __decorate$1([
     _angular_core.Output(),
     __metadata$1("design:type", typeof (_a = typeof _angular_core.EventEmitter !== "undefined" && _angular_core.EventEmitter) === "function" && _a || Object)
 ], exports.NgxSmartModalComponent.prototype, "visibleChange", void 0);
+__decorate$1([
+    _angular_core.Output(),
+    __metadata$1("design:type", typeof (_b = typeof _angular_core.EventEmitter !== "undefined" && _angular_core.EventEmitter) === "function" && _b || Object)
+], exports.NgxSmartModalComponent.prototype, "onClose", void 0);
+__decorate$1([
+    _angular_core.Output(),
+    __metadata$1("design:type", typeof (_c = typeof _angular_core.EventEmitter !== "undefined" && _angular_core.EventEmitter) === "function" && _c || Object)
+], exports.NgxSmartModalComponent.prototype, "onDismiss", void 0);
+__decorate$1([
+    _angular_core.Output(),
+    __metadata$1("design:type", typeof (_d = typeof _angular_core.EventEmitter !== "undefined" && _angular_core.EventEmitter) === "function" && _d || Object)
+], exports.NgxSmartModalComponent.prototype, "onOpen", void 0);
 exports.NgxSmartModalComponent = __decorate$1([
     _angular_core.Component({
         selector: 'ngx-smart-modal',
-        template: "<div [@dialog] *ngIf=\"visible\" class=\"dialog\">\n  <ng-content></ng-content>\n  <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay\" (click)=\"close()\"></div>\n",
-        styles: [".overlay {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999; }\n\n.dialog {\n  z-index: 1000;\n  position: fixed;\n  right: 0;\n  left: 0;\n  top: 20px;\n  margin-right: auto;\n  margin-left: auto;\n  min-height: 200px;\n  width: 90%;\n  max-width: 520px;\n  background-color: #fff;\n  padding: 12px;\n  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12); }\n\n@media (min-width: 768px) {\n  .dialog {\n    top: 40px; } }\n\n.dialog__close-btn {\n  border: 0;\n  background: none;\n  color: #2d2d2d;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 1.2em; }\n"],
+        template: "<div [@dialog] *ngIf=\"visible\" [style.z-index]=\"layerPosition\" [cssClass]=\"customClass\" class=\"dialog\">\n  <ng-content></ng-content>\n  <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay transparent\" (click)=\"dismiss()\"></div>\n",
+        styles: [".overlay {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999; }\n  .overlay.transparent {\n    background-color: transparent; }\n\n.dialog {\n  z-index: 1040;\n  position: fixed;\n  right: 0;\n  left: 0;\n  top: 20px;\n  margin-right: auto;\n  margin-left: auto;\n  min-height: 200px;\n  width: 90%;\n  max-width: 520px;\n  background-color: #fff;\n  padding: 12px;\n  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12); }\n\n@media (min-width: 768px) {\n  .dialog {\n    top: 40px; } }\n\n.dialog__close-btn {\n  border: 0;\n  background: none;\n  color: #2d2d2d;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 1.2em; }\n"],
         animations: [
             _angular_animations.trigger('dialog', [
                 _angular_animations.transition('void => *', [
@@ -5682,10 +5748,13 @@ exports.NgxSmartModalComponent = __decorate$1([
             ])
         ]
     }),
-    __metadata$1("design:paramtypes", [typeof (_b = typeof exports.NgxSmartModalService !== "undefined" && exports.NgxSmartModalService) === "function" && _b || Object])
+    __metadata$1("design:paramtypes", [typeof (_e = typeof exports.NgxSmartModalService !== "undefined" && exports.NgxSmartModalService) === "function" && _e || Object])
 ], exports.NgxSmartModalComponent);
 var _a;
 var _b;
+var _c;
+var _d;
+var _e;
 
 exports.NgxSmartModalModule = (function () {
     function NgxSmartModalModule() {
@@ -5695,7 +5764,7 @@ exports.NgxSmartModalModule = (function () {
 exports.NgxSmartModalModule = __decorate$1([
     _angular_core.NgModule({
         imports: [_angular_platformBrowser.BrowserModule, BrowserAnimationsModule],
-        exports: [exports.NgxSmartModalComponent],
+        exports: [exports.NgxSmartModalComponent, exports.NgxSmartModalService],
         declarations: [exports.NgxSmartModalComponent],
         providers: [exports.NgxSmartModalService],
     })
