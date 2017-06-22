@@ -5650,11 +5650,6 @@ NgxSmartModalService = __decorate$1([
     Injectable(),
     __metadata$1("design:paramtypes", [])
 ], NgxSmartModalService);
-var ModalInstance = (function () {
-    function ModalInstance() {
-    }
-    return ModalInstance;
-}());
 
 var NgxSmartModalComponent = (function () {
     function NgxSmartModalComponent(ngxSmartModalService) {
@@ -5770,5 +5765,5 @@ NgxSmartModalModule = __decorate$1([
     })
 ], NgxSmartModalModule);
 
-export { NgxSmartModalModule, NgxSmartModalService, ModalInstance, NgxSmartModalComponent };
+export { NgxSmartModalModule, NgxSmartModalComponent };
 //# sourceMappingURL=ngx-smart-modal.esm.js.map
