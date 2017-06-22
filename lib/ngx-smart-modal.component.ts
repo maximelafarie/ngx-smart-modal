@@ -70,4 +70,20 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
             this.customClass += ' ' + className;
         }
     }
+
+    public hasData(): boolean {
+        return !!this.ngxSmartModalService.getModalData(this.identifier);
+    }
+
+    public setData(data: Object | Array<any> | number | string | boolean): boolean {
+        return this.ngxSmartModalService.setModalData(data, this.identifier);
+    }
+
+    public getData(): Object {
+        return this.ngxSmartModalService.getModalData(this.identifier);
+    }
+
+    public removeData(): Array<any> {
+        return this.ngxSmartModalService.resetModalData(this.identifier);
+    }
 }

@@ -73,7 +73,9 @@ export class NgxSmartModalService {
      * @returns {Object|Array|number|string|boolean|null} Returns the associated modal data.
      */
     getModalData(id: string): Object | Array<any> | number | string | boolean | null {
-        return this.modalData.find((o) => o.id === id) ? this.modalData.find((o) => o.id === id).data : null;
+        return _.find(this.modalData, (o) => {
+            return o.id === id;
+        });
     }
 
     /**
@@ -99,7 +101,7 @@ export class NgxSmartModalService {
 
     /**
      * Reset all the modal data.
-     * Be careful, it could be very dangerous.
+     * Use it wisely.
      */
     resetAllModalData(): void {
         this.modalData = [];
