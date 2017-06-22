@@ -19,4 +19,8 @@ export declare class NgxSmartModalComponent implements OnInit, OnDestroy {
     close(): void;
     dismiss(): void;
     addCustomClass(className: string): void;
+    hasData(): boolean;
+    setData(data: Object | Array<any> | number | string | boolean): boolean;
+    getData(): Object;
+    removeData(): Array<any>;
 }

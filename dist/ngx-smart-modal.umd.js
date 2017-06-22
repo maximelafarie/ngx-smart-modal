@@ -5616,7 +5616,9 @@ exports.NgxSmartModalService = (function () {
      * @returns {Object|Array|number|string|boolean|null} Returns the associated modal data.
      */
     NgxSmartModalService.prototype.getModalData = function (id) {
-        return this.modalData.find(function (o) { return o.id === id; }) ? this.modalData.find(function (o) { return o.id === id; }).data : null;
+        return _.find(this.modalData, function (o) {
+            return o.id === id;
+        });
     };
     /**
      * Retrieve all data associated to any modal.
@@ -5639,7 +5641,7 @@ exports.NgxSmartModalService = (function () {
     };
     /**
      * Reset all the modal data.
-     * Be careful, it could be very dangerous.
+     * Use it wisely.
      */
     NgxSmartModalService.prototype.resetAllModalData = function () {
         this.modalData = [];
@@ -5697,6 +5699,18 @@ exports.NgxSmartModalComponent = (function () {
         else {
             this.customClass += ' ' + className;
         }
+    };
+    NgxSmartModalComponent.prototype.hasData = function () {
+        return !!this.ngxSmartModalService.getModalData(this.identifier);
+    };
+    NgxSmartModalComponent.prototype.setData = function (data) {
+        return this.ngxSmartModalService.setModalData(data, this.identifier);
+    };
+    NgxSmartModalComponent.prototype.getData = function () {
+        return this.ngxSmartModalService.getModalData(this.identifier);
+    };
+    NgxSmartModalComponent.prototype.removeData = function () {
+        return this.ngxSmartModalService.resetModalData(this.identifier);
     };
     return NgxSmartModalComponent;
 }());

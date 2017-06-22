@@ -48,7 +48,7 @@ export declare class NgxSmartModalService {
     resetModalData(id: string): Array<any>;
     /**
      * Reset all the modal data.
-     * Be careful, it could be very dangerous.
+     * Use it wisely.
      */
     resetAllModalData(): void;
 }
