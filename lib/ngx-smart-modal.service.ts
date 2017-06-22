@@ -54,9 +54,9 @@ export class NgxSmartModalService {
     setModalData(data: Object | Array<any> | number | string | boolean, id: string): boolean {
         if (!!this.modalStack.find((o: ModalInstance) => o.id === id)) {
             if (!!this.modalData.find((o) => o.id === id)) {
-                this.modalData[this.modalData.findIndex((o) => o.id === id)].data = data;
+                setTimeout(() => this.modalData[this.modalData.findIndex((o) => o.id === id)].data = data);
             } else {
-                this.modalData.push({data: data, id: id});
+                setTimeout(() => this.modalData.push({data: data, id: id}));
             }
             return true;
         } else {
