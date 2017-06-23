@@ -8,9 +8,10 @@ export declare class NgxSmartModalService {
      * It stores an object that contains the given modal identifier and the modal itself directly in the `modalStack`.
      *
      * @param {ModalInstance} modalInstance The object that contains the given modal identifier and the modal itself.
+     * @param {boolean} force Optional parameter that forces the overriding of modal instance if it already exists.
      * @returns {void} Returns nothing special.
      */
-    addModal(modalInstance: ModalInstance): void;
+    addModal(modalInstance: ModalInstance, force?: boolean): void;
     /**
      * Retrieve a modal instance by its identifier.
      *
