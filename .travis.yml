@@ -10,6 +10,7 @@ before_install:
 
 install:
   - npm install
+  - npm install -g rollup
   - npm run build
   
 after_script:
