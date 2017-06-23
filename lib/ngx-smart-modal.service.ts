@@ -20,9 +20,11 @@ export class NgxSmartModalService {
      */
     addModal(modalInstance: ModalInstance, force?: boolean): void {
         if (force) {
-            let i:ModalInstance = _.find(this.modalStack, (o: ModalInstance) => {return o.id === modalInstance.id;});
-            if (!!i) {
-                this.getModal(i.id)
+            let i: number = _.findIndex(this.modalStack, (o: ModalInstance) => {
+                return o.id === modalInstance.id;
+            });
+            if (i > -1) {
+                this.modalStack[i].modal = modalInstance.modal;
             }
         }
         this.modalStack.push(modalInstance);
