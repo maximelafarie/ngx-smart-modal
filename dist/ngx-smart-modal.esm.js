@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injectable, Input, NgModule, NgZone, Output, R
 import { CommonModule } from '@angular/common';
 import { BrowserModule, ɵDomRendererFactory2 } from '@angular/platform-browser';
 import { AUTO_STYLE, AnimationBuilder, AnimationFactory, NoopAnimationPlayer, animate, sequence, style, transition, trigger, ɵAnimationGroupPlayer, ɵPRE_STYLE } from '@angular/animations';
-import { each, find, remove } from 'lodash';
+import { each, find, findIndex, remove } from 'lodash';
 import * as _ from 'lodash';
 
 /*! *****************************************************************************
@@ -5568,9 +5568,11 @@ var NgxSmartModalService = (function () {
      */
     NgxSmartModalService.prototype.addModal = function (modalInstance, force) {
         if (force) {
-            var i = find(this.modalStack, function (o) { return o.id === modalInstance.id; });
-            if (!!i) {
-                this.getModal(i.id);
+            var i = findIndex(this.modalStack, function (o) {
+                return o.id === modalInstance.id;
+            });
+            if (i > -1) {
+                this.modalStack[i].modal = modalInstance.modal;
             }
         }
         this.modalStack.push(modalInstance);
@@ -5826,7 +5828,7 @@ __decorate$1([
 NgxSmartModalComponent = __decorate$1([
     Component({
         selector: 'ngx-smart-modal',
-        template: "<div [@dialog] *ngIf=\"visible\" [style.z-index]=\"layerPosition\" class=\"dialog\" [ngClass]=\"customClass\">\n    <ng-content></ng-content>\n    <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay\" [ngClass]=\"{'transparent':!backdrop}\" (click)=\"dismiss()\"></div>\n",
+        template: "<div [@dialog] *ngIf=\"visible\" [style.z-index]=\"layerPosition\" class=\"dialog\" [ngClass]=\"customClass\">\n    <ng-content></ng-content>\n    <button *ngIf=\"closable\" (click)=\"close()\" aria-label=\"Close\" class=\"dialog__close-btn\">X</button>\n</div>\n<div *ngIf=\"visible\" class=\"overlay\" [style.z-index]=\"layerPosition-1\" [ngClass]=\"{'transparent':!backdrop}\"\n     (click)=\"dismiss()\"></div>\n",
         styles: [".overlay {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 999; }\n  .overlay.transparent {\n    background-color: transparent; }\n\n.dialog {\n  z-index: 1040;\n  position: fixed;\n  right: 0;\n  left: 0;\n  top: 20px;\n  margin-right: auto;\n  margin-left: auto;\n  min-height: 200px;\n  width: 90%;\n  max-width: 520px;\n  background-color: #fff;\n  padding: 12px;\n  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12); }\n\n@media (min-width: 768px) {\n  .dialog {\n    top: 40px; } }\n\n.dialog__close-btn {\n  border: 0;\n  background: none;\n  color: #2d2d2d;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 1.2em; }\n"],
         animations: [
             trigger('dialog', [
