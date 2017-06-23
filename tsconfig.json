@@ -17,6 +17,6 @@
     "node_modules"
   ],
   "files": [
-    "./lib/ngx-smart-modal.ts"
+    "./lib/ngx-smart-modal.module.ts"
   ]
 }
