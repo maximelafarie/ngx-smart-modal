@@ -1,28 +1,154 @@
-# NgxSmartModal
+# ngx-smart-modal
+[![Build Status](https://travis-ci.org/maximelafarie/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/maximelafarie/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.3.
+`ngx-smart-modal` is a lightweight and very complete Angular component for managing modal through any Angular project. It was built for modern browsers using TypeScript, SCSS, HTML5 and Angular >=4.0.0.
 
-## Development server
+## No external library, no jQuery! 🤘
+To avoid imposing you to download a CSS library by using this package, this one is only using [Angular animations](https://angular.io/guide/animations). So get rid off to be forced to use a CSS library you don't want to! In addition, it doesn't use jQuery too! 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+> #### But... I'm using Boostrap (or Matrialize, Foundation or anything else)!
+> Don't panic! We already thought about that! And because we want to be the more neutral as we can, we made it very flexible for you to style it!
+> So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClasses]="modal"` (e.g.: bootstrap). And the rest of the modal DOM elements simply have to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
 
-## Code scaffolding
+Check out the [documentation](https://github.com/maximelafarie/ngx-smart-modal) & [demos](https://github.com/maximelafarie/ngx-smart-modal) for more information and tutorials!
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+See the [changelog](https://github.com/maximelafarie/ngx-smart-modalchangelog.md) for recent changes.
 
-## Build
+## Features
+ - Handle large quantity of modals anywhere in your app
+ - Customize the style of your modals through custom CSS classes
+ - No external CSS library is used so you can easily override the modals default style
+ - Pass data to any modal, and retrieve it very simply in the modal view
+ - Events on `open`, `close` and `dismiss` for each modal
+ - Manage all your modal stack and data with very fast methods
+ - Very smart `z-index` computation (no ugly glitches or problems with a modal inside another)
+ - A modal in a modal in a modal in a modal... I guess you got it!
+ - AoT compilation support
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Setup
+To use `ngx-smart-modal` in your project install it via [npm](https://www.npmjs.com/package/ngx-smart-modal):
+```
+npm i ngx-smart-modal --save
+```
+Then add `NgxSmartModalModule` and `NgxSmartModalService` to your project `NgModule`
+```
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-## Running unit tests
+import {AppComponent} from './app.component';
+import {NgxSmartModalModule, NgxSmartModalService} from 'ngx-smart-modal';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    NgxSmartModalModule
+  ],
+  providers: [NgxSmartModalService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}
+```
 
-## Running end-to-end tests
+## Manipulate modals
+You can use it directly in your component's template like this
+```
+<ngx-smart-modal #myModal [identifier]="'myModal'">
+  <h1>Title</h1>
+  <p>Some stuff...</p>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+  <button (click)="myModal.close()">Close</button>
+</ngx-smart-modal>
+```
+At this point, the modal instance is stored in the `NgxSmartModalService`. You can do absolutely what you want with it, anywhere in your app. For example, from a component :
+```
+import {Component} from '@angular/core';
+import {NgxSmartModalService} from 'ngx-smart-modal';
 
-## Further help
+@Component({
+  ...
+})
+export class AppComponent {
+  constructor(public ngxSmartModalService: NgxSmartModalService) {
+  }
+}
+```
+Then in the AppComponent view you can open any modal with no need to be in the same view:
+```
+<button (click)="ngxSmartModalService.getModal('myModal').open()">Open myModal</button>
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Manipulate data
+You can associate data with any created modal. To do that, simply use the `setModalData()` from the `NgxSmartModalService`:
+```
+import {AfterViewInit, Component} from '@angular/core';
+import {NgxSmartModalService} from 'ngx-smart-modal';
+
+@Component({
+  ...
+})
+export class AppComponent implements AfterViewInit {
+  constructor(public ngxSmartModalService: NgxSmartModalService) {
+  }
+
+  ngAfterViewInit() {
+    const obj: Object = {
+      prop1: 'test',
+      prop2: true,
+      prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
+      prop4: 327652175423
+    };
+
+    this.ngxSmartModalService.setModalData(obj, 'myModal');
+  }
+}
+```
+After that, you can retrieve the modal data directly from the view with the `getData()` modal property. To avoid any errors with unavailable data, you can use the `hasData()` modal property (It's dynamic. If data comes after a certain time its value will automatically change to `true`):
+```
+<ngx-smart-modal #myModal [identifier]="'myModal'">
+  <div *ngIf="myModal.hasData()">
+    <pre>{{ myModal.getData() | json }}</pre>
+  </div>
+
+  <button (click)="myModal.close()">Close</button>
+</ngx-smart-modal>
+```
+
+## Handle events
+`ngx-smart-modal` comes with three built-in events: `onOpen`, `onClose` and `onDismiss`.
+
+ - `onOpen`: a modal has been opened
+ - `onClose`: a modal has been closed
+ - `onDismiss`: a modal has been closed by clicking on its backdrop
+
+You can handle events directly from the view...
+```
+<ngx-smart-modal #myModal [identifier]="'myModal'" (onOpen)="log('Modal opened!')" (onClose)="log('Modal closed!')" (onDismiss)="log('Modal dismissed!')">
+  <h1>Title</h1>
+  <p>Some stuff...</p>
+
+  <button (click)="myModal.close()">Close</button>
+</ngx-smart-modal>
+```
+...and execute component's functions:
+```
+@Component({
+  ...
+})
+export class AppComponent {
+  constructor() {
+  }
+
+  public log(msg: string) {
+    console.log(msg);
+  }
+```
+
+### How it works
+Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
+
+![Sequence diagram](assets/sequence_diagram.png)

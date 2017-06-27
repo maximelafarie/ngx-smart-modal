@@ -1,20 +1,94 @@
-<!--The whole content below can be removed with the new code.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=" />
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="http://angularjs.blogspot.ca/">Angular blog</a></h2>
-  </li>
-</ul>
+<a href="https://github.com/maximelafarie/ngx-smart-modal">
+  <img style="position: absolute; top: 0; right: 0; border: 0;"
+       src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67"
+       alt="Fork me on GitHub"
+       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png">
+</a>
 
+<div class="container">
+  <h1 class="title">ngx-smart-modal</h1>
+  <div class="buttons">
+    <button class="button -regular" (click)="classicModal.open()">Classic modal</button>
+    <button class="button -regular" (click)="modalInception.open()">Modal inception</button>
+    <button class="button -regular" (click)="modalData.open()">Data in modal</button>
+    <button class="button -regular" (click)="modalEvents.open()">Events on modal</button>
+    <button class="button -regular" (click)="ngxSmartModalService.getModal('remoteModal').open()">Open modal remotely
+    </button>
+
+    <!-- Below buttons are not available at this moment. Coming soon! -->
+    <!--<button class="button -regular">Bootstrap Modal</button>
+    <button class="button -regular">Materialize Modal</button>
+    <button class="button -regular">Foundation Modal</button>-->
+  </div>
+
+  <footer class="footer">
+    Demo using Anuglar {{version}}
+    <br>
+    Released under the
+    <a href="https://github.com/maximelafarie/ngx-smart-modal/blob/master/LICENSE">ISC</a> license.
+    <a href="https://github.com/maximelafarie/ngx-smart-modal">View source</a>.
+  </footer>
+</div>
+
+<!-- Classic modal -->
+<ngx-smart-modal #classicModal [identifier]="'classicModal'">
+  <h1>Hey, I'm a simple modal!</h1>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/200/3" alt="Lorem picsum">
+  <p>{{ sampleText[0] }}</p>
+  <button class="button -dark" (click)="classicModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal inception -->
+<ngx-smart-modal #modalInception [identifier]="'modalInception'">
+  <h1>Howdy how, I'm a modal that opens another one!</h1>
+  <p>{{ sampleText[0] }}</p>
+
+  <div class="buttons">
+    <button class="button -green" (click)="sampleModal.open()">Open another modal!</button>
+    <button class="button -dark" (click)="modalInception.close()">Close</button>
+  </div>
+</ngx-smart-modal>
+
+<!-- Data in modal -->
+<ngx-smart-modal #modalData [identifier]="'modalData'">
+  <h1>Hey, I'm a modal with some data!</h1>
+  <p>By the way, look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
+  <div *ngIf="modalData.hasData()">
+    <strong>Code below comes from <code>NgxSmartModalService</code>. It was set from the
+      <code>AppComponent</code>!</strong>
+
+    <pre>{{ modalData.getData() | json }}</pre>
+  </div>
+  <p>Learn more in <a href="https://github.com/maximelafarie/ngx-smart-modal#manipulate-data">the documentation</a>!</p>
+  <button class="button -dark" (click)="modalData.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal events -->
+<ngx-smart-modal #modalEvents [identifier]="'modalEvents'" (onOpen)="log('Modal opened!')"
+                 (onClose)="log('Modal closed!')"
+                 (onDismiss)="log('Modal dismissed!')">
+  <h1>Hi! I'm a modal with events</h1>
+  <p>Look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
+
+  <button class="button -dark" (click)="modalEvents.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Remote modal -->
+<ngx-smart-modal #remoteModal [identifier]="'remoteModal'">
+  <h1>Yo, I'm a remotely opened modal!</h1>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/200/2" alt="Lorem picsum">
+  <p>To interact with a modal remotely, you simply need to retrieve the desired modal instance via the <strong><code>NgxSmartModalService</code></strong>
+  </p>
+  <p>For example:</p>
+  <pre>ngxSmartModalService.getModal('remoteModal').open()</pre>
+  <button class="button -dark" (click)="remoteModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Another sample modal -->
+<ngx-smart-modal #sampleModal [identifier]="'sampleModal'" [customClass]="'large-modal'" [backdrop]="false">
+  <h1>Hello! I'm a modal with a custom class, without backdrop!</h1>
+  <p>That's why I'm larger than the others</p>
+  <p>Even if I have no backdrop, you can dismiss me by simple click out of me.</p>
+
+  <button class="button -dark" (click)="sampleModal.close()">Close</button>
+</ngx-smart-modal>

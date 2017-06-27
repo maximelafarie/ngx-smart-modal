@@ -1,0 +1,36 @@
+{
+  "name": "ngx-smart-modal",
+  "version": "0.2.14",
+  "description": "Smart modal handler to manage modals and data everywhere in Angular apps.",
+  "main": "ngx-smart-modal.umd.js",
+  "jsnext:main": "ngx-smart-modal.esm.js",
+  "module": "ngx-smart-modal.esm.js",
+  "types": "ngx-smart-modal.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximelafarie/ngx-smart-modal.git"
+  },
+  "homepage": "https://github.com/maximelafarie/ngx-smart-modal",
+  "keywords": [
+    "ngx-smart-modal",
+    "smart",
+    "modal",
+    "typescript",
+    "angular",
+    "angular2",
+    "angular4",
+    "ngx"
+  ],
+  "author": "Maxime LAFARIE <maxime.lafarie@gmail.com>",
+  "license": "ISC",
+  "peerDependencies": {
+    "@angular/animations": ">=2.4.0 <=5.0.0",
+    "@angular/common": ">=2.4.0 <=5.0.0",
+    "@angular/core": ">=2.4.0 <=5.0.0",
+    "@angular/platform-browser": ">=2.4.0 <=5.0.0",
+    "lodash": ">=4.10.0",
+    "rxjs": ">=5.1.0",
+    "web-animations-js": ">=2.0.0",
+    "zone.js": ">=0.8.0"
+  }
+}
