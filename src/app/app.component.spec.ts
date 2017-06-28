@@ -1,7 +1,7 @@
-import { TestBed, async } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxSmartModalModule, NgxSmartModalService } from '../lib/core/ngx-smart-modal';
-import { AppComponent } from './app.component';
+import {TestBed, async} from '@angular/core/testing';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgxSmartModalModule, NgxSmartModalService} from '../lib/core/ngx-smart-modal';
+import {AppComponent} from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
