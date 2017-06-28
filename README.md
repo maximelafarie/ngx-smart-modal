@@ -148,7 +148,14 @@ export class AppComponent {
   }
 ```
 
-### How it works
+## Contribute
+Firstly fork this repo, then clone it and go inside the root of the freshly forked project.
+`ng serve` to start the angular-cli demo.
+To modify the package, go into ./src/lib/core and do some code! 🤓
+When you finished commit and push it to your fork repo, make a PR!
+Thank you for your support, you rock! 🤘🎸
+
+## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
 
 ![Sequence diagram](src/assets/sequence_diagram.png)
