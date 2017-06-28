@@ -3,6 +3,10 @@
 
 `ngx-smart-modal` is a lightweight and very complete Angular component for managing modal through any Angular project. It was built for modern browsers using TypeScript, SCSS, HTML5 and Angular >=4.0.0.
 
+## Demo
+https://maximelafarie.com/ngx-smart-modal/
+
+
 ## No external library, no jQuery! 🤘
 To avoid imposing you to download a CSS library by using this package, this one is only using [Angular animations](https://angular.io/guide/animations). So get rid off to be forced to use a CSS library you don't want to! In addition, it doesn't use jQuery too! 
 
@@ -151,4 +155,4 @@ export class AppComponent {
 ### How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
 
-![Sequence diagram](assets/sequence_diagram.png)
+![Sequence diagram](src/assets/sequence_diagram.png)
