@@ -1,5 +1,7 @@
 # ngx-smart-modal
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/maximelafarie/ngx-smart-modal.svg)](https://greenkeeper.io/)
+
 [![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/maximelafarie/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/maximelafarie/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![codecov](https://codecov.io/gh/maximelafarie/ngx-smart-modal/branch/master/graph/badge.svg)](https://codecov.io/gh/maximelafarie/ngx-smart-modal)
 
