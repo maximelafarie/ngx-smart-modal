@@ -43,7 +43,7 @@
     "del": "^3.0.0",
     "node-sass": "^4.5.3",
     "rimraf": "^2.6.1",
-    "rollup": "^0.43.0",
+    "rollup": "^0.44.0",
     "rollup-plugin-angular": "^0.4.4",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
