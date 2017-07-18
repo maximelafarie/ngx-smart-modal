@@ -36,16 +36,16 @@ body {
   font-family: $font-face;
   font-size: 16px;
   transform: translate3d(0, 0, 0);
-  background: #eee linear-gradient(
-      135deg,
-      $colorMainDarker 0%,
-      $colorSecundaryDarker 100%
-  );
   filter: progid:DXImageTransform.Microsoft.gradient(
       startColorstr='#1e5799',
       endColorstr='#7db9e8',
       GradientType=1
   );
+  background: #eee linear-gradient(
+      135deg,
+      $colorMainDarker 0%,
+      $colorSecundaryDarker 100%
+  ) fixed;
 }
 
 pre {
@@ -53,15 +53,19 @@ pre {
   unicode-bidi: embed;
   font-family: monospace;
   white-space: pre;
-  background-color: rgba(0,0,0,.75);
-  border-left: .5rem solid rgba(0,0,0,.5);
-  color: #FBAF5C;
+  background-color: rgba(0, 0, 0, .75);
+  border-left: .5rem solid rgba(0, 0, 0, .5);
+  color: #fbaf5c;
   margin: 0;
   padding: 1rem;
 }
 
 .large-modal {
   max-width: none !important;
+}
+
+.dialog.medium-modal {
+  max-width: 1280px !important;
 }
 
 .container {

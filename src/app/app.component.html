@@ -12,6 +12,7 @@
     <button class="button -regular" (click)="modalInception.open()">Modal inception</button>
     <button class="button -regular" (click)="modalData.open()">Data in modal</button>
     <button class="button -regular" (click)="modalEvents.open()">Events on modal</button>
+    <button class="button -regular" (click)="videoModal.open()">Rickroll events</button>
     <button class="button -regular" (click)="ngxSmartModalService.getModal('remoteModal').open()">Open modal remotely
     </button>
 
@@ -52,11 +53,11 @@
 <!-- Data in modal -->
 <ngx-smart-modal #modalData [identifier]="'modalData'">
   <h1>Hey, I'm a modal with some data!</h1>
-  <p>By the way, look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
-  <div *ngIf="modalData.hasData()">
+  <p>
     <strong>Code below comes from <code>NgxSmartModalService</code>. It was set from the
       <code>AppComponent</code>!</strong>
-
+  </p>
+  <div *ngIf="modalData.hasData()">
     <pre>{{ modalData.getData() | json }}</pre>
   </div>
   <p>Learn more in <a href="https://github.com/maximelafarie/ngx-smart-modal#manipulate-data">the documentation</a>!</p>
@@ -71,6 +72,16 @@
   <p>Look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
 
   <button class="button -dark" (click)="modalEvents.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal video events -->
+<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'">
+  <h1>Hey, I Rickrolled You!</h1>
+  <iframe #rickroll width="1280" height="720"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
+          frameborder="0" allowfullscreen></iframe>
+
+  <button class="button -dark" (click)="videoModal.close()">Close</button>
 </ngx-smart-modal>
 
 <!-- Remote modal -->
