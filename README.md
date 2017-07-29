@@ -159,4 +159,4 @@ Thank you for your support, you rock! 🤘🎸
 ## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
 
-![Sequence diagram](src/assets/sequence_diagram.png)
+![Sequence diagram](demo/src/assets/sequence_diagram.png)
