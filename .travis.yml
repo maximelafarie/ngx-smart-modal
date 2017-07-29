@@ -1,0 +1,36 @@
+sudo: required
+dist: trusty
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+language: node_js
+node_js:
+  - stable
+before_install:
+  - npm i npm@^4 -g
+install:
+  - npm install
+script:
+  - npm test
+  - npm run build
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+after_script:
+  - greenkeeper-lockfile-upload
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - npm run ghpages
+notifications:
+  email: false
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: demo/dist
+  github_token: $PUSH_TOKEN
+  on:
+    branch: master
