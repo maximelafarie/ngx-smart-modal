@@ -34,7 +34,7 @@ export class AppComponent implements AfterViewInit {
 
     this.ngxSmartModalService.setModalData(obj, 'modalData');
 
-    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((event) => {
+    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((event: Event) => {
       console.log('Rickroll modal opened!', event);
     });
   }
