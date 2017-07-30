@@ -82,5 +82,10 @@
     "webpack": "3.0.0",
     "yargs": "8.0.2",
     "zone.js": "0.8.14"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "uglify-js"
+    ]
   }
 }
