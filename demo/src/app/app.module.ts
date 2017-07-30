@@ -10,7 +10,7 @@ import {AppComponent} from './app.component';
   ],
   imports: [
     BrowserModule,
-    NgxSmartModalModule
+    NgxSmartModalModule.forRoot()
   ],
   providers: [NgxSmartModalService],
   bootstrap: [AppComponent]

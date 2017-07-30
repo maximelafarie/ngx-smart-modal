@@ -37,22 +37,30 @@ To use `ngx-smart-modal` in your project install it via [npm](https://www.npmjs.
 ```
 npm i ngx-smart-modal --save
 ```
+If you have the following warning after install:
+`npm WARN ngx-smart-modal@2.0.1 requires a peer of web-animations-js@>=2.0.0 but none was installed.` or `warning "ngx-smart-modal@2.0.1" has unmet peer dependency "web-animations-js@>=2.0.0".`
+Just run:
+`npm i web-animations-js --save` or `yarn add web-animations-js`.
 Then add `NgxSmartModalModule` and `NgxSmartModalService` to your project `NgModule`
 ```
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 
-import {AppComponent} from './app.component';
-import {NgxSmartModalModule, NgxSmartModalService} from 'ngx-smart-modal';
+import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, NgxSmartModalModule],
-  providers: [NgxSmartModalService],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    NgxSmartModalModule.forRoot()
+  ],
+  providers: [ NgxSmartModalService ],
+  bootstrap: [ AppComponent ]
 })
-export class AppModule {
-}
+export class AppModule { }
 ```
 
 ## Manipulate modals
