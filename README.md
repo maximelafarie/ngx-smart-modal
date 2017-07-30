@@ -1,8 +1,8 @@
 # ngx-smart-modal
 
 [![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
-[![Greenkeeper badge](https://badges.greenkeeper.io/maximelafarie/ngx-smart-modal.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/maximelafarie/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/maximelafarie/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![codecov](https://codecov.io/gh/maximelafarie/ngx-smart-modal/branch/master/graph/badge.svg)](https://codecov.io/gh/maximelafarie/ngx-smart-modal)
+[![Greenkeeper badge](https://badges.greenkeeper.io/biig-io/ngx-smart-modal.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/biig-io/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/biig-io/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![codecov](https://codecov.io/gh/biig-io/ngx-smart-modal/branch/master/graph/badge.svg)](https://codecov.io/gh/biig-io/ngx-smart-modal)
 
 `ngx-smart-modal` is a lightweight and very complete Angular component for managing modal inside any Angular project. It was built for modern browsers using TypeScript, SCSS, HTML5 and Angular >=4.0.0.
 
@@ -17,9 +17,9 @@ To avoid imposing you to download a CSS library by using this package, this one 
 > Don't panic! We already thought about that! And because we want to be the more neutral as we can, we made it very flexible for you to style it!
 > So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClasses]="modal"` (e.g.: bootstrap). And the rest of the modal DOM elements simply have to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
 
-Check out the [documentation](https://github.com/maximelafarie/ngx-smart-modal) & [demos](https://github.com/maximelafarie/ngx-smart-modal) for more information and tutorials!
+Check out the [documentation](https://github.com/biig-io/ngx-smart-modal) & [demos](https://github.com/biig-io/ngx-smart-modal) for more information and tutorials!
 
-See the [changelog](https://github.com/maximelafarie/ngx-smart-modalchangelog.md) for recent changes.
+See the [changelog](https://github.com/biig-io/ngx-smart-modalchangelog.md) for recent changes.
 
 ## Features
  - Handle large quantity of modals anywhere in your app
