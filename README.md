@@ -1,4 +1,4 @@
-# ngx-smart-modal
+![ngx-smart-modal](https://user-images.githubusercontent.com/5319267/28756216-65c335c4-756a-11e7-9ac5-6a0e0cd8ea22.png)
 
 [![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/biig-io/ngx-smart-modal.svg)](https://greenkeeper.io/)
