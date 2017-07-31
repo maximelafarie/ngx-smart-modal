@@ -37,7 +37,7 @@ To use `ngx-smart-modal` in your project install it via [npm](https://www.npmjs.
 ```
 npm i ngx-smart-modal --save
 ```
-If you have the following warning after install:
+⚠️ If you have the following warning after install:
 ```
 npm WARN ngx-smart-modal@2.0.1 requires a peer of web-animations-js@>=2.0.0 but none was installed.
 ``` 
