@@ -143,9 +143,9 @@ After that, you can retrieve the modal data directly from the view with the `get
 ## Handle events
 `ngx-smart-modal` comes with three built-in events: `onOpen`, `onClose` and `onDismiss`.
 
- - `onOpen`: a modal has been opened
- - `onClose`: a modal has been closed
- - `onDismiss`: a modal has been closed by clicking on its backdrop
+ - `onOpen`: modal has been opened
+ - `onClose`: modal has been closed
+ - `onDismiss`: modal has been closed by clicking on its backdrop
 
 You can handle events directly from the view...
 ```
@@ -168,6 +168,33 @@ export class AppComponent {
   public log(msg: string) {
     console.log(msg);
   }
+}
+```
+
+Or you also can declare modal in any template (e.g.: the Rickroll demo modal)...
+```
+<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'">
+  <h1>Hey, I Rickrolled You!</h1>
+  <iframe #rickroll width="1280" height="720"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
+          frameborder="0" allowfullscreen></iframe>
+
+  <button class="button -dark" (click)="videoModal.close()">Close</button>
+</ngx-smart-modal>
+```
+... and listen to its events from any component:
+```
+export class AppComponent implements AfterViewInit {
+  ...
+  constructor(public ngxSmartModalService: NgxSmartModalService) {
+  }
+
+  ngAfterViewInit() {
+    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((event: Event) => {
+      console.log('Rickroll modal opened!', event);
+    });
+  }
+}
 ```
 
 ## Contribute
