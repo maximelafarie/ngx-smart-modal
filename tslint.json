@@ -9,6 +9,7 @@
             "check-interpolation",
             "check-pipe"
         ],
+        "no-trailing-whitespace": false,
         "max-line-length": [true, 10000],
         "banana-in-box": true,
         "templates-no-negated-async": true,
