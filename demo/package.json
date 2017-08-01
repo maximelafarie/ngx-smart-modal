@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
-    "ngx-smart-modal": "git+https://github.com/maximelafarie/ngx-smart-modal-refacto.git",
+    "ngx-smart-modal": "git+https://github.com/biig-io/ngx-smart-modal.git",
     "rxjs": "^5.4.1",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.14"
