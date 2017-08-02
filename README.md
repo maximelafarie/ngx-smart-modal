@@ -4,7 +4,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/biig-io/ngx-smart-modal.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/biig-io/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/biig-io/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![codecov](https://codecov.io/gh/biig-io/ngx-smart-modal/branch/master/graph/badge.svg)](https://codecov.io/gh/biig-io/ngx-smart-modal)
 
-`ngx-smart-modal` is a lightweight and very complete Angular component for managing modal inside any Angular project. It was built for modern browsers using TypeScript, SCSS, HTML5 and Angular >=4.0.0.
+`ngx-smart-modal` is a lightweight and very complete Angular component for managing modal inside any Angular project. It was built for modern browsers using TypeScript, HTML5 and Angular >=2.0.0.
 
 ## Demo
 http://biig-io.github.io/ngx-smart-modal/
@@ -19,13 +19,13 @@ To avoid imposing you to download a CSS library by using this package, this one 
 
 Check out the [documentation](https://github.com/biig-io/ngx-smart-modal) & [demos](https://github.com/biig-io/ngx-smart-modal) for more information and tutorials!
 
-See the [changelog](https://github.com/biig-io/ngx-smart-modalchangelog.md) for recent changes.
+See the [changelog](https://github.com/biig-io/ngx-smart-modal/CHANGELOG.md) for recent changes.
 
 ## Features
  - Handle large quantity of modals anywhere in your app
  - Customize the style of your modals through custom CSS classes
  - No external CSS library is used so you can easily override the modals default style
- - Pass data to any modal, and retrieve it very simply in the modal view
+ - Pass data to any modal and retrieve it very simply in the modal view (or anywhere else)
  - Events on `open`, `close` and `dismiss` for each modal
  - Manage all your modal stack and data with very fast methods
  - Very smart `z-index` computation (no ugly glitches or problems with a modal inside another)
@@ -75,6 +75,27 @@ import { AppComponent } from './app.component';
 })
 export class AppModule { }
 ```
+
+## Parameters / Options
+`ngx-smart-modal` comes with some parameters / options in order to make it fit your needs. The following parameters / options needs to be used like this: `<ngx-smart-modal [parameter-or-option-name]="value"></ngx-smart-modal>`
+
+The below documentation will use the following pattern: 
+> `parameter/option name` (type) | default value | required? ― _description_
+
+- `closable` (boolean) | `true` ― _Show / hide the cross icon at the top right corner of the modal_
+
+- `escapeAble` (boolean) | `true` ― _Enable / disable the modal for listening to the escape keypress event (if pressed and this option is true, it will close the current opened modal or the latest opened if you have several modals opened at the same time_
+
+- `identifier` (string) | `undefined` | **REQUIRED** ― _The identifiant of the modal instance. Retrieve a modal easily by its identifier_
+
+- `force` (boolean) | true ― _If true and if you declare another modal instance with the same identifier that another, the service will override it by the new you declare in the modal stack._
+
+- `customClass` (string) | `''` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated classnames_
+
+- `visible` (boolean) | `false` ― _Define if the modal is shown or not. Automatically toggled with open() and close()/dismiss() methods._
+
+- `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. Tip: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
+
 
 ## Manipulate modals
 You can use it directly in your component's template like this
