@@ -1,6 +1,7 @@
-import {Component, OnInit, Input, Output, OnChanges, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, Output, OnChanges, EventEmitter, OnDestroy, HostListener} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
+import {ModalInstance} from "../services/modal-instance";
 
 @Component({
     animations: [
@@ -23,6 +24,7 @@ import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
                 bottom: 0;
                 left: 0;
                 right: 0;
+                overflow-y: auto;
                 background-color: rgba(0, 0, 0, 0.5);
                 z-index: 999;
             }
@@ -30,32 +32,11 @@ import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
             .overlay.transparent {
                 background-color: transparent;
             }
-            
-            .dialog-container {
-                position: fixed;
-                z-index: 1040;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin-right: auto;
-                margin-left: auto;
-                min-height: 200px;
-                width: 90%;
-                max-width: 520px;
-                visibility: hidden;
-                overflow-y: scroll;
-                overflow-x: hidden;
-            }
-            
-            .dialog-container:not(*:root) {
-                visibility: visible;
+
+            body.dialog-open {
+                overflow: hidden;
             }
 
-            .dialog-container::-webkit-scrollbar {
-                visibility: hidden;
-            }
-            
             .dialog {
                 visibility: visible;
                 position: absolute;
@@ -95,20 +76,21 @@ import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
                 cursor: pointer;
             }
         </style>
-        <div [@dialog] *ngIf="visible" [style.z-index]="layerPosition" class="dialog-container" [ngClass]="customClass">
-            <div class="dialog">
+        <div *ngIf="overlayVisible" class="overlay" [style.z-index]="layerPosition-1"
+             [ngClass]="{'transparent':!backdrop}"
+             (click)="dismiss($event)">
+            <div [@dialog] *ngIf="visible" [style.z-index]="layerPosition" class="dialog" [ngClass]="customClass">
                 <ng-content></ng-content>
                 <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">
                     <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDMsNi4wNThjLTguMDc3LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDksMEw2LjA1OCw0NzYuNjkzYy04LjA3Nyw4LjA3Ny04LjA3NywyMS4xNzIsMCwyOS4yNDkgICAgQzEwLjA5Niw1MDkuOTgyLDE1LjM5LDUxMiwyMC42ODMsNTEyYzUuMjkzLDAsMTAuNTg2LTIuMDE5LDE0LjYyNS02LjA1OUw1MDUuOTQzLDM1LjMwNiAgICBDNTE0LjAxOSwyNy4yMyw1MTQuMDE5LDE0LjEzNSw1MDUuOTQzLDYuMDU4eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDIsNDc2LjY5NEwzNS4zMDYsNi4wNTljLTguMDc2LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDgsMGMtOC4wNzcsOC4wNzYtOC4wNzcsMjEuMTcxLDAsMjkuMjQ4bDQ3MC42MzYsNDcwLjYzNiAgICBjNC4wMzgsNC4wMzksOS4zMzIsNi4wNTgsMTQuNjI1LDYuMDU4YzUuMjkzLDAsMTAuNTg3LTIuMDE5LDE0LjYyNC02LjA1N0M1MTQuMDE4LDQ5Ny44NjYsNTE0LjAxOCw0ODQuNzcxLDUwNS45NDIsNDc2LjY5NHoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
                 </button>
             </div>
         </div>
-        <div *ngIf="visible" class="overlay" [style.z-index]="layerPosition-1" [ngClass]="{'transparent':!backdrop}"
-             (click)="dismiss()"></div>
     `
 })
 export class NgxSmartModalComponent implements OnInit, OnDestroy {
     @Input() public closable: boolean = true;
+    @Input() public escapeAble: boolean = true;
     @Input() public identifier: string;
     @Input() public customClass: string = '';
     @Input() public visible: boolean = false;
@@ -121,6 +103,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     @Output() public onOpen: EventEmitter<any> = new EventEmitter();
 
     public layerPosition: number = 1041;
+    public overlayVisible: boolean = false;
 
     constructor(private ngxSmartModalService: NgxSmartModalService) {
     }
@@ -138,20 +121,37 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         if (top) {
             this.layerPosition = this.ngxSmartModalService.getHigherIndex();
         }
+        if (!document.body.classList.contains('dialog-open')) {
+            document.body.classList.add('dialog-open');
+        }
+        this.overlayVisible = true;
         this.visible = true;
         this.onOpen.emit(this);
     }
 
     public close(): void {
+        const me = this;
         this.visible = false;
         this.visibleChange.emit(this.visible);
         this.onClose.emit(this);
+        if (document.body.classList.contains('dialog-open')) {
+            document.body.classList.remove('dialog-open');
+        }
+        setTimeout(() => {
+            me.overlayVisible = false;
+        }, 150);
     }
 
-    public dismiss(): void {
-        this.visible = false;
-        this.visibleChange.emit(this.visible);
-        this.onDismiss.emit(this);
+    public dismiss(e: any): void {
+        const me = this;
+        if (e.target.classList.contains('overlay')) {
+            this.visible = false;
+            this.visibleChange.emit(this.visible);
+            this.onDismiss.emit(this);
+            setTimeout(() => {
+                me.overlayVisible = false;
+            }, 150);
+        }
     }
 
     public addCustomClass(className: string): void {
@@ -188,5 +188,15 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
     public removeData(): void {
         return this.ngxSmartModalService.resetModalData(this.identifier);
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    private escapeKeyboardEvent(event: KeyboardEvent) {
+        if (this.escapeAble) {
+            const x = event.keyCode;
+            if (x === 27) {
+                this.ngxSmartModalService.closeLatestModal();
+            }
+        }
     }
 }

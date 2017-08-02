@@ -6,6 +6,7 @@ import {ModalInstance} from './modal-instance';
 export class NgxSmartModalService {
     public modalStack: ModalInstance[] = [];
     public modalData: any[] = [];
+    private debouncer: any;
 
     /**
      * Add a new modal instance. This step is essential and allows to retrieve any modal at any time.
@@ -172,5 +173,24 @@ export class NgxSmartModalService {
      */
     public resetAllModalData(): void {
         this.modalData = [];
+    }
+
+    /**
+     * Close the latest opened modal if it has been declared as escapeAble
+     * Using a debounce system because one or more modals could be listening
+     * escape key press event.
+     */
+    public closeLatestModal(): void {
+        const me = this;
+        clearTimeout(this.debouncer);
+        this.debouncer = setTimeout(() => {
+            let tmp: ModalInstance | undefined;
+            me.getOpenedModals().forEach((m: ModalInstance) => {
+                if (m.modal.layerPosition > (!!tmp ? tmp.modal.layerPosition : 0 && m.modal.escapeAble)) {
+                    tmp = m;
+                }
+            });
+            return !!tmp ? tmp.modal.close() : false;
+        }, 100);
     }
 }
