@@ -53,6 +53,7 @@ pre {
   unicode-bidi: embed;
   font-family: monospace;
   white-space: pre;
+  overflow-x: auto;
   background-color: rgba(0, 0, 0, .75);
   border-left: .5rem solid rgba(0, 0, 0, .5);
   color: #fbaf5c;
