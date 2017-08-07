@@ -75,7 +75,7 @@
     "sorcery": "0.10.0",
     "source-map-loader": "0.2.1",
     "ts-loader": "2.3.2",
-    "tslint": "5.5.0",
+    "tslint": "5.6.0",
     "typescript": "2.4.2",
     "uglify-js": "2.8.29",
     "web-animations-js": "2.3.1",
