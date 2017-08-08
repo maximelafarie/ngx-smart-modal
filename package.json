@@ -79,7 +79,7 @@
     "typescript": "2.4.2",
     "uglify-js": "2.8.29",
     "web-animations-js": "2.3.1",
-    "webpack": "3.4.1",
+    "webpack": "3.5.0",
     "yargs": "8.0.2",
     "zone.js": "0.8.16"
   },
