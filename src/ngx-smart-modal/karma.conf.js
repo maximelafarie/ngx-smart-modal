@@ -31,12 +31,16 @@ module.exports = function (config) {
     exclude: [
     ],
 
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['spec', 'progress', 'coverage'],
+
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'spec.bundle.js': ['webpack', 'sourcemap'],
-      'src/**/.ts': ['coverage'],
-      'src/**/.js': ['coverage']
+      'src/**/!(*spec).ts': ['coverage']
     },
 
     // webpack
@@ -62,19 +66,10 @@ module.exports = function (config) {
       noInfo: true
     },
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec', 'coverage'],
-
     // Configure code coverage reporter
     coverageReporter: {
-      reporters: [
-        // generates ./coverage/lcov.info
-        {type:'lcovonly', subdir: '.'},
-        // generates ./coverage/coverage-final.json
-        {type:'json', subdir: '.'}
-      ]
+      type : 'lcov',
+      dir : 'coverage/'
     },
 
     // web server port
