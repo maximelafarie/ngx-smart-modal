@@ -7,6 +7,8 @@ module.exports = function (config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    browserNoActivityTimeout: 100000,
+
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
@@ -16,6 +18,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-webpack'),
       require('karma-sourcemap-loader'),
+      require('karma-coverage'),
       require('karma-spec-reporter')
     ],
 
@@ -31,7 +34,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'spec.bundle.js': ['webpack', 'sourcemap']
+      'spec.bundle.js': ['webpack', 'sourcemap', 'coverage']
     },
 
     // webpack
@@ -57,12 +60,20 @@ module.exports = function (config) {
       noInfo: true
     },
 
-
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec'],
+    reporters: ['spec', 'coverage'],
 
+    // Configure code coverage reporter
+    coverageReporter: {
+      reporters: [
+        // generates ./coverage/lcov.info
+        {type:'lcovonly', subdir: '.'},
+        // generates ./coverage/coverage-final.json
+        {type:'json', subdir: '.'}
+      ]
+    },
 
     // web server port
     port: 9876,

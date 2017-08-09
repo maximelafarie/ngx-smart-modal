@@ -1,7 +1,7 @@
 $ cat .gitignore
 **/node_modules
 /dist
-/documentation
+**/documentation
 
 *.log
 *.tgz
@@ -31,11 +31,11 @@ $ cat .gitignore
 # misc
 /.sass-cache
 /connect.lock
-/coverage
+**/coverage
 /libpeerconnection.log
-npm-debug.log
+**/npm-debug.log
 testem.log
-/typings
+**/typings
 
 # e2e
 /e2e/*.js
