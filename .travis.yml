@@ -26,7 +26,7 @@ before_script:
 after_script:
   - greenkeeper-lockfile-upload
 after_success:
-  - codecov
+  - codecov -t $CODECOV_TOKEN
   - rm -r node_modules
   - cd ../..
   - npm run ghpages
