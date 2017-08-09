@@ -28,7 +28,7 @@ after_script:
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
   - rm -r node_modules
-  - cd /
+  - cd ../..
   - npm run ghpages
 notifications:
   email: false
