@@ -1,6 +1,6 @@
 // Karma configuration for Unit testing
 
-module.exports = function (config) {
+module.exports = function(config) {
 
   const configuration = {
 
@@ -24,23 +24,18 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'spec.bundle.js', watched: false }
+      {pattern: 'spec.bundle.js', watched: false},
+      {pattern: '**/*.map', served: true, included: false, watched: true}
     ],
 
     // list of files to exclude
-    exclude: [
-    ],
-
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec', 'progress', 'coverage'],
+    exclude: [],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'spec.bundle.js': ['webpack', 'sourcemap'],
-      'src/**/!(*spec).ts': ['coverage']
+      './src/**/!(*.test|tests|spec.*).(ts|js)': ['sourcemap']
     },
 
     // webpack
@@ -59,17 +54,28 @@ module.exports = function (config) {
         exprContextCritical: false
       },
       devtool: 'inline-source-map',
-      performance: { hints: false }
+      stats: {colors: true, reasons: true},
+      performance: {hints: false}
     },
 
     webpackServer: {
       noInfo: true
     },
 
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['spec', 'progress', 'coverage'],
+
     // Configure code coverage reporter
     coverageReporter: {
-      type : 'lcov',
-      dir : 'coverage/'
+      includeAllSources: true,
+      dir: './coverage/',
+      reporters: [
+        {type: 'html'},
+        {type: 'json'},
+        {type: 'lcov'}
+      ]
     },
 
     // web server port
