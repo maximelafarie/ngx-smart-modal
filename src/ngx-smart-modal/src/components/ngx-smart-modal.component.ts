@@ -149,6 +149,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       this.visible = false;
       this.visibleChange.emit(this.visible);
       this.onDismiss.emit(this);
+      if (document.body.classList.contains('dialog-open')) {
+        document.body.classList.remove('dialog-open');
+      }
       setTimeout(() => {
         me.overlayVisible = false;
       }, 150);
