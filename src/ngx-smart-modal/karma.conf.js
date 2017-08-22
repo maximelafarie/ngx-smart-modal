@@ -69,7 +69,6 @@ module.exports = function(config) {
 
     // Configure code coverage reporter
     coverageReporter: {
-      includeAllSources: true,
       dir: './coverage/',
       reporters: [
         {type: 'html'},
