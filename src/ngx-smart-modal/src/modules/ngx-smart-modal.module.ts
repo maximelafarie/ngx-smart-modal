@@ -1,14 +1,12 @@
 import {CommonModule} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, ModuleWithProviders} from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
 import {NgxSmartModalComponent} from '../components/ngx-smart-modal.component';
 
 @NgModule({
     declarations: [NgxSmartModalComponent],
     exports: [NgxSmartModalComponent],
-    imports: [CommonModule, BrowserModule, BrowserAnimationsModule]
+    imports: [CommonModule]
 })
 export class NgxSmartModalModule {
 

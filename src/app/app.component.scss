@@ -134,7 +134,6 @@ pre {
 
   justify-content: center;
   align-items: center;
-  flex: 0 0 160px;
 
   &:hover {
     transition: all 60ms ease;
@@ -214,6 +213,19 @@ pre {
     &:first-of-type {
       margin-left: 0;
     }
+  }
+}
+
+.go-back a {
+  color: #edeeee;
+  text-decoration: none;
+  font-size: 14px;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #e1e2e2;
+    text-decoration: underline;
   }
 }
 
