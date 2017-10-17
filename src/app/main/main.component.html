@@ -1,0 +1,142 @@
+<div class="container">
+  <h1 class="title">ngx-smart-modal</h1>
+  <div class="buttons">
+    <button class="button -regular" (click)="classicModal.open()">Classic modal</button>
+    <button class="button -regular" (click)="modalInception.open()">Modal inception</button>
+    <button class="button -regular" (click)="modalData.open()">Data in modal</button>
+    <button class="button -regular" (click)="modalEvents.open()">Events on modal</button>
+    <button class="button -regular" (click)="videoModal.open()">Rickroll events</button>
+    <button class="button -regular" (click)="longTextModal.open()">Big content modal</button>
+    <button class="button -regular" (click)="ngxSmartModalService.getModal('remoteModal').open()">Open modal remotely
+    </button>
+    <button class="button -regular" (click)="goFeature()">lazy load feature module
+    </button>
+
+    <!-- Below buttons are not available at this moment. Coming soon! -->
+    <!--<button class="button -regular">Bootstrap Modal</button>
+    <button class="button -regular">Materialize Modal</button>
+    <button class="button -regular">Foundation Modal</button>-->
+  </div>
+
+  <footer class="footer">
+    Demo using Anuglar {{version}}
+    <br>
+    Released under the
+    <a href="https://github.com/biig-io/ngx-smart-modal/blob/master/LICENSE">ISC</a> license.
+    <a href="https://github.com/biig-io/ngx-smart-modal">View source</a>.
+  </footer>
+</div>
+
+<!-- Classic modal -->
+<ngx-smart-modal #classicModal [identifier]="'classicModal'">
+  <h1>Hey, I'm a simple modal!</h1>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/200/3" alt="Lorem picsum">
+  <p>{{ sampleText[0] }}</p>
+  <button class="button -dark" (click)="classicModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal inception -->
+<ngx-smart-modal #modalInception [identifier]="'modalInception'">
+  <h1>Howdy how, I'm a modal that opens another one!</h1>
+  <p>{{ sampleText[0] }}</p>
+
+  <div class="buttons">
+    <button class="button -green" (click)="sampleModal.open()">Open another modal!</button>
+    <button class="button -dark" (click)="modalInception.close()">Close</button>
+  </div>
+</ngx-smart-modal>
+
+<!-- Data in modal -->
+<ngx-smart-modal #modalData [identifier]="'modalData'">
+  <h1>Hey, I'm a modal with some data!</h1>
+  <p>
+    <strong>Code below comes from <code>NgxSmartModalService</code>. It was set from the
+      <code>AppComponent</code>!</strong>
+  </p>
+  <div *ngIf="modalData.hasData()">
+    <pre>{{ modalData.getData() | json }}</pre>
+  </div>
+  <p>Learn more in <a href="https://github.com/biig-io/ngx-smart-modal#manipulate-data">the documentation</a>!</p>
+  <button class="button -dark" (click)="modalData.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal events -->
+<ngx-smart-modal #modalEvents [identifier]="'modalEvents'" (onOpen)="log('Modal opened!')"
+                 (onClose)="log('Modal closed!')"
+                 (onDismiss)="log('Modal dismissed!')">
+  <h1>Hi! I'm a modal with events</h1>
+  <p>Look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
+
+  <button class="button -dark" (click)="modalEvents.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal video events -->
+<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'">
+  <h1>Hey, I Rickrolled You!</h1>
+  <iframe #rickroll width="1280" height="720" style="max-width: 100%;"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
+          frameborder="0" allowfullscreen></iframe>
+
+  <button class="button -dark" (click)="videoModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Remote modal -->
+<ngx-smart-modal #remoteModal [identifier]="'remoteModal'">
+  <h1>Yo, I'm a remotely opened modal!</h1>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/200/2" alt="Lorem picsum">
+  <p>To interact with a modal remotely, you simply need to retrieve the desired modal instance via the <strong><code>NgxSmartModalService</code></strong>
+  </p>
+  <p>For example:</p>
+  <pre>ngxSmartModalService.getModal('remoteModal').open()</pre>
+  <button class="button -dark" (click)="remoteModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Another sample modal -->
+<ngx-smart-modal #sampleModal [identifier]="'sampleModal'" [customClass]="'large-modal'" [backdrop]="false">
+  <h1>Hello! I'm a modal with a custom class, without backdrop!</h1>
+  <p>That's why I'm larger than the others</p>
+  <p>Even if I have no backdrop, you can dismiss me by simple click out of me.</p>
+
+  <button class="button -dark" (click)="sampleModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Big content modal -->
+<ngx-smart-modal #longTextModal [identifier]="'longTextModal'">
+  <h1>You wanna see my big content?</h1>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/200/1" alt="Lorem picsum">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt dolore ex labore nesciunt, non quam
+    quas quasi, repellat unde veritatis vitae. Atque ipsam quaerat quam soluta, sunt totam! Aperiam eos est ipsam nemo
+    veritatis. Accusamus consequatur corporis debitis dolorem eos error explicabo, magnam minus non odio optio porro
+    quia quis quisquam suscipit tempora velit! Aliquid aperiam autem cumque cupiditate dicta, dolore dolores doloribus
+    earum enim est facere facilis ipsa iure nam nobis nostrum pariatur perspiciatis quae quas quo quod reprehenderit
+    sunt, suscipit tempore, unde vitae voluptates voluptatibus. Fugiat obcaecati saepe voluptatibus? Aliquam dolores
+    enim est et harum, itaque odio provident quaerat quam quasi quis recusandae repellat sapiente soluta vitae.
+    Accusamus aliquid autem commodi consequatur, dignissimos dolorem error eum fuga fugiat illum ipsum iure magnam
+    minima minus obcaecati officia porro possimus praesentium quasi quibusdam repudiandae soluta veniam! Ad alias amet
+    animi architecto aspernatur atque commodi consectetur cum debitis dolorem eius est illo illum ipsa iste iure
+    laboriosam minima nemo nihil non nostrum nulla obcaecati perspiciatis provident quae quas, quasi quidem sapiente
+    suscipit unde veritatis vitae voluptatem voluptatum. Ab aliquid, animi aspernatur atque aut, beatae corporis
+    cupiditate debitis dolorem doloremque earum facere illo ipsam labore nesciunt nostrum officia quaerat quas quisquam
+    rerum soluta tempora temporibus ullam! Blanditiis commodi consequuntur cumque error necessitatibus numquam,
+    possimus? Ad aut, doloremque ducimus hic, molestiae praesentium provident quas quo sint suscipit, temporibus vel
+    veniam veritatis! Atque commodi cum ipsa iure voluptatum. Assumenda atque autem debitis ducimus eos et iusto
+    laudantium libero non obcaecati, officia quaerat repellendus, voluptates! Dolor, dolorem explicabo facilis id illum
+    necessitatibus quidem quisquam tenetur. Consequatur ea inventore ipsum iusto maxime quidem quod sit soluta totam!
+    Aliquam beatae cum cumque dolorem eligendi, eos error id iste maiores neque nisi nobis quam recusandae repellat
+    repudiandae sapiente tempore ut vel velit voluptates. Aliquid aperiam consequuntur, deserunt doloribus earum eum
+    eveniet excepturi expedita incidunt iste, natus nihil quibusdam quis sint voluptatum? Blanditiis deleniti dolor
+    doloremque ducimus error facere harum itaque magni nulla rerum, veritatis voluptatem? A accusantium adipisci aperiam
+    assumenda beatae blanditiis consequatur cum delectus dolore doloribus eaque enim et, ex expedita facilis harum illo
+    inventore laboriosam magnam maxime mollitia nesciunt nobis officiis porro quae quia quibusdam ratione reiciendis rem
+    sed sequi sit suscipit tempore ullam ut velit voluptates. Ab accusamus accusantium animi, atque corporis culpa cum
+    cupiditate delectus ea enim eos et eum fugit harum illo impedit ipsum maxime modi natus neque non pariatur
+    perspiciatis praesentium quasi quis quo recusandae repellendus reprehenderit sapiente sequi, sunt ut veniam vero!
+    Adipisci earum facilis illo minima nulla perspiciatis qui quia ratione repellat voluptatibus? Assumenda aut debitis
+    delectus dicta, dignissimos dolor ducimus eum eveniet ipsam magnam minima minus molestias numquam odio quasi qui
+    quis quod repellat repellendus, ut vitae voluptas voluptates? Adipisci aliquam dignissimos doloribus eius eveniet,
+    in iste molestias odio officia, possimus, quam soluta ullam veritatis. Atque explicabo suscipit voluptates!
+    Accusamus adipisci aspernatur blanditiis dolore, maiores mollitia neque praesentium repellat! Accusantium, beatae
+    deserunt eligendi impedit in ipsa iste laborum mollitia quaerat quasi reprehenderit soluta suscipit, unde ut
+    voluptate! Assumenda.</p>
+  <button class="button -dark" (click)="longTextModal.close()">Close</button>
+</ngx-smart-modal>
