@@ -15,7 +15,7 @@ To avoid imposing you to download a CSS library by using this package, this one 
 
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
 > Don't panic! We already thought about that! And because we want to be the more neutral as we can, we made it very flexible for you to style it!
-> So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClasses]="modal"` (e.g.: bootstrap). And the rest of the modal DOM elements simply have to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
+> So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClass]="'modal'"` (e.g.: bootstrap). And the rest of the modal DOM elements simply have to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
 
 Check out the [documentation](https://github.com/biig-io/ngx-smart-modal) & [demos](https://github.com/biig-io/ngx-smart-modal) for more information and tutorials!
 
