@@ -38,6 +38,10 @@ export class MainComponent implements AfterViewInit {
         console.log('Rickroll modal opened!', event);
       });
 
+      this.ngxSmartModalService.getModal('modalData').onOpen.subscribe((event: Event) => {
+        console.log(this.ngxSmartModalService.getModal('modalData').getData());
+      });
+
       this.ngxSmartModalService.getModal('classicModal').onEscape.subscribe((event: Event) => {
         console.log('You just escaped the classicModal!');
       });

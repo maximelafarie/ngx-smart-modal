@@ -1,6 +1,15 @@
-import {Component, OnInit, Input, Output, EventEmitter, OnDestroy, HostListener} from '@angular/core';
-import {trigger, style, animate, transition} from '@angular/animations';
-import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  HostListener,
+  ChangeDetectorRef
+} from '@angular/core';
+import { trigger, style, animate, transition } from '@angular/animations';
+import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
 
 @Component({
   animations: [
@@ -96,6 +105,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public visible: boolean = false;
   @Input() public backdrop: boolean = true;
   @Input() public force: boolean = true;
+
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -103,10 +113,15 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Output() public onOpen: EventEmitter<any> = new EventEmitter();
   @Output() public onEscape: EventEmitter<any> = new EventEmitter();
 
+  @Output() public onDataAdded: EventEmitter<any> = new EventEmitter();
+  @Output() public onDataRemoved: EventEmitter<any> = new EventEmitter();
+
   public layerPosition: number = 1041;
   public overlayVisible: boolean = false;
 
-  constructor(private ngxSmartModalService: NgxSmartModalService) {
+  private data: any = null;
+
+  constructor(private ngxSmartModalService: NgxSmartModalService, private changeDetectorRef: ChangeDetectorRef) {
   }
 
   public ngOnInit() {
@@ -140,6 +155,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => {
       me.overlayVisible = false;
+      me.changeDetectorRef.markForCheck();
     }, 150);
   }
 
@@ -154,6 +170,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       }
       setTimeout(() => {
         me.overlayVisible = false;
+        me.changeDetectorRef.markForCheck();
       }, 150);
     }
   }
@@ -179,19 +196,27 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   public hasData(): boolean {
-    return !!this.ngxSmartModalService.getModalData(this.identifier);
+    return !!this.data;
   }
 
-  public setData(data: object | any[] | number | string | boolean): boolean {
-    return this.ngxSmartModalService.setModalData(data, this.identifier);
+  public setData(data: any, force?: boolean): any {
+    if (!this.data || (!!this.data && force)) {
+      setTimeout(() => {
+        this.data = data;
+        this.onDataAdded.emit(this.data);
+      }, 0);
+    }
   }
 
-  public getData(): object | any[] | number | string | boolean {
-    return this.ngxSmartModalService.getModalData(this.identifier);
+  public getData(): any {
+    return this.data;
   }
 
   public removeData(): void {
-    return this.ngxSmartModalService.resetModalData(this.identifier);
+    setTimeout(() => {
+      this.data = null;
+      this.onDataRemoved.emit(true);
+    }, 0);
   }
 
   @HostListener('document:keydown', ['$event'])

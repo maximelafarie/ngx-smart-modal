@@ -167,6 +167,10 @@ After that, you can retrieve the modal data directly from the view with the `get
  - `onOpen`: modal has been opened
  - `onClose`: modal has been closed
  - `onDismiss`: modal has been closed by clicking on its backdrop
+ - `onEscape`: modal has been closed by escape key
+ - `visibleChange`: modal visibility has changed (regardless of the modal visibility state)
+ - `onDataAdded`: data were added to the modal (using `setData()`)
+ - `onDataRemoved` data were removed from the modal (using `removeData()`)
 
 You can handle events directly from the view...
 ```
@@ -219,13 +223,13 @@ export class AppComponent implements AfterViewInit {
 ```
 
 ## Contribute
-Firstly fork this repo, then clone it and go inside the root of the freshly forked project.
-`ng serve` to start the angular-cli demo.
-To modify the package, go into ./src/lib/core and do some code! 🤓
-When you finished commit and push it to your fork repo, make a PR!
+Firstly fork this repo, then clone your fork and go inside the root of the freshly forked project.
+Run `npm i` or `yarn` to install dependencies then `ng serve` to start the angular-cli demo.
+To modify the package, go into `src/ngx-smart-modal` and do some code! 🤓
+When you've finished, commit and push it to your forked repo, and make a PR to the official `ngx-smart-modal` repo!
 Thank you for your support, you rock! 🤘🎸
 
 ## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
 
-![Sequence diagram](demo/src/assets/sequence_diagram.png)
+![Sequence diagram](src/assets/sequence_diagram.png)

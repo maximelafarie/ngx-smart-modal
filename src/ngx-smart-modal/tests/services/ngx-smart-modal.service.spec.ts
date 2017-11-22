@@ -105,52 +105,6 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should set and retrieve several modals data', async(() => {
-    inject([NgxSmartModalService],
-      (ngxSmartModalService: NgxSmartModalService) => {
-        const fixture = TestBed.createComponent(NgxSmartModalComponent);
-        const otherFixture = TestBed.createComponent(NgxSmartModalComponent);
-        const app = fixture.debugElement.componentInstance;
-        const otherApp = otherFixture.debugElement.componentInstance;
-        const obj = {
-          prop1: 'test',
-          prop2: true,
-          prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
-          prop4: 327652175423
-        };
-        app.identifier = 'myModal';
-        otherApp.identifier = 'myOtherModal';
-        ngxSmartModalService.setModalData(obj, 'myModal');
-        ngxSmartModalService.setModalData(obj, 'myOtherModal');
-        const modalData = ngxSmartModalService.getAllModalData();
-        expect(modalData.length).toEqual(2);
-      });
-  }));
-
-  it('should reset several modals data', async(() => {
-    inject([NgxSmartModalService],
-      (ngxSmartModalService: NgxSmartModalService) => {
-        const fixture = TestBed.createComponent(NgxSmartModalComponent);
-        const otherFixture = TestBed.createComponent(NgxSmartModalComponent);
-        const app = fixture.debugElement.componentInstance;
-        const otherApp = otherFixture.debugElement.componentInstance;
-        const obj = {
-          prop1: 'test',
-          prop2: true,
-          prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
-          prop4: 327652175423
-        };
-        app.identifier = 'myModal';
-        otherApp.identifier = 'myOtherModal';
-        ngxSmartModalService.setModalData(obj, 'myModal');
-        ngxSmartModalService.setModalData(obj, 'myOtherModal');
-        const modalData = ngxSmartModalService.getAllModalData();
-        expect(modalData.length).toEqual(2);
-        ngxSmartModalService.resetAllModalData();
-        expect(modalData.length).toEqual(0);
-      });
-  }));
-
   it('should close the latest opened modal', async(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {

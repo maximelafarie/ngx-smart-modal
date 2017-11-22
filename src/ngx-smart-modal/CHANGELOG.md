@@ -1,28 +1,20 @@
-## Angular library starter Changelog
+<a name="3.1.0"></a>
+# 3.1.0 (Nov 20, 2017)
 
-<a name="Jun 21, 2017"></a>
-### Jun 21, 2017
-* Update _rollup.config_ and _tsconfig_ files
-* Update building process:
-    - TSLint
-    - Stop building for errors on Rollup conversion
-    - Use local import for ShellJS
-* Add sourcemap files for testing to _karma.conf_ & use ES2015 syntax in _spec.bundle_
-* Update Codelyzer rules
-* Update packages
+### Bug Fixes
+* Fix modal close / dismiss issue on projects which use `ChangeDetectionStrategy.OnPush`, closes #47
+* Fix a non-issued error on modal prototypes functions where Angular check cycle was triggering an error of type : "value changed after it was checked" (e.g.: if you was watching `modal.hasData()` from a component's view).
 
-<a name="May 2, 2017"></a>
-### May 2, 2017
-* Upgrade versions & enable _strict_ TypeScript compiler option
+### Features
+* Update project dependencies
+* Remove `modalData` from `NgxSmartModalService`
+* Update the demo
+* Now, each modal has its own **private** `data` property with public accessors (always available from the `NgxSmartModalService`)
+* Modal data no more wrapped into an array. This way, retrieving modal data is easier.
+* Privatize the `data` of each modal. Accessible by public accessors
+* Remove `getAllModalData()` and `resetAllModalData()` from `NgxSmartModalService` because
+    - too permissive
+    - not very useful given that it could be coded if needed depending on the project needs
+    - it was using the `NgxSmartModalService` `modalData` array (no more used)
+* Add events `onDataAdded` and `onDataRemoved` on each modal
 
-<a name="Mar 25, 2017"></a>
-### Mar 25, 2017
-* Upgrade to Angular 4 configuration
-
-<a name="Mar 6, 2017"></a>
-### Mar 6, 2017
-* Add _compodoc_ for generating documentation 
-
-<a name="Feb 5, 2017"></a>
-### Feb 5, 2017
-* Create library
