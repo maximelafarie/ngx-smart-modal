@@ -109,7 +109,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
+  @Output() public onCloseFinished: EventEmitter<any> = new EventEmitter();
   @Output() public onDismiss: EventEmitter<any> = new EventEmitter();
+  @Output() public onDismissFinished: EventEmitter<any> = new EventEmitter();
   @Output() public onOpen: EventEmitter<any> = new EventEmitter();
   @Output() public onEscape: EventEmitter<any> = new EventEmitter();
 
@@ -156,6 +158,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       me.overlayVisible = false;
       me.changeDetectorRef.markForCheck();
+      me.onCloseFinished.emit(me);
     }, 150);
   }
 
@@ -171,6 +174,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         me.overlayVisible = false;
         me.changeDetectorRef.markForCheck();
+        me.onDismissFinished.emit(me);
       }, 150);
     }
   }
