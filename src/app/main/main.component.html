@@ -64,7 +64,9 @@
 <!-- Modal events -->
 <ngx-smart-modal #modalEvents [identifier]="'modalEvents'" (onOpen)="log('Modal opened!')"
                  (onClose)="log('Modal closed!')"
-                 (onDismiss)="log('Modal dismissed!')">
+                 (onCloseFinished)="log('Modal close finished!')"
+                 (onDismiss)="log('Modal dismissed!')"
+                 (onDismissFinished)="log('Modal dismiss finished!')">
   <h1>Hi! I'm a modal with events</h1>
   <p>Look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
 
