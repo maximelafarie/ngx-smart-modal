@@ -1,6 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
-// Add here external dependencies that actually you use.
 const globals = {
     '@angular/core': 'ng.core',
     '@angular/common': 'ng.common',
@@ -13,13 +13,14 @@ const globals = {
 };
 
 export default {
-    entry: './dist/modules/ngx-smart-modal.es5.js',
-    dest: './dist/bundles/ngx-smart-modal.umd.js',
-    format: 'umd',
-    exports: 'named',
-    moduleName: 'ng.ngxSmartModal',
-    plugins: [resolve()],
     external: Object.keys(globals),
-    globals: globals,
-    onwarn: () => { return }
+    plugins: [resolve(), sourcemaps()],
+    onwarn: () => { return },
+    output: {
+        format: 'umd',
+        name: 'ng.ngxSmartModal',
+        globals: globals,
+        sourcemap: true,
+        exports: 'named'
+    }
 }

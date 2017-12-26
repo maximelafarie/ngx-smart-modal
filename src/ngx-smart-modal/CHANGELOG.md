@@ -1,3 +1,19 @@
+<a name="4.1.0"></a>
+# 4.1.0 (Dec 26, 2017)
+
+### Features
+* Add events when actions ends (pull #65)
+
+
+<a name="4.0.0"></a>
+# 4.0.0 (Dec 26, 2017)
+
+### Features
+* Update demo dependencies
+* Update library dependencies
+* Update all the library build process with latest tools version
+
+
 <a name="3.1.0"></a>
 # 3.1.0 (Nov 20, 2017)
 

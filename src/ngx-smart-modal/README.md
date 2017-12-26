@@ -15,18 +15,18 @@ To avoid imposing you to download a CSS library by using this package, this one 
 
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
 > Don't panic! We already thought about that! And because we want to be the more neutral as we can, we made it very flexible for you to style it!
-> So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClasses]="modal"` (e.g.: bootstrap). And the rest of the modal DOM elements simply have to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
+> So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClass]="'modal'"` (e.g.: bootstrap). And the rest of the modal DOM elements simply have to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
 
-Check out the [documentation](https://github.com/biig-io/ngx-smart-modal) & [demos](https://github.com/biig-io/ngx-smart-modal) for more information and tutorials!
+Check out the [documentation](https://github.com/biig-io/ngx-smart-modal#parameters--options) & [demo](https://github.com/biig-io/ngx-smart-modal) for more information and examples!
 
-See the [changelog](https://github.com/biig-io/ngx-smart-modal/CHANGELOG.md) for recent changes.
+See the [changelog](https://github.com/biig-io/ngx-smart-modal/blob/master/CHANGELOG.md) for recent changes.
 
 ## Features
  - Handle large quantity of modals anywhere in your app
  - Customize the style of your modals through custom CSS classes
  - No external CSS library is used so you can easily override the modals default style
  - Pass data to any modal and retrieve it very simply in the modal view (or anywhere else)
- - Events on `open`, `close` and `dismiss` for each modal
+ - Events on `open`, `close`, `dismiss` and `escape` for each modal
  - Manage all your modal stack and data with very fast methods
  - Very smart `z-index` computation (no ugly glitches or problems with a modal inside another)
  - A modal in a modal in a modal in a modal... I guess you got it!
@@ -37,13 +37,17 @@ To use `ngx-smart-modal` in your project install it via [npm](https://www.npmjs.
 ```
 npm i ngx-smart-modal --save
 ```
+or with [yarn](https://yarnpkg.com/en/package/ngx-smart-modal):
+```
+yarn add ngx-smart-modal
+```
 ⚠️ If you have the following warning after install:
 ```
-npm WARN ngx-smart-modal@2.0.1 requires a peer of web-animations-js@>=2.0.0 but none was installed.
+npm WARN ngx-smart-modal@x.x.x requires a peer of web-animations-js@>=x.x.x but none was installed.
 ``` 
 or 
 ```
-warning "ngx-smart-modal@2.0.1" has unmet peer dependency "web-animations-js@>=2.0.0".
+warning "ngx-smart-modal@x.x.x" has unmet peer dependency "web-animations-js@>=x.x.x".
 ```
 Just run:
 ```
@@ -80,7 +84,7 @@ export class AppModule { }
 `ngx-smart-modal` comes with some parameters / options in order to make it fit your needs. The following parameters / options needs to be used like this: `<ngx-smart-modal [parameter-or-option-name]="value"></ngx-smart-modal>`
 
 The below documentation will use the following pattern: 
-> `parameter/option name` (type) | default value | required? ― _description_
+> `parameter/option name` (type) | default value | required? ― _description_
 
 - `closable` (boolean) | `true` ― _Show / hide the cross icon at the top right corner of the modal_
 
@@ -92,9 +96,9 @@ The below documentation will use the following pattern:
 
 - `customClass` (string) | `''` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated classnames_
 
-- `visible` (boolean) | `false` ― _Define if the modal is shown or not. Automatically toggled with open() and close()/dismiss() methods._
+- `visible` (boolean) | `false` ― _Define if the modal is shown or not. Automatically toggled with open() and close()/dismiss() methods._
 
-- `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. Tip: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
+- `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. Tip: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
 
 
 ## Manipulate modals
@@ -164,9 +168,15 @@ After that, you can retrieve the modal data directly from the view with the `get
 ## Handle events
 `ngx-smart-modal` comes with three built-in events: `onOpen`, `onClose` and `onDismiss`.
 
- - `onOpen`: modal has been opened
- - `onClose`: modal has been closed
- - `onDismiss`: modal has been closed by clicking on its backdrop
+ - `onOpen`: modal is opening
+ - `onClose`: modal is closing
+ - `onCloseFinished`: modal has been closed
+ - `onDismiss`: modal is closing by clicking on its backdrop
+ - `onDismissFinished`: modal has been closed by clicking on its backdrop
+ - `onEscape`: modal has been closed by escape key
+ - `visibleChange`: modal visibility has changed (regardless of the modal visibility state)
+ - `onDataAdded`: data were added to the modal (using `setData()`)
+ - `onDataRemoved` data were removed from the modal (using `removeData()`)
 
 You can handle events directly from the view...
 ```
@@ -219,13 +229,13 @@ export class AppComponent implements AfterViewInit {
 ```
 
 ## Contribute
-Firstly fork this repo, then clone it and go inside the root of the freshly forked project.
-`ng serve` to start the angular-cli demo.
-To modify the package, go into ./src/lib/core and do some code! 🤓
-When you finished commit and push it to your fork repo, make a PR!
+Firstly fork this repo, then clone your fork and go inside the root of the freshly forked project.
+Run `npm i` or `yarn` to install dependencies then `yarn start` to start the angular-cli demo.
+To modify the package, go into `src/ngx-smart-modal` and do some code! 🤓
+When you've finished, commit and push it to your forked repo, and make a PR to the official `ngx-smart-modal` repo!
 Thank you for your support, you rock! 🤘🎸
 
 ## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
 
-![Sequence diagram](demo/src/assets/sequence_diagram.png)
+![Sequence diagram](src/assets/sequence_diagram.png)

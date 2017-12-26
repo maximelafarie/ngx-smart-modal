@@ -11,9 +11,9 @@ export class NgxSmartModalService {
    * Add a new modal instance. This step is essential and allows to retrieve any modal at any time.
    * It stores an object that contains the given modal identifier and the modal itself directly in the `modalStack`.
    *
-   * @param {ModalInstance} modalInstance The object that contains the given modal identifier and the modal itself.
-   * @param {boolean} force Optional parameter that forces the overriding of modal instance if it already exists.
-   * @returns {void} Returns nothing special.
+   * @param modalInstance The object that contains the given modal identifier and the modal itself.
+   * @param force Optional parameter that forces the overriding of modal instance if it already exists.
+   * @returns Returns nothing special.
    */
   public addModal(modalInstance: ModalInstance, force?: boolean): void {
     if (force) {
@@ -33,7 +33,7 @@ export class NgxSmartModalService {
   /**
    * Retrieve a modal instance by its identifier.
    *
-   * @param {string} id The modal identifier used at creation time.
+   * @param id The modal identifier used at creation time.
    */
   public getModal(id: string): NgxSmartModalComponent {
     return this.modalStack.filter((o: any) => {
@@ -44,7 +44,7 @@ export class NgxSmartModalService {
   /**
    * Retrieve all the created modals.
    *
-   * @returns {Array} Returns an array that contains all modal instances.
+   * @returns Returns an array that contains all modal instances.
    */
   public getModalStack(): ModalInstance[] {
     return this.modalStack;
@@ -53,7 +53,7 @@ export class NgxSmartModalService {
   /**
    * Retrieve all the opened modals. It looks for all modal instances with their `visible` property set to `true`.
    *
-   * @returns {Array} Returns an array that contains all the opened modals.
+   * @returns Returns an array that contains all the opened modals.
    */
   public getOpenedModals(): ModalInstance[] {
     const modals: ModalInstance[] = [];
@@ -70,7 +70,7 @@ export class NgxSmartModalService {
    * calculates a higher value (it takes the highest index value between all the modal instances and adds 1).
    * Use it to make a modal appear foreground.
    *
-   * @returns {number} Returns a higher index from all the existing modal instances.
+   * @returns Returns a higher index from all the existing modal instances.
    */
   public getHigherIndex(): number {
     const index: number[] = [];
@@ -84,7 +84,7 @@ export class NgxSmartModalService {
   /**
    * It gives the number of modal instances. It's helpful to know if the modal stack is empty or not.
    *
-   * @returns {number} Returns the number of modal instances.
+   * @returns Returns the number of modal instances.
    */
   public getModalStackCount(): number {
     return this.modalStack.length;
@@ -93,8 +93,8 @@ export class NgxSmartModalService {
   /**
    * Remove a modal instance from the modal stack.
    *
-   * @param {string} id The modal identifier.
-   * @returns {Array} Returns the removed modal instance.
+   * @param id The modal identifier.
+   * @returns Returns the removed modal instance.
    */
   public removeModal(id: string): void {
     const i: number = this.modalStack.findIndex((o: any) => {
@@ -111,10 +111,10 @@ export class NgxSmartModalService {
    * them with the new ones. Finally if no modal found it returns an error message in the console and false value
    * as method output.
    *
-   * @param {Object | Array | number | string | boolean} data The data you want to associate to the modal.
-   * @param {string} id The modal identifier.
-   * @param {boolean} force If true, overrides the previous stored data if there was.
-   * @returns {boolean} Returns true if the given modal exists and the process has been tried, either false.
+   * @param data The data you want to associate to the modal.
+   * @param id The modal identifier.
+   * @param force If true, overrides the previous stored data if there was.
+   * @returns Returns true if the given modal exists and the process has been tried, either false.
    */
   public setModalData(data: any, id: string, force?: boolean): boolean {
     if (!!this.modalStack.find((o: ModalInstance) => {
@@ -130,8 +130,8 @@ export class NgxSmartModalService {
   /**
    * Retrieve modal data by its identifier.
    *
-   * @param {string} id The modal identifier used at creation time.
-   * @returns {any} Returns the associated modal data.
+   * @param id The modal identifier used at creation time.
+   * @returns Returns the associated modal data.
    */
   public getModalData(id: string): any {
     return this.getModal(id).getData();
@@ -140,8 +140,8 @@ export class NgxSmartModalService {
   /**
    * Reset the data attached to a given modal.
    *
-   * @param {string} id The modal identifier used at creation time.
-   * @returns {any|boolean} Returns the removed data or false if modal doesn't exist.
+   * @param id The modal identifier used at creation time.
+   * @returns Returns the removed data or false if modal doesn't exist.
    */
   public resetModalData(id: string): any | boolean {
     if (!!this.modalStack.find((o: ModalInstance) => {
