@@ -27,7 +27,7 @@ describe('NgxSmartModalComponent', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
-    app.open(true);
+    app.open();
     expect(app.visible).toBeTruthy();
     app.close();
     expect(app.visible).toBeFalsy();
@@ -37,12 +37,14 @@ describe('NgxSmartModalComponent', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     const event = new KeyboardEvent("keypress", {key: "Escape"});
+    spyOn(app, 'escapeKeyboardEvent');
     app.identifier = 'myModal';
     app.open();
     expect(app.visible).toBeTruthy();
     dispatchEvent(event);
     app.onEscape.subscribe(() => {
       expect(app.visible).toBeFalsy();
+      expect(app.escapeKeyboardEvent).toHaveBeenCalled();
     });
   }));
 
@@ -86,9 +88,11 @@ describe('NgxSmartModalComponent', () => {
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
     const compiled = fixture.debugElement.nativeElement;
+    spyOn(app, 'dismiss');
     app.open();
     app.onOpen.subscribe(() => {
-      app.dismiss(new Event('dismissTestEvent', {}));
+      compiled.querySelector('.overlay').click();
+      expect(app.dismiss).toHaveBeenCalled();
       expect(app.visible).toBeFalsy();
     });
   }));
@@ -166,11 +170,23 @@ describe('NgxSmartModalComponent', () => {
           prop4: 327652175423
         };
         app.identifier = 'myModal';
+
+        spyOn(app, 'setData');
+        spyOn(app, 'hasData');
+        spyOn(app, 'getData');
+        spyOn(app, 'removeData');
+
         app.setData(obj);
         expect(app.hasData()).toBeTruthy();
         expect(app.getData()).toEqual(obj);
+
+        expect(app.setData).toHaveBeenCalled();
+        expect(app.hasData).toHaveBeenCalled();
+        expect(app.getData).toHaveBeenCalled();
+
         app.removeData();
         expect(app.getData()).toBeUndefined();
+        expect(app.removeData).toHaveBeenCalled();
       });
   }));
 

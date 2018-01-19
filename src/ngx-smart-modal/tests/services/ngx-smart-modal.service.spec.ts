@@ -40,12 +40,19 @@ describe('NgxSmartModalService', () => {
         const app = fixture.debugElement.componentInstance;
         app.identifier = 'myModal';
         const myModal = ngxSmartModalService.getModal('myModal');
+
+        spyOn(ngxSmartModalService, 'addModal');
+        spyOn(ngxSmartModalService, 'removeModal');
+
         expect(myModal).toEqual(app);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
         ngxSmartModalService.removeModal('myModal');
         expect(ngxSmartModalService.modalStack.length).toEqual(0);
         ngxSmartModalService.addModal(app);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
+
+        expect(ngxSmartModalService.addModal).toHaveBeenCalledWith(app);
+        expect(ngxSmartModalService.removeModal).toHaveBeenCalledWith('myModal')
       });
   }));
 
@@ -56,12 +63,14 @@ describe('NgxSmartModalService', () => {
         const app = fixture.debugElement.componentInstance;
         app.identifier = 'myModal';
         const compiled = fixture.debugElement.nativeElement;
+        spyOn(app, 'isVisible');
 
         /* Open */
         ngxSmartModalService.getModal('myModal').open();
         expect(compiled.querySelector('.dialog').isDisplayed).toBeTruthy();
         expect(app.isVisible).toBeTruthy();
         expect(ngxSmartModalService.getOpenedModals().length).toEqual(1);
+        expect(app.isVisible).toHaveBeenCalled();
 
         /* Close */
         ngxSmartModalService.getModal('myModal').close();
