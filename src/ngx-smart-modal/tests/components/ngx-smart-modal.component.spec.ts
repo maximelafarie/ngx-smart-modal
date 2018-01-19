@@ -27,7 +27,7 @@ describe('NgxSmartModalComponent', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
-    app.open();
+    app.open(true);
     expect(app.visible).toBeTruthy();
     app.close();
     expect(app.visible).toBeFalsy();
@@ -77,6 +77,18 @@ describe('NgxSmartModalComponent', () => {
     app.open();
     app.onOpen.subscribe(() => {
       compiled.querySelector('.overlay').click();
+      expect(app.visible).toBeFalsy();
+    });
+  }));
+
+  it('should dismiss the modal by calling the dismiss() method directly', async(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    const compiled = fixture.debugElement.nativeElement;
+    app.open();
+    app.onOpen.subscribe(() => {
+      app.dismiss(new Event('dismissTestEvent', {}));
       expect(app.visible).toBeFalsy();
     });
   }));
