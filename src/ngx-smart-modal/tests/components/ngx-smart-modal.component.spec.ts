@@ -19,6 +19,7 @@ describe('NgxSmartModalComponent', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
+    app.ngOnInit();
     expect(app).toBeTruthy();
   }));
 
@@ -68,6 +69,18 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
+  it('should dismiss the modal by clicking on its overlay', async(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    const compiled = fixture.debugElement.nativeElement;
+    app.open();
+    app.onOpen.subscribe(() => {
+      compiled.querySelector('.overlay').click();
+      expect(app.visible).toBeFalsy();
+    });
+  }));
+
   it('should hide the modal close cross button', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
@@ -85,7 +98,8 @@ describe('NgxSmartModalComponent', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
-    app.customClass = 'firstClass secondClass';
+    app.addCustomClass('firstClass');
+    app.addCustomClass('secondClass');
     app.open();
     app.onOpen.subscribe(() => {
       const compiled = fixture.debugElement.nativeElement;
@@ -99,8 +113,8 @@ describe('NgxSmartModalComponent', () => {
   it('should remove additional class of the modal', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    app.identifier = 'myModal';
-    app.customClass = 'firstClass secondClass';
+    app.addCustomClass('firstClass');
+    app.addCustomClass('secondClass');
     app.removeCustomClass('firstClass');
     app.open();
     app.onOpen.subscribe(() => {
@@ -109,6 +123,22 @@ describe('NgxSmartModalComponent', () => {
       const secondRef = compiled.querySelector('.dialog.secondClass');
       expect(firstRef).toEqual(null);
       expect(secondRef).toEqual(compiled);
+    });
+  }));
+
+  it('should remove all custom class of the modal', async(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.addCustomClass('firstClass');
+    app.addCustomClass('secondClass');
+    app.removeCustomClass();
+    app.open();
+    app.onOpen.subscribe(() => {
+      const compiled = fixture.debugElement.nativeElement;
+      const firstRef = compiled.querySelector('.dialog.firstClass');
+      const secondRef = compiled.querySelector('.dialog.secondClass');
+      expect(firstRef).toEqual(null);
+      expect(secondRef).toEqual(null);
     });
   }));
 
