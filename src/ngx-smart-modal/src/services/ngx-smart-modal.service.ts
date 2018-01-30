@@ -73,8 +73,8 @@ export class NgxSmartModalService {
    * @returns Returns a higher index from all the existing modal instances.
    */
   public getHigherIndex(): number {
-    const index: number[] = [];
-    const modals: ModalInstance[] = this.getOpenedModals();
+    const index: number[] = [1041];
+    const modals: ModalInstance[] = this.getModalStack();
     modals.forEach((o: ModalInstance) => {
       index.push(o.modal.layerPosition);
     });
