@@ -230,12 +230,17 @@ export class AppComponent implements AfterViewInit {
 ## Author and Maintainer
 * [Maxime LAFARIE](https://github.com/maximelafarie)
 
+## Issues
+
+If you wish to submit an issue, please use the available template to facilitate reading and comprehension of all issues encountered. You can find this template in `./github/issue_template.md`.
+
 ## Contribute
 Firstly fork this repo, then clone your fork and go inside the root of the freshly forked project.
 Run `npm i` or `yarn` to install dependencies then `yarn start` to start the angular-cli demo.
 To modify the package, go into `src/ngx-smart-modal` and do some code! 🤓
 When you've finished, commit and push it to your forked repo, and make a PR to the official `ngx-smart-modal` repo!
 Thank you for your support, you rock! 🤘🎸
+
 
 ## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
