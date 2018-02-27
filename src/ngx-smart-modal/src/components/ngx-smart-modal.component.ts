@@ -15,11 +15,11 @@ import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
   animations: [
     trigger('dialog', [
       transition('void => *', [
-        style({transform: 'scale3d(.3, .3, .3)'}),
+        style({ transform: 'scale3d(.3, .3, .3)' }),
         animate(100)
       ]),
       transition('* => void', [
-        animate(100, style({transform: 'scale3d(.0, .0, .0)'}))
+        animate(100, style({ transform: 'scale3d(.0, .0, .0)' }))
       ])
     ])
   ],
@@ -105,6 +105,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public visible: boolean = false;
   @Input() public backdrop: boolean = true;
   @Input() public force: boolean = true;
+  @Input() public allowOutsideClick: boolean = true;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -128,7 +129,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.layerPosition += this.ngxSmartModalService.getModalStackCount();
-    this.ngxSmartModalService.addModal({id: this.identifier, modal: this}, this.force);
+    this.ngxSmartModalService.addModal({ id: this.identifier, modal: this }, this.force);
   }
 
   public ngOnDestroy() {
@@ -164,6 +165,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public dismiss(e: any): void {
     const me = this;
+    if (!this.allowOutsideClick) {
+      return;
+    }
     if (e.target.classList.contains('overlay')) {
       this.visible = false;
       this.visibleChange.emit(this.visible);
