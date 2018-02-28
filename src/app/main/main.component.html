@@ -7,15 +7,18 @@
     <button class="button -regular" (click)="modalEvents.open()">Events on modal</button>
     <button class="button -regular" (click)="videoModal.open()">Rickroll events</button>
     <button class="button -regular" (click)="longTextModal.open()">Big content modal</button>
-    <button class="button -regular" (click)="ngxSmartModalService.getModal('remoteModal').open()">Open modal remotely
+    <button class="button -regular" (click)="ngxSmartModalService.getModal('remoteModal').open()">
+      Open modal remotely
     </button>
-    <button class="button -regular" (click)="goFeature()">lazy load feature module
-    </button>
+    <button class="button -regular" (click)="goFeature()">Lazy load feature module</button>
+    <button class="button -regular" (click)="undismissable.open()">Undismissable modal</button>
+    <button class="button -regular" (click)="inescapable.open()">Inescapable modal</button>
 
-    <!-- Below buttons are not available at this moment. Coming soon! -->
-    <!--<button class="button -regular">Bootstrap Modal</button>
+    <!-- TODO: Below buttons are not available at this moment. Coming soon!
+    <button class="button -regular">Bootstrap Modal</button>
     <button class="button -regular">Materialize Modal</button>
-    <button class="button -regular">Foundation Modal</button>-->
+    <button class="button -regular">Foundation Modal</button>
+    -->
   </div>
 
   <footer class="footer">
@@ -62,7 +65,9 @@
 </ngx-smart-modal>
 
 <!-- Modal events -->
-<ngx-smart-modal #modalEvents [identifier]="'modalEvents'" (onOpen)="log('Modal opened!')"
+<ngx-smart-modal #modalEvents
+                 identifier="modalEvents"
+                 (onOpen)="log('Modal opened!')"
                  (onClose)="log('Modal closed!')"
                  (onCloseFinished)="log('Modal close finished!')"
                  (onDismiss)="log('Modal dismissed!')"
@@ -87,7 +92,9 @@
 <ngx-smart-modal #remoteModal [identifier]="'remoteModal'">
   <h1>Yo, I'm a remotely opened modal!</h1>
   <img class="modal-image" src="http://lorempicsum.com/futurama/627/200/2" alt="Lorem picsum">
-  <p>To interact with a modal remotely, you simply need to retrieve the desired modal instance via the <strong><code>NgxSmartModalService</code></strong>
+  <p>
+    To interact with a modal remotely, you simply need to retrieve the desired modal instance via the
+    <strong><code>NgxSmartModalService</code></strong>
   </p>
   <p>For example:</p>
   <pre>ngxSmartModalService.getModal('remoteModal').open()</pre>
@@ -142,4 +149,22 @@
     deserunt eligendi impedit in ipsa iste laborum mollitia quaerat quasi reprehenderit soluta suscipit, unde ut
     voluptate! Assumenda.</p>
   <button class="button -dark" (click)="longTextModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Undismissable modal -->
+<ngx-smart-modal #undismissable identifier="undismissable" [dismissable]="false">
+  <h1>Hey, I'm a not dismissable modal!</h1>
+  <p>Clicking on my backdrop <strong>won't</strong> close me.</p>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/350/7" alt="Lorem picsum">
+  <p>{{ sampleText[0] }}</p>
+  <button class="button -dark" (click)="undismissable.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Inescapable modal -->
+<ngx-smart-modal #inescapable identifier="inescapable" [escapable]="false">
+  <h1>Hey, I'm an unescapable modal!</h1>
+  <p>Pressing the escape key <strong>won't</strong> close me.</p>
+  <img class="modal-image" src="http://lorempicsum.com/futurama/627/450/8" alt="Lorem picsum">
+  <p>{{ sampleText[2] }}</p>
+  <button class="button -dark" (click)="inescapable.close()">Close</button>
 </ngx-smart-modal>

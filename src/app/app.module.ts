@@ -3,14 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutes } from './app.routing';
-import { NgxSmartModalModule, NgxSmartModalService } from '../ngx-smart-modal';
+import { NgxSmartModalModule } from '../ngx-smart-modal';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
+import { ForkMeComponent } from './fork-me/fork-me.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    ForkMeComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +21,6 @@ import { MainComponent } from './main/main.component';
     AppRoutes,
     NgxSmartModalModule.forRoot()
   ],
-  providers: [NgxSmartModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

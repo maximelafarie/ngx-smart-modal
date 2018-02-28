@@ -15,11 +15,11 @@ import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
   animations: [
     trigger('dialog', [
       transition('void => *', [
-        style({ transform: 'scale3d(.3, .3, .3)' }),
+        style({transform: 'scale3d(.3, .3, .3)'}),
         animate(100)
       ]),
       transition('* => void', [
-        animate(100, style({ transform: 'scale3d(.0, .0, .0)' }))
+        animate(100, style({transform: 'scale3d(.0, .0, .0)'}))
       ])
     ])
   ],
@@ -99,13 +99,13 @@ import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
 })
 export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public closable: boolean = true;
-  @Input() public escapeAble: boolean = true;
+  @Input() public escapable: boolean = true;
+  @Input() public dismissable: boolean = true;
   @Input() public identifier: string;
   @Input() public customClass: string = '';
   @Input() public visible: boolean = false;
   @Input() public backdrop: boolean = true;
   @Input() public force: boolean = true;
-  @Input() public allowOutsideClick: boolean = true;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -129,7 +129,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.layerPosition += this.ngxSmartModalService.getModalStackCount();
-    this.ngxSmartModalService.addModal({ id: this.identifier, modal: this }, this.force);
+    this.ngxSmartModalService.addModal({id: this.identifier, modal: this}, this.force);
   }
 
   public ngOnDestroy() {
@@ -165,7 +165,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public dismiss(e: any): void {
     const me = this;
-    if (!this.allowOutsideClick) {
+    if (!this.dismissable) {
       return;
     }
     if (e.target.classList.contains('overlay')) {
@@ -227,11 +227,12 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  @HostListener('document:keydown', ['$event'])
+  @HostListener('document:keyup', ['$event'])
   private escapeKeyboardEvent(event: KeyboardEvent) {
-    if (this.escapeAble) {
-      const x = event.keyCode;
-      if (x === 27) {
+    if (event.keyCode === 27 && this.visible) {
+      if (!this.escapable) {
+        return false;
+      } else {
         this.onEscape.emit(this);
         this.ngxSmartModalService.closeLatestModal();
       }

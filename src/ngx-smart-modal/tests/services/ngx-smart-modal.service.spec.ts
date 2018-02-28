@@ -1,6 +1,6 @@
-import {inject, TestBed, async} from '@angular/core/testing';
+import { inject, TestBed, async } from '@angular/core/testing';
 
-import {NgxSmartModalComponent, NgxSmartModalService} from './../../index';
+import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
 describe('NgxSmartModalService', () => {
 

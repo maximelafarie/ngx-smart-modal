@@ -88,7 +88,9 @@ The below documentation will use the following pattern:
 
 - `closable` (boolean) | `true` ― _Show / hide the cross icon at the top right corner of the modal_
 
-- `escapeAble` (boolean) | `true` ― _Enable / disable the modal for listening to the escape keypress event (if pressed and this option is true, it will close the current opened modal or the latest opened if you have several modals opened at the same time_
+- `escapable` (boolean) | `true` ― _Enable / disable the modal for listening to the escape keypress event (if pressed and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time)_
+
+- `dismissable` (boolean) | `true` ― _Enable / disable the modal backdrop for listening to the click event (if backdrop is clicked and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time)_
 
 - `identifier` (string) | `undefined` | **REQUIRED** ― _The identifiant of the modal instance. Retrieve a modal easily by its identifier_
 
@@ -104,7 +106,7 @@ The below documentation will use the following pattern:
 ## Manipulate modals
 You can use it directly in your component's template like this
 ```
-<ngx-smart-modal #myModal [identifier]="'myModal'">
+<ngx-smart-modal #myModal identifier="myModal">
   <h1>Title</h1>
   <p>Some stuff...</p>
 
@@ -156,7 +158,7 @@ export class AppComponent implements AfterViewInit {
 ```
 After that, you can retrieve the modal data directly from the view with the `getData()` modal property. To avoid any errors with unavailable data, you can use the `hasData()` modal property (It's dynamic. If data comes after a certain time its value will automatically change to `true`):
 ```
-<ngx-smart-modal #myModal [identifier]="'myModal'">
+<ngx-smart-modal #myModal identifier="myModal">
   <div *ngIf="myModal.hasData()">
     <pre>{{ myModal.getData() | json }}</pre>
   </div>
@@ -180,7 +182,7 @@ After that, you can retrieve the modal data directly from the view with the `get
 
 You can handle events directly from the view...
 ```
-<ngx-smart-modal #myModal [identifier]="'myModal'" (onOpen)="log('Modal opened!')" (onClose)="log('Modal closed!')" (onDismiss)="log('Modal dismissed!')">
+<ngx-smart-modal #myModal identifier="myModal" (onOpen)="log('Modal opened!')" (onClose)="log('Modal closed!')" (onDismiss)="log('Modal dismissed!')">
   <h1>Title</h1>
   <p>Some stuff...</p>
 
@@ -204,7 +206,7 @@ export class AppComponent {
 
 Or you also can declare modal in any template (e.g.: the Rickroll demo modal)...
 ```
-<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'">
+<ngx-smart-modal #videoModal identifier="videoModal" [customClass]="'medium-modal'">
   <h1>Hey, I Rickrolled You!</h1>
   <iframe #rickroll width="1280" height="720"
           src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"

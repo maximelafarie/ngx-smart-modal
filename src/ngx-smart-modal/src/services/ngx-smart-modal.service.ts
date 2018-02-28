@@ -156,7 +156,7 @@ export class NgxSmartModalService {
   }
 
   /**
-   * Close the latest opened modal if it has been declared as escapeAble
+   * Close the latest opened modal if it has been declared as escapable
    * Using a debounce system because one or more modals could be listening
    * escape key press event.
    */
@@ -166,7 +166,7 @@ export class NgxSmartModalService {
     this.debouncer = setTimeout(() => {
       let tmp: ModalInstance | undefined;
       me.getOpenedModals().forEach((m: ModalInstance) => {
-        if (m.modal.layerPosition > (!!tmp ? tmp.modal.layerPosition : 0 && m.modal.escapeAble)) {
+        if (m.modal.layerPosition > (!!tmp ? tmp.modal.layerPosition : 0 && m.modal.escapable)) {
           tmp = m;
         }
       });

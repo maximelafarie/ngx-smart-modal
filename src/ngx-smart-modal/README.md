@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 [![Greenkeeper badge](https://badges.greenkeeper.io/biig-io/ngx-smart-modal.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/biig-io/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/biig-io/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![codecov](https://codecov.io/gh/biig-io/ngx-smart-modal/branch/master/graph/badge.svg)](https://codecov.io/gh/biig-io/ngx-smart-modal)
+[![Build Status](https://travis-ci.org/biig-io/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/biig-io/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![codecov](https://codecov.io/gh/biig-io/ngx-smart-modal/branch/master/graph/badge.svg)](https://codecov.io/gh/biig-io/ngx-smart-modal) [![Maintainability](https://api.codeclimate.com/v1/badges/75353ed5bb260561a836/maintainability)](https://codeclimate.com/github/biig-io/ngx-smart-modal/maintainability)
 
 `ngx-smart-modal` is a lightweight and very complete Angular component for managing modal inside any Angular project. It was built for modern browsers using TypeScript, HTML5 and Angular >=2.0.0.
 
@@ -88,7 +88,9 @@ The below documentation will use the following pattern:
 
 - `closable` (boolean) | `true` ― _Show / hide the cross icon at the top right corner of the modal_
 
-- `escapeAble` (boolean) | `true` ― _Enable / disable the modal for listening to the escape keypress event (if pressed and this option is true, it will close the current opened modal or the latest opened if you have several modals opened at the same time_
+- `escapable` (boolean) | `true` ― _Enable / disable the modal for listening to the escape keypress event (if pressed and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time)_
+
+- `dismissable` (boolean) | `true` ― _Enable / disable the modal backdrop for listening to the click event (if backdrop is clicked and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time)_
 
 - `identifier` (string) | `undefined` | **REQUIRED** ― _The identifiant of the modal instance. Retrieve a modal easily by its identifier_
 
@@ -104,7 +106,7 @@ The below documentation will use the following pattern:
 ## Manipulate modals
 You can use it directly in your component's template like this
 ```
-<ngx-smart-modal #myModal [identifier]="'myModal'">
+<ngx-smart-modal #myModal identifier="myModal">
   <h1>Title</h1>
   <p>Some stuff...</p>
 
@@ -156,7 +158,7 @@ export class AppComponent implements AfterViewInit {
 ```
 After that, you can retrieve the modal data directly from the view with the `getData()` modal property. To avoid any errors with unavailable data, you can use the `hasData()` modal property (It's dynamic. If data comes after a certain time its value will automatically change to `true`):
 ```
-<ngx-smart-modal #myModal [identifier]="'myModal'">
+<ngx-smart-modal #myModal identifier="myModal">
   <div *ngIf="myModal.hasData()">
     <pre>{{ myModal.getData() | json }}</pre>
   </div>
@@ -180,7 +182,7 @@ After that, you can retrieve the modal data directly from the view with the `get
 
 You can handle events directly from the view...
 ```
-<ngx-smart-modal #myModal [identifier]="'myModal'" (onOpen)="log('Modal opened!')" (onClose)="log('Modal closed!')" (onDismiss)="log('Modal dismissed!')">
+<ngx-smart-modal #myModal identifier="myModal" (onOpen)="log('Modal opened!')" (onClose)="log('Modal closed!')" (onDismiss)="log('Modal dismissed!')">
   <h1>Title</h1>
   <p>Some stuff...</p>
 
@@ -204,7 +206,7 @@ export class AppComponent {
 
 Or you also can declare modal in any template (e.g.: the Rickroll demo modal)...
 ```
-<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'">
+<ngx-smart-modal #videoModal identifier="videoModal" [customClass]="'medium-modal'">
   <h1>Hey, I Rickrolled You!</h1>
   <iframe #rickroll width="1280" height="720"
           src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
@@ -227,6 +229,12 @@ export class AppComponent implements AfterViewInit {
   }
 }
 ```
+## Author and Maintainer
+* [Maxime LAFARIE](https://github.com/maximelafarie)
+
+## Issues
+
+If you wish to submit an issue, please use the available template to facilitate reading and comprehension of all issues encountered. You can find this template in `./github/issue_template.md`.
 
 ## Contribute
 Firstly fork this repo, then clone your fork and go inside the root of the freshly forked project.
@@ -234,6 +242,7 @@ Run `npm i` or `yarn` to install dependencies then `yarn start` to start the ang
 To modify the package, go into `src/ngx-smart-modal` and do some code! 🤓
 When you've finished, commit and push it to your forked repo, and make a PR to the official `ngx-smart-modal` repo!
 Thank you for your support, you rock! 🤘🎸
+
 
 ## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
