@@ -1,4 +1,5 @@
-import { inject, TestBed, async } from '@angular/core/testing';
+import { inject, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
@@ -12,6 +13,7 @@ describe('NgxSmartModalComponent', () => {
       providers: [
         NgxSmartModalService
       ],
+      imports: [BrowserAnimationsModule]
     }).compileComponents();
   }));
 
@@ -27,10 +29,10 @@ describe('NgxSmartModalComponent', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
-    app.open();
-    expect(app.visible).toBeTruthy();
+    app.open(true);
+    expect(app.isVisible()).toBeTruthy();
     app.close();
-    expect(app.visible).toBeFalsy();
+    expect(app.isVisible()).toBeFalsy();
   }));
 
   it('should close the modal by escape keyup', async(() => {
@@ -73,30 +75,41 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
-  it('should dismiss the modal by clicking on its overlay', async(() => {
+  it('should dismiss the modal by calling the dismiss method directly', fakeAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
     const compiled = fixture.debugElement.nativeElement;
+    spyOn(app, 'dismiss').and.callThrough();
     app.open();
-    app.onOpen.subscribe(() => {
-      compiled.querySelector('.overlay').click();
-      expect(app.visible).toBeFalsy();
-    });
+    tick();
+    fixture.detectChanges();
+    const fakeEvent = {
+      target: compiled.querySelector('.overlay')
+    };
+    app.dismiss(fakeEvent);
+    tick(150);
+    expect(app.dismiss).toHaveBeenCalledWith(fakeEvent);
+    expect(app.visible).toBeFalsy();
   }));
 
-  it('should dismiss the modal by calling the dismiss() method directly', async(() => {
+  it('should not dismiss the modal if dismissable option is set to false', fakeAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
+    app.dismissable = false;
     const compiled = fixture.debugElement.nativeElement;
-    spyOn(app, 'dismiss');
+    spyOn(app, 'dismiss').and.callThrough();
     app.open();
-    app.onOpen.subscribe(() => {
-      compiled.querySelector('.overlay').click();
-      expect(app.dismiss).toHaveBeenCalled();
-      expect(app.visible).toBeFalsy();
-    });
+    tick();
+    fixture.detectChanges();
+    const fakeEvent = {
+      target: compiled.querySelector('.overlay')
+    };
+    app.dismiss(fakeEvent);
+    tick(150);
+    expect(app.dismiss).toHaveBeenCalledWith(fakeEvent);
+    expect(app.visible).toBeTruthy();
   }));
 
   it('should hide the modal close cross button', async(() => {
@@ -173,22 +186,18 @@ describe('NgxSmartModalComponent', () => {
         };
         app.identifier = 'myModal';
 
-        spyOn(app, 'setData');
-        spyOn(app, 'hasData');
-        spyOn(app, 'getData');
-        spyOn(app, 'removeData');
+        expect(app.hasData()).toBe(false);
 
-        app.setData(obj);
-        expect(app.hasData()).toBeTruthy();
-        expect(app.getData()).toEqual(obj);
-
-        expect(app.setData).toHaveBeenCalled();
-        expect(app.hasData).toHaveBeenCalled();
-        expect(app.getData).toHaveBeenCalled();
+        app.setData(obj, true);
+        app.onDataAdded.subscribe(() => {
+          expect(app.hasData()).toBe(true);
+          expect(app.getData().prop1).toBe(obj.prop1);
+        });
 
         app.removeData();
-        expect(app.getData()).toBeUndefined();
-        expect(app.removeData).toHaveBeenCalled();
+        app.onDataRemoved.subscribe(() => {
+          expect(app.hasData()).toBeFalsy();
+        });
       });
   }));
 

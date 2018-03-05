@@ -33,7 +33,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should create and remove a modal, the re-add the deleted modal', async(() => {
+  it('should create and remove a modal, then re-add the deleted modal', async(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -53,6 +53,27 @@ describe('NgxSmartModalService', () => {
 
         expect(ngxSmartModalService.addModal).toHaveBeenCalledWith(app);
         expect(ngxSmartModalService.removeModal).toHaveBeenCalledWith('myModal')
+      });
+  }));
+
+  it('should override an existing modal', async(() => {
+    inject([NgxSmartModalService],
+      (ngxSmartModalService: NgxSmartModalService) => {
+        const fixture = TestBed.createComponent(NgxSmartModalComponent);
+        const app = fixture.debugElement.componentInstance;
+        app.identifier = 'myModal';
+        const myModal = ngxSmartModalService.getModal('myModal');
+
+        spyOn(ngxSmartModalService, 'addModal');
+
+        expect(myModal).toEqual(app);
+        expect(ngxSmartModalService.modalStack.length).toEqual(1);
+        ngxSmartModalService.addModal({id: 'FakeModal', modal: myModal}, true);
+        expect(ngxSmartModalService.modalStack.length).toEqual(1);
+
+        let modal = ngxSmartModalService.getModal('FakeModal');
+        expect(modal).toBeTruthy();
+        expect(ngxSmartModalService.addModal).toHaveBeenCalled();
       });
   }));
 
