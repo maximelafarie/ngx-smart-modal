@@ -4,6 +4,7 @@ env:
   global:
     - CODECLIMATE_REPO_TOKEN=$CC_TEST_REPORTER_ID
     - CODACY_ACCOUNT_TOKEN=$CODACY_ACCOUNT_TOKEN
+    - CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
 addons:
   apt:
     sources:
@@ -35,7 +36,7 @@ after_script:
 after_success:
   - codecov -t $CODECOV_TOKEN
   - codeclimate-test-reporter < 'coverage/lcov.info'
-  - cat coverage/lcov.info | codacy-coverage --username 'maximelafarie' --projectName 'ngx-smart-modal'
+  - cat coverage/lcov.info | codacy-coverage
   - rm -r node_modules
   - cd ../..
   - npm run ghpages
