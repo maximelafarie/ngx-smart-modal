@@ -1,5 +1,8 @@
 sudo: required
 dist: trusty
+env:
+  global:
+    - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID
 addons:
   apt:
     sources:
@@ -12,6 +15,7 @@ node_js:
 before_install:
   - npm i npm@^4 -g
   - npm i codecov -g
+  - npm i codeclimate-test-reporter -g
   - npm install -g greenkeeper-lockfile@1
   - cd src/ngx-smart-modal
 install:
@@ -28,6 +32,7 @@ after_script:
   - greenkeeper-lockfile-upload
 after_success:
   - codecov -t $CODECOV_TOKEN
+  - codeclimate-test-reporter < 'coverage/lcov.info'
   - rm -r node_modules
   - cd ../..
   - npm run ghpages
