@@ -1,4 +1,4 @@
-import { inject, TestBed, async } from '@angular/core/testing';
+import { inject, TestBed, async, tick } from '@angular/core/testing';
 
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
@@ -41,8 +41,8 @@ describe('NgxSmartModalService', () => {
         app.identifier = 'myModal';
         const myModal = ngxSmartModalService.getModal('myModal');
 
-        spyOn(ngxSmartModalService, 'addModal');
-        spyOn(ngxSmartModalService, 'removeModal');
+        spyOn(ngxSmartModalService, 'addModal').and.callThrough();
+        spyOn(ngxSmartModalService, 'removeModal').and.callThrough();
 
         expect(myModal).toEqual(app);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
@@ -64,15 +64,14 @@ describe('NgxSmartModalService', () => {
         app.identifier = 'myModal';
         const myModal = ngxSmartModalService.getModal('myModal');
 
-        spyOn(ngxSmartModalService, 'addModal');
+        spyOn(ngxSmartModalService, 'addModal').and.callThrough();
 
         expect(myModal).toEqual(app);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
         ngxSmartModalService.addModal({id: 'FakeModal', modal: myModal}, true);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
 
-        let modal = ngxSmartModalService.getModal('FakeModal');
-        expect(modal).toBeTruthy();
+        expect(ngxSmartModalService.getModal('FakeModal')).toBeTruthy();
         expect(ngxSmartModalService.addModal).toHaveBeenCalled();
       });
   }));
@@ -84,7 +83,7 @@ describe('NgxSmartModalService', () => {
         const app = fixture.debugElement.componentInstance;
         app.identifier = 'myModal';
         const compiled = fixture.debugElement.nativeElement;
-        spyOn(app, 'isVisible');
+        spyOn(app, 'isVisible').and.callThrough();
 
         /* Open */
         ngxSmartModalService.getModal('myModal').open();
@@ -126,9 +125,18 @@ describe('NgxSmartModalService', () => {
           prop4: 327652175423
         };
         app.identifier = 'myModal';
-        ngxSmartModalService.setModalData(obj, 'myModal');
+
+        spyOn(ngxSmartModalService, 'getModal').and.callThrough();
+        spyOn(ngxSmartModalService, 'getModalData').and.callThrough();
+        spyOn(ngxSmartModalService, 'setModalData').and.callThrough();
+
+        ngxSmartModalService.setModalData(obj, 'myModal', true);
         const myModalData = ngxSmartModalService.getModalData('myModal');
         expect(myModalData).toEqual(obj);
+
+        expect(ngxSmartModalService.getModalData).toHaveBeenCalledWith('myModal');
+        expect(ngxSmartModalService.getModal).toHaveBeenCalledWith('myModal');
+        expect(ngxSmartModalService.setModalData).toHaveBeenCalledWith(obj, 'myModal', true)
       });
   }));
 
@@ -161,6 +169,10 @@ describe('NgxSmartModalService', () => {
         const otherApp = otherFixture.debugElement.componentInstance;
         app.identifier = 'myModal';
         otherApp.identifier = 'myOtherModal';
+
+        spyOn(ngxSmartModalService, 'closeLatestModal').and.callThrough();
+        spyOn(ngxSmartModalService, 'getOpenedModals').and.callThrough();
+
         ngxSmartModalService.getModal('myModal').onOpen.subscribe(() => {
           ngxSmartModalService.getModal('myOtherModal').open();
         });
@@ -168,6 +180,9 @@ describe('NgxSmartModalService', () => {
         expect(app.visible).toBeTruthy();
         expect(otherApp.visible).toBeTruthy();
         ngxSmartModalService.closeLatestModal();
+        tick();
+        expect(ngxSmartModalService.closeLatestModal).toHaveBeenCalled();
+        expect(ngxSmartModalService.getOpenedModals).toHaveBeenCalled();
         expect(app.visible).toBeTruthy();
         expect(otherApp.visible).toBeFalsy();
       });
