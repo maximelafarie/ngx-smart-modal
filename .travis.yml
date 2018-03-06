@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 env:
   global:
-    - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID
+    - CODECLIMATE_REPO_TOKEN=$CC_TEST_REPORTER_ID
 addons:
   apt:
     sources:
