@@ -1,0 +1,42 @@
+@import "~foundation/scss/normalize";
+@import "~foundation/scss/foundation";
+
+.demo-container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+  }
+}
+
+.h-block {
+  color: white;
+
+  h1 {
+    color: white;
+  }
+}
+
+.button {
+  margin: 0;
+}
+
+.go-back {
+  margin-top: 10px;
+
+  a {
+    color: white;
+  }
+}

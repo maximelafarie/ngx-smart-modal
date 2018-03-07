@@ -7,12 +7,18 @@ import { NgxSmartModalModule } from '../ngx-smart-modal';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { ForkMeComponent } from './fork-me/fork-me.component';
+import { BootstrapComponent } from './bootstrap/bootstrap.component';
+import { MaterializeComponent } from './materialize/materialize.component';
+import { FoundationComponent } from './foundation/foundation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    ForkMeComponent
+    ForkMeComponent,
+    BootstrapComponent,
+    MaterializeComponent,
+    FoundationComponent
   ],
   imports: [
     BrowserModule,

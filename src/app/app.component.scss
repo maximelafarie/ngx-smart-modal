@@ -37,14 +37,14 @@ body {
   font-size: 16px;
   transform: translate3d(0, 0, 0);
   filter: progid:DXImageTransform.Microsoft.gradient(
-      startColorstr='#1e5799',
-      endColorstr='#7db9e8',
-      GradientType=1
+                  startColorstr='#1e5799',
+                  endColorstr='#7db9e8',
+                  GradientType=1
   );
   background: #eee linear-gradient(
-      135deg,
-      $colorMainDarker 0%,
-      $colorSecundaryDarker 100%
+                  135deg,
+                  $colorMainDarker 0%,
+                  $colorSecundaryDarker 100%
   ) fixed;
 }
 
@@ -73,7 +73,7 @@ pre {
   position: relative;
   width: 100%;
   max-width: $maxWidth;
-  min-height: 100%;
+  height: 100vh;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -216,22 +216,34 @@ pre {
   }
 }
 
+.dialog.no-padding {
+  padding: 0 !important;
+}
+
 .white {
   color: $snow;
   padding: 20px 0;
 }
 
-.go-back a {
-  color: #edeeee;
-  text-decoration: none;
-  font-size: 14px;
+.go-back {
+  display: block;
 
-  &:hover,
-  &:active,
-  &:focus {
-    color: #e1e2e2;
-    text-decoration: underline;
+  a {
+    color: #edeeee !important;
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #e1e2e2 !important;
+      text-decoration: underline;
+    }
   }
+}
+
+.h-block {
+  color: white;
 }
 
 .footer {

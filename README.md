@@ -13,6 +13,7 @@ http://biig-io.github.io/ngx-smart-modal/
 ## No external library, no jQuery! 🤘
 To avoid imposing you to download a CSS library by using this package, this one is only using [Angular animations](https://angular.io/guide/animations). So get rid off to be forced to use a CSS library you don't want to! In addition, it doesn't use jQuery! 
 
+![NgxSmartModal is the CSS frameworks's friend!](src/assets/css_frameworks.png.png
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
 > Don't panic! We already thought about that! And because we want to be the more neutral as we can, we made it very flexible for you to style it!
 > So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClass]="'modal'"` (e.g.: bootstrap). And the rest of the modal DOM elements have just to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
@@ -117,8 +118,8 @@ You can use it directly in your component's template like this
 ```
 At this point, the modal instance is stored in the `NgxSmartModalService`. You can do absolutely what you want with it, anywhere in your app. For example, from a component :
 ```
-import {Component} from '@angular/core';
-import {NgxSmartModalService} from 'ngx-smart-modal';
+import { Component } from '@angular/core';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   ...
@@ -136,8 +137,8 @@ Then in the AppComponent view you can open any modal with no need to be in the s
 ## Manipulate data
 You can associate data with any created modal. To do that, simply use the `setModalData()` from the `NgxSmartModalService`:
 ```
-import {AfterViewInit, Component} from '@angular/core';
-import {NgxSmartModalService} from 'ngx-smart-modal';
+import { AfterViewInit, Component } from '@angular/core';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
   ...
@@ -208,7 +209,7 @@ export class AppComponent {
 
 Or you also can declare modal in any template (e.g.: the Rickroll demo modal)...
 ```
-<ngx-smart-modal #videoModal identifier="videoModal" [customClass]="'medium-modal'">
+<ngx-smart-modal #videoModal identifier="videoModal" customClass="medium-modal">
   <h1>Hey, I Rickrolled You!</h1>
   <iframe #rickroll width="1280" height="720"
           src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"

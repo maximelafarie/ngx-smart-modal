@@ -13,12 +13,15 @@
     <button class="button -regular" (click)="goFeature()">Lazy load feature module</button>
     <button class="button -regular" (click)="undismissable.open()">Undismissable modal</button>
     <button class="button -regular" (click)="inescapable.open()">Inescapable modal</button>
+  </div>
 
-    <!-- TODO: Below buttons are not available at this moment. Coming soon!
-    <button class="button -regular">Bootstrap Modal</button>
-    <button class="button -regular">Materialize Modal</button>
-    <button class="button -regular">Foundation Modal</button>
-    -->
+  <h3 class="title">Examples with CSS frameworks</h3>
+  <p clpss="small-p">⚠️ Please note that only CSS files are imported without JS.<br>
+    Some effects won't appear (e.g.: wave effects on Materialize buttons)</p>
+  <div class="buttons">
+    <button class="button -regular" (click)="goBootstrap()">Bootstrap Modal</button>
+    <button class="button -regular" (click)="goMaterialize()">Materialize Modal</button>
+    <button class="button -regular" (click)="goFoundation()">Foundation Modal</button>
   </div>
 
   <footer class="footer">
@@ -41,7 +44,7 @@
 <!-- Modal inception -->
 <ngx-smart-modal #modalInception [identifier]="'modalInception'">
   <h1>Howdy how, I'm a modal that opens another one!</h1>
-  <p>{{ sampleText[0] }}</p>
+  <p>{{ sampleText[1] }}</p>
 
   <div class="buttons">
     <button class="button -green" (click)="sampleModal.open()">Open another modal!</button>
@@ -79,13 +82,16 @@
 </ngx-smart-modal>
 
 <!-- Modal video events -->
-<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'">
+<ngx-smart-modal #videoModal [identifier]="'videoModal'" [customClass]="'medium-modal'"
+                 [closable]="false" [dismissable]="false" [escapable]="false">
   <h1>Hey, I Rickrolled You!</h1>
+  <p>
+    Btw, the following options has been applied to disable modal closing:<code>
+    [closable]="false" [dismissable]="false" [escapable]="false"</code>
+  </p>
   <iframe #rickroll width="1280" height="720" style="max-width: 100%;"
           src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
           frameborder="0" allowfullscreen></iframe>
-
-  <button class="button -dark" (click)="videoModal.close()">Close</button>
 </ngx-smart-modal>
 
 <!-- Remote modal -->
@@ -156,7 +162,7 @@
   <h1>Hey, I'm a not dismissable modal!</h1>
   <p>Clicking on my backdrop <strong>won't</strong> close me.</p>
   <img class="modal-image" src="http://lorempicsum.com/futurama/627/350/7" alt="Lorem picsum">
-  <p>{{ sampleText[0] }}</p>
+  <p>{{ sampleText[2] }}</p>
   <button class="button -dark" (click)="undismissable.close()">Close</button>
 </ngx-smart-modal>
 
@@ -165,6 +171,6 @@
   <h1>Hey, I'm an unescapable modal!</h1>
   <p>Pressing the escape key <strong>won't</strong> close me.</p>
   <img class="modal-image" src="http://lorempicsum.com/futurama/627/450/8" alt="Lorem picsum">
-  <p>{{ sampleText[2] }}</p>
+  <p>{{ sampleText[3] }}</p>
   <button class="button -dark" (click)="inescapable.close()">Close</button>
 </ngx-smart-modal>
