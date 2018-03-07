@@ -13,7 +13,7 @@ http://biig-io.github.io/ngx-smart-modal/
 ## No external library, no jQuery! 🤘
 To avoid imposing you to download a CSS library by using this package, this one is only using [Angular animations](https://angular.io/guide/animations). So get rid off to be forced to use a CSS library you don't want to! In addition, it doesn't use jQuery! 
 
-![NgxSmartModal is the CSS frameworks's friend!](src/assets/css_frameworks.png.png
+![NgxSmartModal is the CSS frameworks's friend!](src/assets/css_frameworks.png)
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
 > Don't panic! We already thought about that! And because we want to be the more neutral as we can, we made it very flexible for you to style it!
 > So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class it in the `[customClass]="'modal'"` (e.g.: bootstrap). And the rest of the modal DOM elements have just to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
