@@ -1,0 +1,64 @@
+$color-overlay: rgba(0, 0, 0, .5);
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  background-color: $color-overlay;
+  z-index: 999;
+}
+
+.overlay.transparent {
+  background-color: transparent;
+}
+
+body.dialog-open {
+  overflow: hidden;
+}
+
+.nsm-dialog {
+  visibility: visible;
+  position: absolute;
+  border-radius: 2px;
+  right: 0;
+  left: 0;
+  top: 20px;
+  margin-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 200px;
+  width: 90%;
+  max-width: 520px;
+  background-color: #fff;
+  padding: 12px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, .2), 0 13px 19px 2px rgba(0, 0, 0, .14), 0 5px 24px 4px rgba(0, 0, 0, .12);
+
+  &.nsm-dialog-open {
+    transform: scale3d(0, 0, 0);
+  }
+
+  &.nsm-dialog-close {
+    transform: scale3d(.3, .3, .3);
+  }
+}
+
+@media (min-width: 768px) {
+  .nsm-dialog {
+    top: 40px;
+    margin-bottom: 40px;
+  }
+}
+
+.nsm-dialog-btn-close {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
