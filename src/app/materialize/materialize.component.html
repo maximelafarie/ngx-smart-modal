@@ -18,7 +18,7 @@
 <ngx-smart-modal #myMtrlzModal identifier="myMtrlzModal" [closable]="false" customClass="modal no-padding">
   <div class="modal-content">
     <div class="row">
-      <div class="card z-depth-0">
+      <div class="card z-depth-0" style="margin: 0;">
         <div class="card-image">
           <img src="http://lorempicsum.com/simpsons/700/500/5">
           <span class="card-title">Material<br>Modal</span>
@@ -35,6 +35,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <span (click)="myMtrlzModal.close()" class="modal-action modal-close waves-effect waves-green btn-flat">Close</span>
+    <span (click)="myMtrlzModal.close()" class="modal-action modal-close waves-effect waves-green btn-flat"
+          style="float: right; margin: 10px;">Close</span>
   </div>
 </ngx-smart-modal>

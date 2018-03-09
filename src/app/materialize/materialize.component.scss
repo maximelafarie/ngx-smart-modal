@@ -39,8 +39,17 @@ $roboto-font-path: "../../../node_modules/materialize-sass/fonts/roboto/";
   display: block;
   max-height: none;
 
+  .modal-content {
+    padding: 0;
+
+    .card {
+      margin: 0;
+    }
+  }
+
   .modal-footer {
     width: auto;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;

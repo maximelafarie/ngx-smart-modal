@@ -4,7 +4,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   selector: 'app-bootstrap',
   templateUrl: './bootstrap.component.html',
   styleUrls: ['./bootstrap.component.scss'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class BootstrapComponent implements OnInit {
 

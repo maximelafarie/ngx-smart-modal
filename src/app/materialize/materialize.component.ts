@@ -4,7 +4,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   selector: 'app-materialize',
   templateUrl: './materialize.component.html',
   styleUrls: ['./materialize.component.scss'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class MaterializeComponent implements OnInit {
 

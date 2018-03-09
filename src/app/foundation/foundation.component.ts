@@ -4,7 +4,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   selector: 'app-foundation',
   templateUrl: './foundation.component.html',
   styleUrls: ['./foundation.component.scss'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class FoundationComponent implements OnInit {
 
