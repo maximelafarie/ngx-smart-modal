@@ -9,7 +9,17 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        {
+          "glob": "**/*",
+          "input": "../node_modules/materialize-sass/fonts/roboto",
+          "output": "./assets/fonts/roboto"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/material-design-icons/iconfont",
+          "output": "./assets/fonts/material-design-icons"
+        }
       ],
       "index": "index.html",
       "main": "main.ts",
