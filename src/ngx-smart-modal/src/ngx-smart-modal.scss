@@ -1,0 +1,158 @@
+// Color of overlay background
+$color-overlay: rgba(0, 0, 0, .5);
+
+// Position of dialog
+$dialog-position-top: 5% !default;
+
+// Transition time
+// !! The same as the hideDelay variable defined in ngx-smart-modal.component.ts
+$transition-duration: 500ms !default;
+
+// Transition effect
+// linear | ease | ease-in | ease-out | ease-in-out
+$transition-timing-function: ease-in-out !default;
+
+
+// Body if modal is opened
+body.dialog-open {
+  overflow: hidden;
+}
+
+// Close button in modal
+.nsm-dialog-btn-close {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+// Overlay
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  transition: all $transition-duration;
+  background-color: $color-overlay;
+  z-index: 999;
+
+  &.nsm-overlay-close,
+  &.transparent {
+    background-color: transparent;
+  }
+}
+
+// Dialog modal
+.nsm-dialog {
+  position: absolute;
+
+  // State of the dialog in the beginning (hidden)
+  &:not(.nsm-dialog-open),
+  &:not(.nsm-dialog-close) {
+    opacity: 0;
+    min-height: 0;
+    width: 0;
+    max-width: 0;
+    visibility: hidden;
+    overflow: hidden;
+  }
+
+  // When dialog is opening
+  &.nsm-dialog-open {
+    opacity: 1;
+    visibility: visible;
+    min-height: 200px;
+    width: 90%;
+    max-width: 520px;
+    background-color: #fff;
+    border-radius: 2px;
+    right: 0;
+    left: 0;
+    top: $dialog-position-top;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 12px;
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, .2), 0 13px 19px 2px rgba(0, 0, 0, .14), 0 5px 24px 4px rgba(0, 0, 0, .12);
+
+    @media (min-width: 768px) {
+      margin-bottom: 40px;
+    }
+  }
+
+  // When dialog is closing
+  &.nsm-dialog-close {
+    opacity: 0;
+  }
+}
+
+/* *************************
+* Animations
+* *************************/
+
+// Fade
+.nsm-dialog-animation-fade {
+  transition: opacity $transition-duration;
+}
+
+// Left to right (ltr)
+.nsm-dialog-animation-ltr {
+  left: -50%;
+  transition: left $transition-duration $transition-timing-function, opacity $transition-duration;
+
+  &.nsm-dialog-open {
+    left: 0;
+  }
+
+  &.nsm-dialog-close {
+    left: -50%;
+  }
+}
+
+// Right to left (ltr)
+.nsm-dialog-animation-rtl {
+  right: -50%;
+  transition: right $transition-duration $transition-timing-function, opacity $transition-duration;
+
+  &.nsm-dialog-open {
+    right: 0;
+  }
+
+  &.nsm-dialog-close {
+    right: -50%;
+  }
+}
+
+// Top to bottom (ttb)
+.nsm-dialog-animation-ttb {
+  top: -50%;
+  transition: top $transition-duration $transition-timing-function, opacity $transition-duration;
+
+  &.nsm-dialog-open {
+    top: $dialog-position-top;
+  }
+
+  &.nsm-dialog-close {
+    top: -50%;
+  }
+}
+
+// Bottom to top (btt)
+.nsm-dialog-animation-btt {
+  top: 100%;
+  transition: top $transition-duration $transition-timing-function, opacity $transition-duration;
+
+  &.nsm-dialog-open {
+    top: $dialog-position-top;
+  }
+
+  &.nsm-dialog-close {
+    top: 100%;
+  }
+}
