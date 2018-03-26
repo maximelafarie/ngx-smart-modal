@@ -89,7 +89,7 @@
     Btw, the following options has been applied to disable modal closing:<code>
     [closable]="false" [dismissable]="false" [escapable]="false"</code>
   </p>
-  <iframe #rickroll width="1280" height="720" style="max-width: 100%;"
+  <iframe *ngIf="videoModal.isVisible()" #rickroll width="1280" height="720" style="max-width: 100%;"
           src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
           frameborder="0" allowfullscreen></iframe>
 </ngx-smart-modal>
