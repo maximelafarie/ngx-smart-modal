@@ -25,6 +25,15 @@ shell.echo(`Start TSLint`);
 shell.exec(`tslint -c tslint.json -t stylish src/**/*.ts`);
 shell.echo(chalk.green(`TSLint completed`));
 
+/* SCSSLint */
+shell.echo(`Start SCSSLint`);
+if (shell.exec(`stylelint src/*.scss`).code !== 0) {
+  shell.echo(chalk.red(`Error: SCSS linting revealed some errors`));
+  shell.echo(chalk.red(`Please check the above errors and fix them before build`));
+  shell.exit(1);
+}
+shell.echo(chalk.green(`SCSSLint completed`));
+
 /* AoT compilation */
 shell.echo(`Start AoT compilation`);
 if (shell.exec(`ngc -p tsconfig-build.json`).code !== 0) {
@@ -60,6 +69,15 @@ shell.exec(`uglifyjs ${PACKAGE}.umd.js -c --comments -o ${PACKAGE}.umd.min.js --
 shell.cd(`..`);
 shell.cd(`..`);
 
+shell.echo(`Copying and minifying styles`);
+shell.cp('-R', 'src/ngx-smart-modal.scss', `${NPM_DIR}/`);
+shell.cd(`${NPM_DIR}`);
+if (shell.exec(`node-sass ngx-smart-modal.scss ngx-smart-modal.css`).code !== 0) {
+  shell.echo(chalk.red(`Error: SCSS compilation failed`));
+  shell.exit(1);
+}
+shell.cd(`..`);
+
 shell.echo(chalk.green(`Bundling completed`));
 
 shell.rm(`-Rf`, `${NPM_DIR}/package`);
@@ -69,6 +87,6 @@ shell.rm(`-Rf`, `${NPM_DIR}/*.js.map`);
 shell.rm(`-Rf`, `${NPM_DIR}/src/**/*.js`);
 shell.rm(`-Rf`, `${NPM_DIR}/src/**/*.js.map`);
 
-shell.cp(`-Rf`, [`package.json`, `LICENSE`, `README.md`], `${NPM_DIR}`);
+shell.cp(`-Rf`, [`package.json`, `../../LICENSE`, `../../README.md`], `${NPM_DIR}`);
 
 shell.echo(chalk.green(`End building`));

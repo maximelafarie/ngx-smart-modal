@@ -4,6 +4,7 @@
   "description": "Angular-CLI demo of ngx-smart-modal",
   "license": "MIT",
   "scripts": {
+    "commit": "git-cz",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -14,7 +15,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^5.2.7",
     "@angular/common": "^5.2.7",
     "@angular/compiler": "^5.2.7",
     "@angular/core": "^5.2.7",
@@ -29,7 +29,6 @@
     "material-design-icons": "^3.0.1",
     "materialize-sass": "^0.98.2",
     "rxjs": "^5.4.1",
-    "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
@@ -40,6 +39,8 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^8.5.10",
     "codelyzer": "~4.0.2",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",
@@ -53,7 +54,12 @@
     "tslint": "~5.9.0",
     "typescript": ">=2.4.2 <2.6.0"
   },
-  "greenkeeper": {
-    "emails": false
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "greenkeeper": {
+      "emails": false
+    }
   }
 }

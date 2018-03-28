@@ -86,14 +86,14 @@ describe('NgxSmartModalService', () => {
         spyOn(app, 'isVisible').and.callThrough();
 
         /* Open */
-        ngxSmartModalService.getModal('myModal').open();
+        ngxSmartModalService.open('myModal');
         expect(compiled.querySelector('.dialog').isDisplayed).toBeTruthy();
         expect(app.isVisible).toBeTruthy();
         expect(ngxSmartModalService.getOpenedModals().length).toEqual(1);
         expect(app.isVisible).toHaveBeenCalled();
 
         /* Close */
-        ngxSmartModalService.getModal('myModal').close();
+        ngxSmartModalService.close('myModal');
         expect(compiled.querySelector('.dialog').isDisplayed).toBeFalsy();
         expect(app.isVisible).toBeFalsy();
       });

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutes } from './app.routing';
 import { NgxSmartModalModule } from '../ngx-smart-modal';
@@ -22,7 +21,6 @@ import { FoundationComponent } from './foundation/foundation.component';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     RouterModule,
     AppRoutes,
     NgxSmartModalModule.forRoot()

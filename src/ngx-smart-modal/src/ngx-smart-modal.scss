@@ -1,5 +1,5 @@
 // Color of overlay background
-$color-overlay: rgba(0, 0, 0, .5);
+$color-overlay: rgba(0, 0, 0, .5) !default;
 
 // Position of dialog
 $dialog-position-top: 5% !default;
@@ -12,10 +12,18 @@ $transition-duration: 500ms !default;
 // linear | ease | ease-in | ease-out | ease-in-out
 $transition-timing-function: ease-in-out !default;
 
-
 // Body if modal is opened
 body.dialog-open {
   overflow: hidden;
+
+  ngx-smart-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+  }
 }
 
 // Close button in modal

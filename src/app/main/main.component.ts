@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, VERSION } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSmartModalService } from '../../ngx-smart-modal';
+import {NgxSmartModalComponent, NgxSmartModalService} from '../../ngx-smart-modal';
 
 @Component({
   selector: 'app-main',
@@ -36,16 +36,20 @@ export class MainComponent implements AfterViewInit {
 
     this.ngxSmartModalService.setModalData(obj, 'modalData');
 
-    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((event: Event) => {
-      console.log('Rickroll modal opened!', event);
+    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      console.log('Rickroll modal opened!', modal);
     });
 
-    this.ngxSmartModalService.getModal('modalData').onOpen.subscribe((event: Event) => {
-      console.log(this.ngxSmartModalService.getModal('modalData').getData());
+    this.ngxSmartModalService.getModal('modalData').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      console.log(modal.getData());
     });
 
-    this.ngxSmartModalService.getModal('classicModal').onEscape.subscribe((event: Event) => {
-      console.log('You just escaped the classicModal!');
+    this.ngxSmartModalService.getModal('classicModal').onEscape.subscribe((modal: NgxSmartModalComponent) => {
+      console.log('You just escaped the classicModal!', modal);
+    });
+
+    this.ngxSmartModalService.getModal('classicModal').onAnyCloseEventFinished.subscribe((modal: NgxSmartModalComponent) => {
+      console.log('All close events are ended!', modal);
     });
   }
 
