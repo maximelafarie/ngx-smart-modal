@@ -161,7 +161,7 @@ The below documentation will use the following pattern:
 
 - `force` (boolean) | true ― _If true and if you declare another modal instance with the same identifier that another, the service will override it by the new you declare in the modal stack._
 
-- `customClass` (string) | `''` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated class names_
+- `customClass` (string) | `'nsm-dialog-animation-fade'` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated class names_
 
 - `visible` (boolean) | `false` ― _Define if the modal is shown or not. Automatically toggled with open() and close()/dismiss() methods._
 
