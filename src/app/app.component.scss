@@ -37,14 +37,14 @@ body {
   font-size: 16px;
   transform: translate3d(0, 0, 0);
   filter: progid:DXImageTransform.Microsoft.gradient(
-                  startColorstr='#1e5799',
-                  endColorstr='#7db9e8',
-                  GradientType=1
+      startColorstr='#1e5799',
+      endColorstr='#7db9e8',
+      GradientType=1
   );
   background: #eee linear-gradient(
-                  135deg,
-                  $colorMainDarker 0%,
-                  $colorSecundaryDarker 100%
+      135deg,
+      $colorMainDarker 0%,
+      $colorSecundaryDarker 100%
   ) fixed;
 }
 
@@ -61,12 +61,14 @@ pre {
   padding: 1rem;
 }
 
-.large-modal {
-  max-width: none;
-}
+.nsm-dialog {
+  &.large-modal {
+    max-width: none;
+  }
 
-.nsm-dialog.medium-modal {
-  max-width: 1280px;
+  &.medium-modal {
+    max-width: 1280px;
+  }
 }
 
 .container {

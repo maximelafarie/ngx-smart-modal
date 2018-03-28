@@ -53,7 +53,7 @@
 </ngx-smart-modal>
 
 <!-- Data in modal -->
-<ngx-smart-modal #modalData identifier="modalData">
+<ngx-smart-modal #modalData identifier="modalData" customClass="nsm-dialog-animation-ltr">
   <h1>Hey, I'm a modal with some data!</h1>
   <p>
     <strong>Code below comes from <code>NgxSmartModalService</code>. It was set from the
@@ -70,6 +70,7 @@
 <!-- Modal events -->
 <ngx-smart-modal #modalEvents
                  identifier="modalEvents"
+                 customClass="nsm-dialog-animation-ttb"
                  (onOpen)="log('Modal opened!')"
                  (onClose)="log('Modal closed!')"
                  (onCloseFinished)="log('Modal close finished!')"
@@ -82,7 +83,7 @@
 </ngx-smart-modal>
 
 <!-- Modal video events -->
-<ngx-smart-modal #videoModal identifier="videoModal" customClass="medium-modal"
+<ngx-smart-modal #videoModal identifier="videoModal" customClass="nsm-dialog-animation-btt medium-modal"
                  [closable]="false" [dismissable]="false" [escapable]="false">
   <h1>Hey, I Rickrolled You!</h1>
   <p>
@@ -108,8 +109,8 @@
 </ngx-smart-modal>
 
 <!-- Another sample modal -->
-<ngx-smart-modal #sampleModal identifier="sampleModal" customClass="large-modal" [backdrop]="false">
-  <h1>Hello! I'm a modal with a custom class, without backdrop!</h1>
+<ngx-smart-modal #sampleModal identifier="sampleModal" customClass="large-modal" [backdrop]="false" [hideDelay]="0">
+  <h1>Hello! I'm a modal with a custom class, without backdrop, without animation effect and without delay!</h1>
   <p>That's why I'm larger than the others</p>
   <p>Even if I have no backdrop, you can dismiss me by simple click out of me.</p>
 

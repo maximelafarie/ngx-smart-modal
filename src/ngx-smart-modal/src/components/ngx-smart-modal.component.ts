@@ -59,8 +59,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   private data: any = null;
 
   constructor(private renderer: Renderer2,
-              private ngxSmartModalService: NgxSmartModalService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              private ngxSmartModalService: NgxSmartModalService) {
   }
 
   public ngOnInit() {
