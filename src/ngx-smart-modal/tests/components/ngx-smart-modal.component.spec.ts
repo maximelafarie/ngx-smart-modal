@@ -1,7 +1,6 @@
-import { inject, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {inject, TestBed, async, tick, fakeAsync} from '@angular/core/testing';
 
-import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
+import {NgxSmartModalComponent, NgxSmartModalService} from '../../';
 
 describe('NgxSmartModalComponent', () => {
 
@@ -12,8 +11,7 @@ describe('NgxSmartModalComponent', () => {
       ],
       providers: [
         NgxSmartModalService
-      ],
-      imports: [BrowserAnimationsModule]
+      ]
     }).compileComponents();
   }));
 
@@ -32,13 +30,15 @@ describe('NgxSmartModalComponent', () => {
     app.open(true);
     expect(app.isVisible()).toBeTruthy();
     app.close();
-    expect(app.isVisible()).toBeFalsy();
+    app.onCloseFinished.subscribe(() => {
+      expect(app.isVisible()).toBeFalsy();
+    });
   }));
 
   it('should close the modal by escape keyup', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    const event = new KeyboardEvent("keyup", {key: "Escape"});
+    const event = new KeyboardEvent('keyup', {key: 'Escape'});
     spyOn(app, 'escapeKeyboardEvent');
     spyOn(app, 'onEscape');
     app.identifier = 'myModal';
@@ -52,10 +52,120 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
+  it('should listen to any close event (Escape)', fakeAsync(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    const event = new KeyboardEvent('keyup', {key: 'Escape'});
+    app.identifier = 'myModal';
+
+    // Test with escape event
+    app.open();
+    tick();
+    expect(app.visible).toBeTruthy();
+    dispatchEvent(event);
+    tick();
+    app.onAnyCloseEvent.subscribe(() => {
+      expect(app.visible).toBeTruthy();
+      expect(app.openedClass).toBeFalsy();
+    });
+  }));
+
+  it('should listen to any close event (Close)', (done) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+
+    // Test with close event
+    app.open();
+    expect(app.visible).toBeTruthy();
+    app.onAnyCloseEvent.subscribe(() => {
+      expect(app.visible).toBeTruthy();
+      expect(app.openedClass).toBeFalsy();
+      done();
+    });
+    app.close();
+  });
+
+  it('should listen to any close event (Dismiss)', (done) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+
+    // Test with dismiss event
+    app.open();
+    fixture.detectChanges();
+    expect(app.visible).toBeTruthy();
+    const compiled = fixture.debugElement.nativeElement;
+    const fakeEvent = {
+      target: compiled.querySelector('.overlay')
+    };
+    app.onAnyCloseEvent.subscribe(() => {
+      expect(app.visible).toBeTruthy();
+      expect(app.openedClass).toBeFalsy();
+      done();
+    });
+    app.dismiss(fakeEvent);
+  });
+
+  it('should listen to any close event finished (Escape)', fakeAsync(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    const event = new KeyboardEvent('keyup', {key: 'Escape'});
+    app.identifier = 'myModal';
+
+    // Test with escape event
+    app.open();
+    tick();
+    expect(app.visible).toBeTruthy();
+    dispatchEvent(event);
+    tick();
+    app.onAnyCloseEventFinished.subscribe(() => {
+      expect(app.visible).toBeFalsy();
+      expect(app.openedClass).toBeFalsy();
+    });
+  }));
+
+  it('should listen to any close event finished (Close)', (done) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+
+    // Test with close event
+    app.open();
+    expect(app.visible).toBeTruthy();
+    app.onAnyCloseEventFinished.subscribe(() => {
+      expect(app.visible).toBeFalsy();
+      expect(app.openedClass).toBeFalsy();
+      done();
+    });
+    app.close();
+  });
+
+  it('should listen to any close event finished (Dismiss)', (done) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+
+    // Test with dismiss event
+    app.open();
+    fixture.detectChanges();
+    expect(app.visible).toBeTruthy();
+    const compiled = fixture.debugElement.nativeElement;
+    const fakeEvent = {
+      target: compiled.querySelector('.overlay')
+    };
+    app.onAnyCloseEventFinished.subscribe(() => {
+      expect(app.visible).toBeFalsy();
+      expect(app.openedClass).toBeFalsy();
+      done();
+    });
+    app.dismiss(fakeEvent);
+  });
+
   it('should not close the modal by escape keyup', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    const event = new KeyboardEvent("keyup", {key: "Escape"});
+    const event = new KeyboardEvent('keyup', {key: 'Escape'});
     app.identifier = 'myModal';
     app.escapable = false;
     app.open();
@@ -70,7 +180,7 @@ describe('NgxSmartModalComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     app.open();
     app.onOpen.subscribe(() => {
-      compiled.querySelector('button.dialog__close-btn').click();
+      compiled.querySelector('button.nsm-dialog-btn-close').click();
       expect(app.visible).toBeFalsy();
     });
   }));
@@ -88,9 +198,11 @@ describe('NgxSmartModalComponent', () => {
       target: compiled.querySelector('.overlay')
     };
     app.dismiss(fakeEvent);
-    tick(150);
+    app.onDismissFinished.subscribe(() => {
+      expect(app.visible).toBeFalsy();
+    });
+    tick(app.hideDelay);
     expect(app.dismiss).toHaveBeenCalledWith(fakeEvent);
-    expect(app.visible).toBeFalsy();
   }));
 
   it('should not dismiss the modal if dismissable option is set to false', fakeAsync(() => {
@@ -107,98 +219,94 @@ describe('NgxSmartModalComponent', () => {
       target: compiled.querySelector('.overlay')
     };
     app.dismiss(fakeEvent);
-    tick(150);
+    tick();
     expect(app.dismiss).toHaveBeenCalledWith(fakeEvent);
     expect(app.visible).toBeTruthy();
   }));
 
-  it('should hide the modal close cross button', async(() => {
+  it('should hide the modal close cross button', (done) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
     app.closable = false;
     const compiled = fixture.debugElement.nativeElement;
-    app.open();
     app.onOpen.subscribe(() => {
-      const closeBtn = compiled.querySelector('button.dialog__close-btn');
-      expect(closeBtn).toBeUndefined();
+      const closeBtn = compiled.querySelector('button.nsm-dialog-btn-close');
+      expect(closeBtn).toBeNull();
+      done();
     });
-  }));
+    app.open();
+  });
 
-  it('should add additional class to the modal', async(() => {
+  it('should add additional class to the modal', (done) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
     app.addCustomClass('firstClass');
     app.addCustomClass('secondClass');
-    app.open();
-    app.onOpen.subscribe(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const firstRef = compiled.querySelector('.dialog.firstClass');
-      const secondRef = compiled.querySelector('.dialog.secondClass');
-      expect(firstRef).toEqual(compiled);
-      expect(secondRef).toEqual(compiled);
+    app.onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      expect(modal.customClass.includes('firstClass')).toBeTruthy();
+      expect(modal.customClass.includes('secondClass')).toBeTruthy();
+      done();
     });
-  }));
+    app.open();
+  });
 
-  it('should remove additional class of the modal', async(() => {
+  it('should remove additional class of the modal', (done) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.addCustomClass('firstClass');
     app.addCustomClass('secondClass');
     app.removeCustomClass('firstClass');
-    app.open();
-    app.onOpen.subscribe(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const firstRef = compiled.querySelector('.dialog.firstClass');
-      const secondRef = compiled.querySelector('.dialog.secondClass');
-      expect(firstRef).toEqual(null);
-      expect(secondRef).toEqual(compiled);
+    app.onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      expect(modal.customClass.includes('firstClass')).toBeFalsy();
+      expect(modal.customClass.includes('secondClass')).toBeTruthy();
+      done();
     });
-  }));
+    app.open();
+  });
 
-  it('should remove all custom class of the modal', async(() => {
+  it('should remove all custom class of the modal', (done) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.addCustomClass('firstClass');
     app.addCustomClass('secondClass');
     app.removeCustomClass();
-    app.open();
-    app.onOpen.subscribe(() => {
-      const compiled = fixture.debugElement.nativeElement;
-      const firstRef = compiled.querySelector('.dialog.firstClass');
-      const secondRef = compiled.querySelector('.dialog.secondClass');
-      expect(firstRef).toEqual(null);
-      expect(secondRef).toEqual(null);
+    app.onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      expect(modal.customClass.includes('firstClass')).toBeFalsy();
+      expect(modal.customClass.includes('secondClass')).toBeFalsy();
+      done();
     });
-  }));
+    app.open();
+  });
 
-  it('should manage data directly from the modal', async(() => {
-    inject([NgxSmartModalService],
-      () => {
-        const fixture = TestBed.createComponent(NgxSmartModalComponent);
-        const app = fixture.debugElement.componentInstance;
-        const obj = {
-          prop1: 'test',
-          prop2: true,
-          prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
-          prop4: 327652175423
-        };
-        app.identifier = 'myModal';
+  it('should manage data directly from the modal', fakeAsync(() => {
+    inject([NgxSmartModalService], () => {
+      const fixture = TestBed.createComponent(NgxSmartModalComponent);
+      const app = fixture.debugElement.componentInstance;
+      const obj = {
+        prop1: 'test',
+        prop2: true,
+        prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
+        prop4: 327652175423
+      };
+      app.identifier = 'myModal';
 
-        expect(app.hasData()).toBe(false);
+      expect(app.hasData()).toBeFalsy();
 
-        app.setData(obj, true);
-        app.onDataAdded.subscribe(() => {
-          expect(app.hasData()).toBe(true);
-          expect(app.getData().prop1).toBe(obj.prop1);
-        });
-
-        app.removeData();
-        app.onDataRemoved.subscribe(() => {
-          expect(app.hasData()).toBeFalsy();
-        });
+      app.onDataAdded.subscribe(() => {
+        expect(app.hasData()).toBeTruthy();
+        expect(app.getData().prop1).toBe(obj.prop1);
+        tick();
       });
+      app.setData(obj, true);
+
+      app.onDataRemoved.subscribe(() => {
+        expect(app.hasData()).toBeFalsy();
+        tick();
+      });
+      app.removeData();
+    });
   }));
 
 });

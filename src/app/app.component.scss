@@ -62,11 +62,11 @@ pre {
 }
 
 .large-modal {
-  max-width: none !important;
+  max-width: none;
 }
 
-.dialog.medium-modal {
-  max-width: 1280px !important;
+.nsm-dialog.medium-modal {
+  max-width: 1280px;
 }
 
 .container {
@@ -208,7 +208,7 @@ pre {
   background: $flower;
 }
 
-.dialog {
+.nsm-dialog {
   .button {
     &:first-of-type {
       margin-left: 0;
@@ -216,8 +216,8 @@ pre {
   }
 }
 
-.dialog.no-padding {
-  padding: 0 !important;
+.nsm-dialog.no-padding {
+  padding: 0;
 }
 
 .white {

@@ -11,7 +11,7 @@ http://biig-io.github.io/ngx-smart-modal/
 
 
 ## No external library, no jQuery! 🤘
-To avoid imposing you to download a CSS library by using this package, this one is only using [Angular animations](https://angular.io/guide/animations). So get rid off to be forced to use a CSS library you don't want to! In addition, it doesn't use jQuery! 
+To avoid imposing you to download a CSS library by using this package, you simply have to use our built-in SCSS/CSS file with custom animations and overridable variables. So get rid off to be forced to use a CSS library you don't want to! In addition, it doesn't use jQuery!  
 
 ![NgxSmartModal is the CSS frameworks's friend!](src/assets/css_frameworks.png)
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
@@ -24,16 +24,18 @@ See the [changelog](https://github.com/biig-io/ngx-smart-modal/blob/master/CHANG
 
 You can take a look on [this diagram](https://github.com/biig-io/ngx-smart-modal#how-it-works) if you are curious about how this library works.
 
+
 ## Features
  - Handle large quantity of modals anywhere in your app
- - Customize the style of your modals through custom CSS classes
+ - Customize the style of your modals through custom CSS classes and SCSS variables!
  - No external CSS library is used so you can easily override the modals default style
  - Pass data to any modal and retrieve it very simply in the modal view (or anywhere else)
- - Events on `open`, `close`, `dismiss` and `escape` for each modal
+ - Events on `open`, `close`, `dismiss`, `escape` and more for each modal
  - Manage all your modal stack and data with very fast methods
  - Very smart `z-index` computation (no ugly glitches or problems with a modal inside another)
  - A modal in a modal in a modal in a modal... I guess you got it!
  - AoT compilation support
+
 
 ## Setup
 To use `ngx-smart-modal` in your project install it via [npm](https://www.npmjs.com/package/ngx-smart-modal):
@@ -44,7 +46,7 @@ or with [yarn](https://yarnpkg.com/en/package/ngx-smart-modal):
 ```
 yarn add ngx-smart-modal
 ```
-⚠️ If you have the following warning after install:
+⚠️ If you have the following warning after install **(for NgxSmartModal <= 5.0.0)**:
 ```
 npm WARN ngx-smart-modal@x.x.x requires a peer of web-animations-js@>=x.x.x but none was installed.
 ``` 
@@ -60,12 +62,22 @@ or
 ```
 yarn add web-animations-js
 ```
+
+**If you're using SystemJS**
+```
+System.config({
+  map: {
+    'ngx-smart-modal': 'node_modules/ngx-smart-modal/bundles/ngx-smart-modal.umd.js'
+  }
+});
+```
+
 Then add 
 `NgxSmartModalModule` (with `.forRoot()` or `.forChild()` depending if the module which you import the library into is the main module of your project or a nested module) and `NgxSmartModalService` to your project `NgModule`
 ```
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 import { AppComponent } from './app.component';
 
@@ -77,11 +89,61 @@ import { AppComponent } from './app.component';
     BrowserModule,
     NgxSmartModalModule.forRoot()
   ],
-  providers: [ NgxSmartModalService ],
+  providers: [ ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
 ```
+
+And import `ngx-smart-modal.scss` or `ngx-smart-modal.css` in a global style file (e.g. `styles.scss` or `styles.css` in classic Angular projects or any other scss/css file it imports):
+Example **styles.scss**:
+```
+/* You can add global styles to this file, and also import other style files */
+@import "ngx-smart-modal/src/ngx-smart-modal";
+@import "app/app.component";
+...
+```
+[Demo example here](https://github.com/biig-io/ngx-smart-modal/blob/master/src/styles.scss)
+
+
+## Style & customization
+⚠️ **For `ngx-smart-modal` >= 6.0.0 only!**
+`ngx-smart-modal` provides built-in [SCSS variables](https://sass-lang.com/guide#topic-2) that you can override easily like it (assuming you imported `ngx-smart-modal.scss` as explained above):
+```
+/* You can add global styles to this file, and also import other style files */
+/* NgxSmartModal variables override */
+$color-overlay: rgba(0, 0, 0, .7);
+$dialog-position-top: 20%;
+
+@import "ngx-smart-modal/src/ngx-smart-modal";
+...
+```
+_Note that variables needs to be overridden **before** `@import`!_
+
+### Available SCSS variables
+The below documentation will use the following pattern: 
+> `parameter/option name` (type) | default value | _description_
+
+- `$color-overlay` (hex / rgb / rgba) | `rgba(0, 0, 0, .5)` ― _Modifies the modals overlay background color_
+
+- `$dialog-position-top` (px / %) | `5%` ― _Defines the position of the modal from the top of the screen_
+
+- `$transition-duration` (duration) | `500ms` ― _Defines the transition effect duration. **Keep in mind you also need to set the same time (in ms) in the `hideDelay` modal option (see below)**_
+
+- `$transition-timing-function` (transition-timing-function Property) | `ease-in-out` ― _Specifies the speed curve of the transition effect ([available speed curves here](https://www.w3schools.com/cssref/css3_pr_transition-timing-function.asp))_
+
+### Built-in effects
+`ngx-smart-modal` can understand several built-in classes to open differently with a sexy effect:
+
+To change this effect, you can use the `customClass` option (see below) but you also can define your own class names with dedicated effect and pass them to `customClass`!
+
+ - ` `: no class. The modal will show without any transition effect
+ - `.nsm-dialog-animation-fade`: default modal effect with a simple fade effect
+ - `.nsm-dialog-animation-ltr `: the modal comes with a left-to-right effect
+ - `.nsm-dialog-animation-rtl`: the modal comes with a right-to-left effect
+ - `.nsm-dialog-animation-ttb`: the modal comes with a top-to-bottom effect
+ - `.nsm-dialog-animation-btt`: the modal comes with a bottom-to-top effect
+
 
 ## Parameters / Options
 `ngx-smart-modal` comes with some parameters / options in order to make it fit your needs. The following parameters / options needs to be used like this: `<ngx-smart-modal [parameter-or-option-name]="value"></ngx-smart-modal>`
@@ -99,11 +161,13 @@ The below documentation will use the following pattern:
 
 - `force` (boolean) | true ― _If true and if you declare another modal instance with the same identifier that another, the service will override it by the new you declare in the modal stack._
 
-- `customClass` (string) | `''` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated classnames_
+- `customClass` (string) | `''` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated class names_
 
 - `visible` (boolean) | `false` ― _Define if the modal is shown or not. Automatically toggled with open() and close()/dismiss() methods._
 
-- `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. Tip: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
+- `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. **Tip**: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
+
+- `hideDelay` (number) | `500` ― _Opening / closing class delay **in milliseconds**. ⚠️ Only for `NgxSmartModal >= 6.0.0`!_
 
 
 ## Manipulate modals
@@ -179,6 +243,8 @@ After that, you can retrieve the modal data directly from the view with the `get
  - `onDismiss`: modal is closing by clicking on its backdrop
  - `onDismissFinished`: modal has been closed by clicking on its backdrop
  - `onEscape`: modal has been closed by escape key
+ - `onAnyCloseEvent`: modal is closing whatever the kind of event (close / escape / dismiss)
+ - `onAnyCloseEventFinished`: modal has been closed whatever the kind of event (close / escape / dismiss)
  - `visibleChange`: modal visibility has changed (regardless of the modal visibility state)
  - `onDataAdded`: data were added to the modal (using `setData()`)
  - `onDataRemoved` data were removed from the modal (using `removeData()`)
@@ -226,25 +292,61 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((event: Event) => {
-      console.log('Rickroll modal opened!', event);
+    this.ngxSmartModalService.getModal('videoModal').onOpen.subscribe((modal: NgxSmartModalComponent) => {
+      console.log('Rickroll modal opened!', modal);
     });
   }
 }
 ```
+
+
+## API
+`ngx-smart-modal` also comes with the `NgxSmartModalService` that you can use in any component like this:
+```
+import { Component } from '@angular/core';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+
+@Component({
+  ...
+})
+export class AppComponent {
+  constructor(public ngxSmartModalService: NgxSmartModalService) {
+  }
+}
+```
+**List of available methods**:
+ - `addModal(modalInstance: ModalInstance, force?: boolean)`: add a new modal instance
+ - `getModal(id: string)`: retrieve a modal instance by its identifier
+ - `open(id: string, force?: boolean)`: open a given modal
+ - `close(id: string)`: close a given modal
+ - `getModalStack()`: retrieve all the created modals
+ - `getOpenedModals()`: retrieve all the opened modals
+ - `getHigherIndex()`: get the higher `z-index` value between all the modal instances
+ - `getModalStackCount()`: it gives the number of modal instances
+ - `removeModal(id: string)`: remove a modal instance from the modal stack
+ - `setModalData(data: any, id: string, force?: boolean)`: associate data to an identified modal
+ - `getModalData(id: string)`: retrieve modal data by its identifier
+ - `resetModalData(id: string)`: reset the data attached to a given modal
+ - `closeLatestModal()`: Close the latest opened modal **if it has been declared as escapable**
+
+To get more details about the available methods, their parameters and what they return, please take a look at **[ngx-smart-modal.service.ts](https://github.com/biig-io/ngx-smart-modal/blob/master/src/ngx-smart-modal/src/services/ngx-smart-modal.service.ts)** file (well documented). 
+
+
 ## Author and Maintainer
 * [Maxime LAFARIE](https://github.com/maximelafarie)
 
-## Issues
 
+## Issues
 If you wish to submit an issue, please use the available template to facilitate reading and comprehension of all issues encountered. You can find this template in `./github/issue_template.md`.
+
 
 ## Contribute
 Firstly fork this repo, then clone your fork and go inside the root of the freshly forked project.
 Run `npm i` or `yarn` to install dependencies then `yarn start` to start the angular-cli demo.
-To modify the library, go into `src/ngx-smart-modal` and do some code! 🤓
+To modify the library, go into `src/ngx-smart-modal` and do some code (and some tests)! 🤓
 When you've finished, commit and push it to your forked repo, and make a PR to the official `ngx-smart-modal` repo!
 Thank you for your support, you rock! 🤘🎸
+
 
 ## How it works
 Basically, imagine that the component is based on a service that stores any modals you create in order to let you pick them up and manage them anywhere in your app at any time.
