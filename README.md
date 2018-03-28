@@ -99,7 +99,7 @@ And import `ngx-smart-modal.scss` or `ngx-smart-modal.css` in a global style fil
 Example **styles.scss**:
 ```
 /* You can add global styles to this file, and also import other style files */
-@import "ngx-smart-modal/src/ngx-smart-modal";
+@import "ngx-smart-modal/ngx-smart-modal";
 @import "app/app.component";
 ...
 ```
@@ -115,7 +115,7 @@ Example **styles.scss**:
 $color-overlay: rgba(0, 0, 0, .7);
 $dialog-position-top: 20%;
 
-@import "ngx-smart-modal/src/ngx-smart-modal";
+@import "ngx-smart-modal/ngx-smart-modal";
 ...
 ```
 _Note that variables needs to be overridden **before** `@import`!_
