@@ -66,6 +66,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.layerPosition += this.ngxSmartModalService.getModalStackCount();
     this.ngxSmartModalService.addModal({id: this.identifier, modal: this}, this.force);
+    if(this.visible) {
+      this.open();
+    }
   }
 
   public ngOnDestroy() {
