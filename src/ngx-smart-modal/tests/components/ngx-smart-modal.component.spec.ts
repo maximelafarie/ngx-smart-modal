@@ -309,4 +309,12 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
+  it('should open modal when visible setting is true', async(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    app.visible = true;
+    expect(app.isVisible()).toBeTruthy();
+  }));
+
 });
