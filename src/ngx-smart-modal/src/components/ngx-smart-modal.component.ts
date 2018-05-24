@@ -66,7 +66,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.layerPosition += this.ngxSmartModalService.getModalStackCount();
     this.ngxSmartModalService.addModal({id: this.identifier, modal: this}, this.force);
-    if(this.visible) {
+
+    if (this.visible) {
       this.open();
     }
   }
@@ -79,6 +80,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     if (top) {
       this.layerPosition = this.ngxSmartModalService.getHigherIndex();
     }
+
     this.renderer.addClass(document.body, 'dialog-open');
     this.overlayVisible = true;
     this.visible = true;
