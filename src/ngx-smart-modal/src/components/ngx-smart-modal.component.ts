@@ -2,12 +2,12 @@ import {
   Input,
   Output,
   OnInit,
+  OnDestroy,
   Renderer2,
   Component,
-  OnDestroy,
   EventEmitter,
   HostListener,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from '@angular/core';
 import {NgxSmartModalService} from '../services/ngx-smart-modal.service';
 
@@ -33,12 +33,13 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public closable: boolean = true;
   @Input() public escapable: boolean = true;
   @Input() public dismissable: boolean = true;
-  @Input() public identifier: string;
+  @Input() public identifier: string = '';
   @Input() public customClass: string = 'nsm-dialog-animation-fade';
   @Input() public visible: boolean = false;
   @Input() public backdrop: boolean = true;
   @Input() public force: boolean = true;
   @Input() public hideDelay: number = 500;
+  @Input() public autostart: boolean = false;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -56,32 +57,36 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public overlayVisible: boolean = false;
   public openedClass: boolean = false;
 
-  private data: any = null;
+  private _data: any = null;
 
-  constructor(private renderer: Renderer2,
-              private changeDetectorRef: ChangeDetectorRef,
-              private ngxSmartModalService: NgxSmartModalService) {
+  constructor(private _renderer: Renderer2,
+              private _changeDetectorRef: ChangeDetectorRef,
+              private _ngxSmartModalService: NgxSmartModalService) {
   }
 
   public ngOnInit() {
-    this.layerPosition += this.ngxSmartModalService.getModalStackCount();
-    this.ngxSmartModalService.addModal({id: this.identifier, modal: this}, this.force);
+    if (!!this.identifier && this.identifier.length) {
+      this.layerPosition += this._ngxSmartModalService.getModalStackCount();
+      this._ngxSmartModalService.addModal({ id: this.identifier, modal: this }, this.force);
 
-    if (this.visible) {
-      this.open();
+      if (this.autostart) {
+        this._ngxSmartModalService.open(this.identifier);
+      }
+    } else {
+      throw new Error('identifier field isn’t set. Please set one before calling <ngx-smart-modal> in a template.');
     }
   }
 
   public ngOnDestroy() {
-    this.ngxSmartModalService.removeModal(this.identifier);
+    this._ngxSmartModalService.removeModal(this.identifier);
   }
 
   public open(top?: boolean): void {
     if (top) {
-      this.layerPosition = this.ngxSmartModalService.getHigherIndex();
+      this.layerPosition = this._ngxSmartModalService.getHigherIndex();
     }
 
-    this.renderer.addClass(document.body, 'dialog-open');
+    this._renderer.addClass(document.body, 'dialog-open');
     this.overlayVisible = true;
     this.visible = true;
     this.openedClass = true;
@@ -95,15 +100,15 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this.onClose.emit(this);
     this.onAnyCloseEvent.emit(this);
 
-    if (this.ngxSmartModalService.getOpenedModals().length < 2) {
-      this.renderer.removeClass(document.body, 'dialog-open');
+    if (this._ngxSmartModalService.getOpenedModals().length < 2) {
+      this._renderer.removeClass(document.body, 'dialog-open');
     }
 
     setTimeout(() => {
       me.visibleChange.emit(me.visible);
       me.visible = false;
       me.overlayVisible = false;
-      me.changeDetectorRef.markForCheck();
+      me._changeDetectorRef.markForCheck();
       me.onCloseFinished.emit(me);
       me.onAnyCloseEventFinished.emit(me);
     }, this.hideDelay);
@@ -121,18 +126,26 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       this.onDismiss.emit(this);
       this.onAnyCloseEvent.emit(this);
 
-      if (this.ngxSmartModalService.getOpenedModals().length < 2) {
-        this.renderer.removeClass(document.body, 'dialog-open');
+      if (this._ngxSmartModalService.getOpenedModals().length < 2) {
+        this._renderer.removeClass(document.body, 'dialog-open');
       }
 
       setTimeout(() => {
         me.visible = false;
         me.visibleChange.emit(me.visible);
         me.overlayVisible = false;
-        me.changeDetectorRef.markForCheck();
+        me._changeDetectorRef.markForCheck();
         me.onDismissFinished.emit(me);
         me.onAnyCloseEventFinished.emit(me);
       }, this.hideDelay);
+    }
+  }
+
+  public toggle(top?: boolean) {
+    if (this.visible) {
+      this.close();
+    } else {
+      this.open(top);
     }
   }
 
@@ -157,37 +170,37 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   public hasData(): boolean {
-    return !!this.data;
+    return !!this._data;
   }
 
   public setData(data: any, force?: boolean): any {
-    if (!this.data || (!!this.data && force)) {
+    if (!this._data || (!!this._data && force)) {
       setTimeout(() => {
-        this.data = data;
-        this.onDataAdded.emit(this.data);
+        this._data = data;
+        this.onDataAdded.emit(this._data);
       });
     }
   }
 
   public getData(): any {
-    return this.data;
+    return this._data;
   }
 
   public removeData(): void {
     setTimeout(() => {
-      this.data = null;
+      this._data = null;
       this.onDataRemoved.emit(true);
     });
   }
 
   @HostListener('document:keyup', ['$event'])
-  private escapeKeyboardEvent(event: KeyboardEvent) {
+  public escapeKeyboardEvent(event: KeyboardEvent) {
     if (event.keyCode === 27 && this.visible) {
       if (!this.escapable) {
         return false;
       } else {
         this.onEscape.emit(this);
-        this.ngxSmartModalService.closeLatestModal();
+        this._ngxSmartModalService.closeLatestModal();
       }
     }
   }

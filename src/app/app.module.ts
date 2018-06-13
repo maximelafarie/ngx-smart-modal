@@ -9,6 +9,7 @@ import { ForkMeComponent } from './fork-me/fork-me.component';
 import { BootstrapComponent } from './bootstrap/bootstrap.component';
 import { MaterializeComponent } from './materialize/materialize.component';
 import { FoundationComponent } from './foundation/foundation.component';
+import { AutostartComponent } from './autostart/autostart.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FoundationComponent } from './foundation/foundation.component';
     ForkMeComponent,
     BootstrapComponent,
     MaterializeComponent,
-    FoundationComponent
+    FoundationComponent,
+    AutostartComponent
   ],
   imports: [
     BrowserModule,
