@@ -42,6 +42,15 @@ export class NgxSmartModalService {
   }
 
   /**
+   * Alias of `getModal` to retrieve a modal instance by its identifier.
+   *
+   * @param id The modal identifier used at creation time.
+   */
+  public get(id: string): NgxSmartModalComponent {
+    return this.getModal(id);
+  }
+
+  /**
    * Open a given modal
    *
    * @param id The modal identifier used at creation time.
@@ -69,6 +78,24 @@ export class NgxSmartModalService {
     });
     if (!!instance) {
       instance.modal.close();
+    } else {
+      throw new Error('Modal not found');
+    }
+  }
+
+  /**
+   * Toggles a given modal
+   * If the retrieved modal is opened it closes it, else it opens it.
+   *
+   * @param id The modal identifier used at creation time.
+   * @param force Tell the modal to open top of all other opened modals
+   */
+  public toggle(id: string, force = false) {
+    const instance = this.modalStack.find((o: ModalInstance) => {
+      return o.id === id;
+    });
+    if (!!instance) {
+      instance.modal.toggle(force);
     } else {
       throw new Error('Modal not found');
     }

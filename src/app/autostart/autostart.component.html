@@ -1,0 +1,34 @@
+<div class="container">
+  <h1 class="title">Autostarted modal</h1>
+  <div class="white">
+    Hey, I'm a modal that will opens as soon as the library is fully loaded! As you can see, it's quite fast!
+  </div>
+  <div class="buttons">
+    <button class="button -regular"
+            (click)="classicModal.open()">But you also can open me as a classic modal!</button>
+  </div>
+
+  <div class="go-back">
+    <a routerLink="..">← Go back</a>
+  </div>
+
+  <footer class="footer">
+    Demo using Anuglar {{version}}
+    <br> Released under the
+    <a href="https://github.com/biig-io/ngx-smart-modal/blob/master/LICENSE">ISC</a> license.
+    <a href="https://github.com/biig-io/ngx-smart-modal">View source</a>.
+  </footer>
+</div>
+
+<!-- Classic modal -->
+<ngx-smart-modal #classicModal
+                 [identifier]="'classicModal'"
+                 [autostart]="true">
+  <h1>Hey, I'm an autostarted modal!</h1>
+  <img class="modal-image"
+       src="http://lorempicsum.com/futurama/627/200/3"
+       alt="Lorem picsum">
+  <p>{{ sampleText }}</p>
+  <button class="button -dark"
+          (click)="classicModal.close()">Close</button>
+</ngx-smart-modal>

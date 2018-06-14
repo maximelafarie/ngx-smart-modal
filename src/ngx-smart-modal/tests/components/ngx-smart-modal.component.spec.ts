@@ -35,6 +35,19 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
+  it('should toggle the modal directly', async(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    expect(app.isVisible()).toBeFalsy();
+    app.toggle(true);
+    expect(app.isVisible()).toBeTruthy();
+    app.toggle();
+    app.onCloseFinished.subscribe(() => {
+      expect(app.isVisible()).toBeFalsy();
+    });
+  }));
+
   it('should close the modal by escape keyup', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;

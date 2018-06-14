@@ -69,4 +69,8 @@ export class MainComponent implements AfterViewInit {
     this.router.navigate(['foundation']);
   }
 
+  goAutoStart() {
+    this.router.navigate(['/', 'autostart']);
+  }
+
 }

@@ -33,6 +33,17 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
+  it('should retrieve the created modal with method shortened alias', async(() => {
+    inject([NgxSmartModalService],
+      (ngxSmartModalService: NgxSmartModalService) => {
+        const fixture = TestBed.createComponent(NgxSmartModalComponent);
+        const app = fixture.debugElement.componentInstance;
+        app.identifier = 'myModal';
+        const myModal = ngxSmartModalService.get('myModal');
+        expect(myModal).toEqual(app);
+      });
+  }));
+
   it('should create and remove a modal, then re-add the deleted modal', async(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
@@ -94,6 +105,31 @@ describe('NgxSmartModalService', () => {
 
         /* Close */
         ngxSmartModalService.close('myModal');
+        expect(compiled.querySelector('.dialog').isDisplayed).toBeFalsy();
+        expect(app.isVisible).toBeFalsy();
+      });
+  }));
+
+  it('should toggle the modal remotely', async(() => {
+    inject([NgxSmartModalService],
+      (ngxSmartModalService: NgxSmartModalService) => {
+        const fixture = TestBed.createComponent(NgxSmartModalComponent);
+        const app = fixture.debugElement.componentInstance;
+        app.identifier = 'myModal';
+        const compiled = fixture.debugElement.nativeElement;
+        spyOn(app, 'isVisible').and.callThrough();
+
+        expect(app.isVisible).toBeFalsy();
+
+        /* Open */
+        ngxSmartModalService.toggle('myModal');
+        expect(compiled.querySelector('.dialog').isDisplayed).toBeTruthy();
+        expect(app.isVisible).toBeTruthy();
+        expect(ngxSmartModalService.getOpenedModals().length).toEqual(1);
+        expect(app.isVisible).toHaveBeenCalled();
+
+        /* Close */
+        ngxSmartModalService.toggle('myModal');
         expect(compiled.querySelector('.dialog').isDisplayed).toBeFalsy();
         expect(app.isVisible).toBeFalsy();
       });
