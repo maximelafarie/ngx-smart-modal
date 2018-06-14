@@ -1,17 +1,17 @@
 ![ngx-smart-modal](https://user-images.githubusercontent.com/5319267/28756216-65c335c4-756a-11e7-9ac5-6a0e0cd8ea22.png)
 
-[![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
+[![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Greenkeeper badge](https://badges.greenkeeper.io/biig-io/ngx-smart-modal.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/biig-io/ngx-smart-modal.svg?branch=master)](https://travis-ci.org/biig-io/ngx-smart-modal) [![npm version](https://badge.fury.io/js/ngx-smart-modal.svg)](https://badge.fury.io/js/ngx-smart-modal) [![npm downloads](https://img.shields.io/npm/dm/ngx-smart-modal.svg)](https://npmjs.org/ngx-smart-modal) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/8763afb5afe5443bb18c63f7721cd53c)](https://www.codacy.com/app/maximelafarie/ngx-smart-modal?utm_source=github.com&utm_medium=referral&utm_content=biig-io/ngx-smart-modal&utm_campaign=Badge_Coverage) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8763afb5afe5443bb18c63f7721cd53c)](https://www.codacy.com/app/maximelafarie/ngx-smart-modal?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=biig-io/ngx-smart-modal&amp;utm_campaign=Badge_Grade)
 
-`ngx-smart-modal` is a lightweight and very complete Angular library for managing modals inside any Angular project. It was built for modern browsers using TypeScript, HTML5 and Angular >=2.0.0.
+`ngx-smart-modal` is a lightweight and very complete Angular library for managing modals inside any Angular project. It was built for modern browsers using TypeScript, HTML5 and Angular >=2.4.0.
 
 ## Demo
 http://biig-io.github.io/ngx-smart-modal/
 
 
 ## No external library, no jQuery! 🤘
-To avoid imposing you to download a CSS library by using this package, you simply have to use our built-in SCSS/CSS file with custom animations and overridable variables. So get rid of being forced to use a CSS library you don't want to! In addition, it doesn't use jQuery either!  
+To avoid imposing you to download a CSS library by using this package, you simply have to use our built-in SCSS/CSS file with custom animations and overridable variables. So get rid of being forced to use a CSS library you don't want to! In addition, it doesn't use jQuery either!
 
 ![NgxSmartModal is the CSS frameworks's friend!](src/assets/css_frameworks.png)
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
@@ -49,8 +49,8 @@ yarn add ngx-smart-modal
 ⚠️ If you have the following warning after install **(for NgxSmartModal <= 5.0.0)**:
 ```
 npm WARN ngx-smart-modal@x.x.x requires a peer of web-animations-js@>=x.x.x but none was installed.
-``` 
-or 
+```
+or
 ```
 warning "ngx-smart-modal@x.x.x" has unmet peer dependency "web-animations-js@>=x.x.x".
 ```
@@ -72,7 +72,7 @@ System.config({
 });
 ```
 
-Then add 
+Then add
 `NgxSmartModalModule` (with `.forRoot()` or `.forChild()` depending if the module which you import the library into is the main module of your project or a nested module) and `NgxSmartModalService` to your project `NgModule`
 ```
 import { BrowserModule } from '@angular/platform-browser';
@@ -121,7 +121,7 @@ $dialog-position-top: 20%;
 _Note that variables needs to be overridden **before** `@import`!_
 
 ### Available SCSS variables
-The below documentation will use the following pattern: 
+The below documentation will use the following pattern:
 > `parameter/option name` (type) | default value | _description_
 
 - `$color-overlay` (hex / rgb / rgba) | `rgba(0, 0, 0, .5)` ― _Modifies the modals overlay background color_
@@ -148,7 +148,7 @@ To change this effect, you can use the `customClass` option (see below) but you 
 ## Parameters / Options
 `ngx-smart-modal` comes with some parameters / options in order to make it fit your needs. The following parameters / options needs to be used like this: `<ngx-smart-modal [parameter-or-option-name]="value"></ngx-smart-modal>`
 
-The below documentation will use the following pattern: 
+The below documentation will use the following pattern:
 > `parameter/option name` (type) | default value | required? ― _description_
 
 - `closable` (boolean) | `true` ― _Show / hide the cross icon at the top right corner of the modal_
@@ -168,6 +168,8 @@ The below documentation will use the following pattern:
 - `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. **Tip**: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
 
 - `hideDelay` (number) | `500` ― _Opening / closing class delay **in milliseconds**. ⚠️ Only for `NgxSmartModal >= 6.0.0`!_
+
+- `autostart` (boolean) | `false` ― _Define if the modal is showing up automatically when loaded or not._
 
 
 ## Manipulate modals
@@ -317,8 +319,10 @@ export class AppComponent {
 **List of available methods**:
  - `addModal(modalInstance: ModalInstance, force?: boolean)`: add a new modal instance
  - `getModal(id: string)`: retrieve a modal instance by its identifier
+ - `get(id: string)`: retrieve a modal instance by its identifier (alias of `getModal`)
  - `open(id: string, force?: boolean)`: open a given modal
  - `close(id: string)`: close a given modal
+ - `toggle(id: string, force?: boolean)`: toggle a given modal
  - `getModalStack()`: retrieve all the created modals
  - `getOpenedModals()`: retrieve all the opened modals
  - `getHigherIndex()`: get the higher `z-index` value between all the modal instances
@@ -329,7 +333,7 @@ export class AppComponent {
  - `resetModalData(id: string)`: reset the data attached to a given modal
  - `closeLatestModal()`: Close the latest opened modal **if it has been declared as escapable**
 
-To get more details about the available methods, their parameters and what they return, please take a look at **[ngx-smart-modal.service.ts](https://github.com/biig-io/ngx-smart-modal/blob/master/src/ngx-smart-modal/src/services/ngx-smart-modal.service.ts)** file (well documented). 
+To get more details about the available methods, their parameters and what they return, please take a look at **[ngx-smart-modal.service.ts](https://github.com/biig-io/ngx-smart-modal/blob/master/src/ngx-smart-modal/src/services/ngx-smart-modal.service.ts)** file (well documented).
 
 
 ## Author and Maintainer
