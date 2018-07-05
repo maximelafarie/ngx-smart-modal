@@ -2,6 +2,9 @@ import {inject, TestBed, async, tick, fakeAsync} from '@angular/core/testing';
 
 import {NgxSmartModalComponent, NgxSmartModalService} from '../../';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+
 describe('NgxSmartModalComponent', () => {
 
   beforeEach(async(() => {
@@ -144,8 +147,11 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with close event
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
+
     expect(app.visible).toBeTruthy();
+
     app.onAnyCloseEventFinished.subscribe(() => {
       expect(app.visible).toBeFalsy();
       expect(app.openedClass).toBeFalsy();
@@ -160,9 +166,13 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with dismiss event
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
+
     fixture.detectChanges();
+
     expect(app.visible).toBeTruthy();
+
     const compiled = fixture.debugElement.nativeElement;
     const fakeEvent = {
       target: compiled.querySelector('.overlay')

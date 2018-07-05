@@ -143,6 +143,7 @@ To change this effect, you can use the `customClass` option (see below) but you 
  - `.nsm-dialog-animation-rtl`: the modal comes with a right-to-left effect
  - `.nsm-dialog-animation-ttb`: the modal comes with a top-to-bottom effect
  - `.nsm-dialog-animation-btt`: the modal comes with a bottom-to-top effect
+ - `.nsm-centered`: the modal is centered vertical
 
 
 ## Parameters / Options
@@ -170,6 +171,8 @@ The below documentation will use the following pattern:
 - `hideDelay` (number) | `500` ― _Opening / closing class delay **in milliseconds**. ⚠️ Only for `NgxSmartModal >= 6.0.0`!_
 
 - `autostart` (boolean) | `false` ― _Define if the modal is showing up automatically when loaded or not._
+
+- `target` (string) | `undefined` ― _Displays the modal at the location of the target element
 
 
 ## Manipulate modals

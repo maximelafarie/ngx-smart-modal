@@ -25,7 +25,7 @@ $coal-dust: #edeeee;
 // font
 $font-face: 'Roboto', sans-serif;
 
-html, body {
+body {
   position: relative;
   height: 100%;
   margin: 0;
@@ -35,7 +35,6 @@ html, body {
 body {
   font-family: $font-face;
   font-size: 16px;
-  transform: translate3d(0, 0, 0);
   filter: progid:DXImageTransform.Microsoft.gradient(
       startColorstr='#1e5799',
       endColorstr='#7db9e8',
@@ -75,7 +74,6 @@ pre {
   position: relative;
   width: 100%;
   max-width: $maxWidth;
-  height: 100vh;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -89,6 +87,10 @@ pre {
     color: #fff;
     text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
   }
+}
+
+h1 {
+  margin: 5px auto;
 }
 
 .modal-image {
