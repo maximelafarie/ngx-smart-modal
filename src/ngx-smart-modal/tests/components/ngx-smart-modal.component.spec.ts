@@ -75,6 +75,7 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with escape event
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     expect(app.visible).toBeTruthy();
@@ -92,6 +93,7 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with close event
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     expect(app.visible).toBeTruthy();
     app.onAnyCloseEvent.subscribe(() => {
@@ -108,6 +110,7 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with dismiss event
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     fixture.detectChanges();
     expect(app.visible).toBeTruthy();
@@ -130,6 +133,7 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with escape event
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     expect(app.visible).toBeTruthy();
@@ -191,6 +195,8 @@ describe('NgxSmartModalComponent', () => {
     const event = new KeyboardEvent('keyup', {key: 'Escape'});
     app.identifier = 'myModal';
     app.escapable = false;
+
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     dispatchEvent(event);
     expect(app.visible).toBeTruthy();
@@ -201,6 +207,8 @@ describe('NgxSmartModalComponent', () => {
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
     const compiled = fixture.debugElement.nativeElement;
+
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     app.onOpen.subscribe(() => {
       compiled.querySelector('button.nsm-dialog-btn-close').click();
@@ -214,6 +222,8 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
     const compiled = fixture.debugElement.nativeElement;
     spyOn(app, 'dismiss').and.callThrough();
+
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     fixture.detectChanges();
@@ -235,6 +245,8 @@ describe('NgxSmartModalComponent', () => {
     app.dismissable = false;
     const compiled = fixture.debugElement.nativeElement;
     spyOn(app, 'dismiss').and.callThrough();
+
+    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     fixture.detectChanges();
