@@ -15,9 +15,6 @@ $transition-timing-function: ease-in-out !default;
 // Body if modal is opened
 body.dialog-open {
   overflow: hidden;
-
-  ngx-smart-modal {
-  }
 }
 
 // Close button in modal
@@ -64,7 +61,6 @@ body.dialog-open {
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
-
 
   // When dialog is closing
   &.nsm-dialog-close {

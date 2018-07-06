@@ -23,7 +23,7 @@ import 'rxjs/add/observable/timer';
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
          (click)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
-           class="nsm-dialog {{ openedClass ? 'nsm-dialog-open' : 'nsm-dialog-close'}}" [ngClass]="customClass" #nsmDialog>
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
         <div class="nsm-content" #nsmContent>
           <div class="nsm-body">
             <ng-content></ng-content>
@@ -50,10 +50,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public autostart: boolean = false;
   @Input() public target: any;
 
-  @ViewChild('nsmContent') nsmContent: ElementRef;
-  @ViewChild('nsmDialog') nsmDialog: ElementRef;
-  @ViewChild('nsmOverlay') nsmOverlay: ElementRef;
-
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
   @Output() public onCloseFinished: EventEmitter<any> = new EventEmitter();
@@ -71,6 +67,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public openedClass: boolean = false;
 
   private _data: any = null;
+
+  @ViewChild('nsmContent') private nsmContent: ElementRef;
+  @ViewChild('nsmDialog') private nsmDialog: ElementRef;
+  @ViewChild('nsmOverlay') private nsmOverlay: ElementRef;
 
   constructor(private _renderer: Renderer2,
               private _changeDetectorRef: ChangeDetectorRef,
@@ -103,7 +103,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this.overlayVisible = true;
     this.visible = true;
 
-    Observable.timer(0).subscribe(() => {
+    Observable.timer(50).subscribe(() => {
       this.openedClass = true;
 
       if (this.target) {
@@ -112,42 +112,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     });
 
     this.onOpen.emit(this);
-  }
-
-  @HostListener('window:resize')
-  private targetPlacement() {
-    if (!this.nsmContent || !this.target) {
-      return;
-    }
-
-    const targetElementRect = document.querySelector(this.target).getBoundingClientRect();
-    const bodyRect = this.nsmOverlay.nativeElement.getBoundingClientRect();
-
-    const nsmContentRect = this.nsmContent.nativeElement.getBoundingClientRect();
-    const nsmDialogRect = this.nsmDialog.nativeElement.getBoundingClientRect();
-
-    const marginLeft = parseInt(getComputedStyle(this.nsmContent.nativeElement).marginLeft as any, 10);
-    const marginTop = parseInt(getComputedStyle(this.nsmContent.nativeElement).marginTop as any, 10);
-
-    let offsetTop = targetElementRect.top - nsmDialogRect.top - ((nsmContentRect.height - targetElementRect.height) / 2);
-    let offsetLeft = targetElementRect.left - nsmDialogRect.left - ((nsmContentRect.width - targetElementRect.width) / 2);
-
-    if (offsetLeft + nsmDialogRect.left + nsmContentRect.width + (marginLeft * 2) > bodyRect.width) {
-      offsetLeft = bodyRect.width - (nsmDialogRect.left + nsmContentRect.width) - (marginLeft * 2);
-    } else if (offsetLeft + nsmDialogRect.left < 0) {
-      offsetLeft = -nsmDialogRect.left;
-    }
-
-    if (offsetTop + nsmDialogRect.top + nsmContentRect.height + marginTop > bodyRect.height) {
-      offsetTop = bodyRect.height - (nsmDialogRect.top + nsmContentRect.height) - marginTop;
-
-      if (offsetTop < 0) {
-        offsetTop = 0;
-      }
-    }
-
-    this._renderer.setStyle(this.nsmContent.nativeElement, 'top', offsetTop + 'px');
-    this._renderer.setStyle(this.nsmContent.nativeElement, 'left', offsetLeft + 'px');
   }
 
   public close(): void {
@@ -256,5 +220,41 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         this._ngxSmartModalService.closeLatestModal();
       }
     }
+  }
+
+  @HostListener('window:resize')
+  private targetPlacement() {
+    if (!this.nsmContent || !this.target) {
+      return;
+    }
+
+    const targetElementRect = document.querySelector(this.target).getBoundingClientRect();
+    const bodyRect = this.nsmOverlay.nativeElement.getBoundingClientRect();
+
+    const nsmContentRect = this.nsmContent.nativeElement.getBoundingClientRect();
+    const nsmDialogRect = this.nsmDialog.nativeElement.getBoundingClientRect();
+
+    const marginLeft = parseInt(getComputedStyle(this.nsmContent.nativeElement).marginLeft as any, 10);
+    const marginTop = parseInt(getComputedStyle(this.nsmContent.nativeElement).marginTop as any, 10);
+
+    let offsetTop = targetElementRect.top - nsmDialogRect.top - ((nsmContentRect.height - targetElementRect.height) / 2);
+    let offsetLeft = targetElementRect.left - nsmDialogRect.left - ((nsmContentRect.width - targetElementRect.width) / 2);
+
+    if (offsetLeft + nsmDialogRect.left + nsmContentRect.width + (marginLeft * 2) > bodyRect.width) {
+      offsetLeft = bodyRect.width - (nsmDialogRect.left + nsmContentRect.width) - (marginLeft * 2);
+    } else if (offsetLeft + nsmDialogRect.left < 0) {
+      offsetLeft = -nsmDialogRect.left;
+    }
+
+    if (offsetTop + nsmDialogRect.top + nsmContentRect.height + marginTop > bodyRect.height) {
+      offsetTop = bodyRect.height - (nsmDialogRect.top + nsmContentRect.height) - marginTop;
+
+      if (offsetTop < 0) {
+        offsetTop = 0;
+      }
+    }
+
+    this._renderer.setStyle(this.nsmContent.nativeElement, 'top', offsetTop + 'px');
+    this._renderer.setStyle(this.nsmContent.nativeElement, 'left', offsetLeft + 'px');
   }
 }
