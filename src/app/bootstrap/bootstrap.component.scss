@@ -16,7 +16,7 @@
 
   .title {
     color: #fff;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -29,7 +29,9 @@
 }
 
 .no-padding {
-  padding: 0 !important;
+  .nsm-content {
+    padding: 0 !important;
+  }
 }
 
 .go-back {

@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

@@ -46,7 +46,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public visible: boolean = false;
   @Input() public backdrop: boolean = true;
   @Input() public force: boolean = true;
-  @Input() public hideDelay: number = 500;
+  @Input() public hideDelay: number = 200;
   @Input() public autostart: boolean = false;
   @Input() public target: any;
 
@@ -72,15 +72,16 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @ViewChild('nsmDialog') private nsmDialog: ElementRef;
   @ViewChild('nsmOverlay') private nsmOverlay: ElementRef;
 
-  constructor(private _renderer: Renderer2,
-              private _changeDetectorRef: ChangeDetectorRef,
-              private _ngxSmartModalService: NgxSmartModalService) {
-  }
+  constructor(
+    private _renderer: Renderer2,
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _ngxSmartModalService: NgxSmartModalService
+  ) { }
 
   public ngOnInit() {
     if (!!this.identifier && this.identifier.length) {
       this.layerPosition += this._ngxSmartModalService.getModalStackCount();
-      this._ngxSmartModalService.addModal({id: this.identifier, modal: this}, this.force);
+      this._ngxSmartModalService.addModal({ id: this.identifier, modal: this }, this.force);
 
       if (this.autostart) {
         this._ngxSmartModalService.open(this.identifier);
@@ -109,6 +110,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       if (this.target) {
         this.targetPlacement();
       }
+
+      this._changeDetectorRef.markForCheck();
     });
 
     this.onOpen.emit(this);
@@ -194,6 +197,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     if (!this._data || (!!this._data && force)) {
       Observable.timer(0).subscribe(() => {
         this._data = data;
+        this._changeDetectorRef.markForCheck();
         this.onDataAdded.emit(this._data);
       });
     }
@@ -206,6 +210,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public removeData(): void {
     Observable.timer(0).subscribe(() => {
       this._data = null;
+      this._changeDetectorRef.markForCheck();
       this.onDataRemoved.emit(true);
     });
   }
