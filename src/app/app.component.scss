@@ -45,8 +45,8 @@ pre {
   font-family: monospace;
   white-space: pre;
   overflow-x: auto;
-  background-color: rgba(0, 0, 0, 0.75);
-  border-left: 0.5rem solid rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, .75);
+  border-left: .5rem solid rgba(0, 0, 0, .5);
   color: #fbaf5c;
   margin: 0;
   padding: 1rem;
@@ -77,7 +77,7 @@ pre {
 
   .title {
     color: #fff;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
   }
 }
 

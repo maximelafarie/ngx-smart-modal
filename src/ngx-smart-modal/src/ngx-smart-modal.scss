@@ -1,5 +1,5 @@
 // Color of overlay background
-$color-overlay: rgba(0, 0, 0, 0.5) !default;
+$color-overlay: rgba(0, 0, 0, .5) !default;
 
 // Position of dialog
 $dialog-position-top: 1.75rem !default;
@@ -86,7 +86,7 @@ body.dialog-open {
   border-radius: 2px;
   padding: 1rem;
   margin: $dialog-position-top;
-  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, .2), 0 13px 19px 2px rgba(0, 0, 0, .14), 0 5px 24px 4px rgba(0, 0, 0, .12);
   outline: 0;
 }
 
