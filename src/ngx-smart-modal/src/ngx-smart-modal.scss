@@ -6,7 +6,7 @@ $dialog-position-top: 1.75rem !default;
 
 // Transition time
 // !! The same as the hideDelay variable defined in ngx-smart-modal.component.ts
-$transition-duration: 500ms !default;
+$transition-duration: 200ms !default;
 
 // Transition effect
 // linear | ease | ease-in | ease-out | ease-in-out
@@ -38,7 +38,7 @@ body.dialog-open {
   right: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  transition: background-color 500ms;
+  transition: background-color $transition-duration;
   background-color: transparent;
   z-index: 999;
 
@@ -54,13 +54,14 @@ body.dialog-open {
 // Dialog modal
 .nsm-dialog {
   position: relative;
-  transform: translate(0, 0);
+  transform: translate3d(0, 0, 0); // for performance purposes
   opacity: 1;
   visibility: visible;
   min-height: 200px;
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
+  pointer-events: none;
 
   // When dialog is closing
   &.nsm-dialog-close {
@@ -76,12 +77,7 @@ body.dialog-open {
 
 .nsm-content {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   pointer-events: auto;
   background-clip: padding-box;

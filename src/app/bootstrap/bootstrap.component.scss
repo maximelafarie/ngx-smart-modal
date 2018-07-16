@@ -29,7 +29,9 @@
 }
 
 .no-padding {
-  padding: 0 !important;
+  .nsm-content {
+    padding: 0 !important;
+  }
 }
 
 .go-back {
