@@ -46,7 +46,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public visible: boolean = false;
   @Input() public backdrop: boolean = true;
   @Input() public force: boolean = true;
-  @Input() public hideDelay: number = 200;
+  @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: any;
 

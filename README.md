@@ -143,7 +143,7 @@ To change this effect, you can use the `customClass` option (see below) but you 
  - `.nsm-dialog-animation-rtl`: the modal comes with a right-to-left effect
  - `.nsm-dialog-animation-ttb`: the modal comes with a top-to-bottom effect
  - `.nsm-dialog-animation-btt`: the modal comes with a bottom-to-top effect
- - `.nsm-centered`: the modal is centered vertical
+ - `.nsm-centered`: the modal is centered vertically
 
 
 ## Parameters / Options
@@ -172,7 +172,7 @@ The below documentation will use the following pattern:
 
 - `autostart` (boolean) | `false` ― _Define if the modal is showing up automatically when loaded or not._
 
-- `target` (string) | `undefined` ― _Displays the modal at the location of the target element
+- `target` (string) | `undefined` ― _Displays the modal relatively to the targeted element. ⚠️ Only for `NgxSmartModal >= 7.0.0`!_
 
 
 ## Manipulate modals
@@ -339,8 +339,25 @@ export class AppComponent {
 To get more details about the available methods, their parameters and what they return, please take a look at **[ngx-smart-modal.service.ts](https://github.com/biig-io/ngx-smart-modal/blob/master/src/ngx-smart-modal/src/services/ngx-smart-modal.service.ts)** file (well documented).
 
 
+## Precautions when upgrading to a newer version
+### Upgrade from <=5.x.x to 6.x.x
+Make sure that you imported `ngx-smart-modal.scss` or `ngx-smart-modal.css` in a global style file (e.g. `styles.scss` or `styles.css` in classic Angular projects or any other scss/css file it imports).
+
+### Upgrade from <=6.x.x to >=7.x.x
+Nothing should break unless if you added custom style to the modal content. In this case, it may break your existing style. To fix it, you simply have to add the `.nsm-body` selector after the `.nsm-dialog` selector because from now, the modal content is wrapped in a `.nsm-body` block.
+
+
 ## Author and Maintainer
 * [Maxime LAFARIE](https://github.com/maximelafarie)
+
+## Contributors
+* [Mark LUCAS](https://github.com/marco10024)
+* [gaetanmarsault](https://github.com/gaetanmarsault)
+* [neromaycry](https://github.com/neromaycry)
+* [Kraus Vincent](https://github.com/khylias)
+* [Andreas Bissinger](https://github.com/be-ndee)
+* [Yosbel Marín](https://github.com/yosbelms)
+* [Thomas Chang](https://github.com/thomascsd)
 
 
 ## Issues
