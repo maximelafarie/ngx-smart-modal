@@ -12,9 +12,6 @@ import {
 
 import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/timer';
-
 @Component({
   selector: 'ngx-smart-modal',
   template: `
@@ -68,9 +65,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any = null;
 
-  @ViewChild('nsmContent') private nsmContent: ElementRef;
-  @ViewChild('nsmDialog') private nsmDialog: ElementRef;
-  @ViewChild('nsmOverlay') private nsmOverlay: ElementRef;
+  @ViewChild('nsmContent') private nsmContent: ElementRef | undefined;
+  @ViewChild('nsmDialog') private nsmDialog: ElementRef | undefined;
+  @ViewChild('nsmOverlay') private nsmOverlay: ElementRef | undefined;
 
   constructor(
     private _renderer: Renderer2,
@@ -104,7 +101,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this.overlayVisible = true;
     this.visible = true;
 
-    Observable.timer(50).subscribe(() => {
+    setTimeout(() => {
       this.openedClass = true;
 
       if (this.target) {
@@ -118,6 +115,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   public close(): void {
+    const me = this;
+
     this.openedClass = false;
     this.onClose.emit(this);
     this.onAnyCloseEvent.emit(this);
@@ -126,17 +125,19 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       this._renderer.removeClass(document.body, 'dialog-open');
     }
 
-    Observable.timer(this.hideDelay).subscribe(() => {
-      this.visibleChange.emit(this.visible);
-      this.visible = false;
-      this.overlayVisible = false;
-      this._changeDetectorRef.markForCheck();
-      this.onCloseFinished.emit(this);
-      this.onAnyCloseEventFinished.emit(this);
-    });
+    setTimeout(() => {
+      me.visibleChange.emit(me.visible);
+      me.visible = false;
+      me.overlayVisible = false;
+      me._changeDetectorRef.markForCheck();
+      me.onCloseFinished.emit(me);
+      me.onAnyCloseEventFinished.emit(me);
+    }, this.hideDelay);
   }
 
   public dismiss(e: any): void {
+    const me = this;
+
     if (!this.dismissable) {
       return;
     }
@@ -150,14 +151,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         this._renderer.removeClass(document.body, 'dialog-open');
       }
 
-      Observable.timer(this.hideDelay).subscribe(() => {
-        this.visible = false;
-        this.visibleChange.emit(this.visible);
-        this.overlayVisible = false;
-        this._changeDetectorRef.markForCheck();
-        this.onDismissFinished.emit(this);
-        this.onAnyCloseEventFinished.emit(this);
-      });
+      setTimeout(() => {
+        me.visible = false;
+        me.visibleChange.emit(me.visible);
+        me.overlayVisible = false;
+        me._changeDetectorRef.markForCheck();
+        me.onDismissFinished.emit(me);
+        me.onAnyCloseEventFinished.emit(me);
+      }, this.hideDelay);
     }
   }
 
@@ -195,22 +196,19 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public setData(data: any, force?: boolean): any {
     if (!this._data || (!!this._data && force)) {
-      Observable.timer(0).subscribe(() => {
+      setTimeout(() => {
         this._data = data;
-        this._changeDetectorRef.markForCheck();
         this.onDataAdded.emit(this._data);
       });
     }
   }
-
   public getData(): any {
     return this._data;
   }
 
   public removeData(): void {
-    Observable.timer(0).subscribe(() => {
+    setTimeout(() => {
       this._data = null;
-      this._changeDetectorRef.markForCheck();
       this.onDataRemoved.emit(true);
     });
   }
@@ -229,7 +227,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   private targetPlacement() {
-    if (!this.nsmContent || !this.target) {
+    if (!this.nsmDialog || !this.nsmContent || !this.nsmOverlay || !this.target) {
       return;
     }
 

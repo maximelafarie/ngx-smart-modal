@@ -4,11 +4,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 const globals = {
     '@angular/core': 'ng.core',
     '@angular/common': 'ng.common',
-    '@angular/platform-browser': 'ng.platformBrowser',
-    'web-animations-js': 'WaJs',
-    'rxjs/Observable': 'Rx',
-    'rxjs/Observer': 'Rx',
-    'rxjs/add/operator/map': 'Rx'
+    '@angular/platform-browser': 'ng.platformBrowser'
 };
 
 export default {

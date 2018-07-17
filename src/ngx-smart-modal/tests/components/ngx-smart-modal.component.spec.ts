@@ -1,9 +1,6 @@
-import {inject, TestBed, async, tick, fakeAsync} from '@angular/core/testing';
+import { inject, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 
-import {NgxSmartModalComponent, NgxSmartModalService} from '../../';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
 describe('NgxSmartModalComponent', () => {
 
@@ -54,7 +51,7 @@ describe('NgxSmartModalComponent', () => {
   it('should close the modal by escape keyup', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    const event = new KeyboardEvent('keyup', {key: 'Escape'});
+    const event = new KeyboardEvent('keyup', { key: 'Escape' });
     spyOn(app, 'escapeKeyboardEvent');
     spyOn(app, 'onEscape');
     app.identifier = 'myModal';
@@ -71,11 +68,10 @@ describe('NgxSmartModalComponent', () => {
   it('should listen to any close event (Escape)', fakeAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    const event = new KeyboardEvent('keyup', {key: 'Escape'});
+    const event = new KeyboardEvent('keyup', { key: 'Escape' });
     app.identifier = 'myModal';
 
     // Test with escape event
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     expect(app.visible).toBeTruthy();
@@ -93,7 +89,6 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with close event
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     expect(app.visible).toBeTruthy();
     app.onAnyCloseEvent.subscribe(() => {
@@ -110,7 +105,6 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with dismiss event
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     fixture.detectChanges();
     expect(app.visible).toBeTruthy();
@@ -129,11 +123,10 @@ describe('NgxSmartModalComponent', () => {
   it('should listen to any close event finished (Escape)', fakeAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    const event = new KeyboardEvent('keyup', {key: 'Escape'});
+    const event = new KeyboardEvent('keyup', { key: 'Escape' });
     app.identifier = 'myModal';
 
     // Test with escape event
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     expect(app.visible).toBeTruthy();
@@ -151,17 +144,16 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with close event
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
 
     expect(app.visible).toBeTruthy();
 
     app.onAnyCloseEventFinished.subscribe(() => {
       expect(app.visible).toBeFalsy();
-      expect(app.openedClass).toBeFalsy();
       done();
     });
     app.close();
+    expect(app.openedClass).toBeFalsy();
   });
 
   it('should listen to any close event finished (Dismiss)', (done) => {
@@ -170,7 +162,6 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
 
     // Test with dismiss event
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
 
     fixture.detectChanges();
@@ -183,20 +174,19 @@ describe('NgxSmartModalComponent', () => {
     };
     app.onAnyCloseEventFinished.subscribe(() => {
       expect(app.visible).toBeFalsy();
-      expect(app.openedClass).toBeFalsy();
       done();
     });
     app.dismiss(fakeEvent);
+    expect(app.openedClass).toBeFalsy();
   });
 
   it('should not close the modal by escape keyup', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
-    const event = new KeyboardEvent('keyup', {key: 'Escape'});
+    const event = new KeyboardEvent('keyup', { key: 'Escape' });
     app.identifier = 'myModal';
     app.escapable = false;
 
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     dispatchEvent(event);
     expect(app.visible).toBeTruthy();
@@ -208,7 +198,6 @@ describe('NgxSmartModalComponent', () => {
     app.identifier = 'myModal';
     const compiled = fixture.debugElement.nativeElement;
 
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     app.onOpen.subscribe(() => {
       compiled.querySelector('button.nsm-dialog-btn-close').click();
@@ -223,7 +212,6 @@ describe('NgxSmartModalComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     spyOn(app, 'dismiss').and.callThrough();
 
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     fixture.detectChanges();
@@ -246,7 +234,6 @@ describe('NgxSmartModalComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     spyOn(app, 'dismiss').and.callThrough();
 
-    spyOn(Observable, 'timer').and.returnValue(Observable.of({}));
     app.open();
     tick();
     fixture.detectChanges();
@@ -322,7 +309,7 @@ describe('NgxSmartModalComponent', () => {
       const obj = {
         prop1: 'test',
         prop2: true,
-        prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
+        prop3: [{ a: 'a', b: 'b' }, { c: 'c', d: 'd' }],
         prop4: 327652175423
       };
       app.identifier = 'myModal';
