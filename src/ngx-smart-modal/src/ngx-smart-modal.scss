@@ -54,7 +54,6 @@ body.dialog-open {
 // Dialog modal
 .nsm-dialog {
   position: relative;
-  transform: translate3d(0, 0, 0); // for performance purposes
   opacity: 1;
   visibility: visible;
   min-height: 200px;
@@ -87,6 +86,9 @@ body.dialog-open {
   margin: $dialog-position-top;
   box-shadow: 0 7px 8px -4px rgba(0, 0, 0, .2), 0 13px 19px 2px rgba(0, 0, 0, .14), 0 5px 24px 4px rgba(0, 0, 0, .12);
   outline: 0;
+
+  // For performance purpose
+  transform: translate3d(0, 0, 0);
 }
 
 .nsm-body {
