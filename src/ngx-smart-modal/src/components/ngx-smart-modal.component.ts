@@ -73,7 +73,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     private _renderer: Renderer2,
     private _changeDetectorRef: ChangeDetectorRef,
     private _ngxSmartModalService: NgxSmartModalService
-  ) { }
+  ) {
+  }
 
   public ngOnInit() {
     if (!!this.identifier && this.identifier.length) {
@@ -202,6 +203,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   public getData(): any {
     return this._data;
   }
@@ -227,7 +229,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   private targetPlacement() {
-    if (!this.nsmDialog || !this.nsmContent || !this.nsmOverlay || !this.target) {
+    if (!this.nsmDialog || !this.nsmContent || !this.nsmOverlay || !this.target) {
       return;
     }
 
@@ -251,10 +253,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
     if (offsetTop + nsmDialogRect.top + nsmContentRect.height + marginTop > bodyRect.height) {
       offsetTop = bodyRect.height - (nsmDialogRect.top + nsmContentRect.height) - marginTop;
+    }
 
-      if (offsetTop < 0) {
-        offsetTop = 0;
-      }
+    if (offsetTop < 0) {
+      offsetTop = 0;
     }
 
     this._renderer.setStyle(this.nsmContent.nativeElement, 'top', offsetTop + 'px');

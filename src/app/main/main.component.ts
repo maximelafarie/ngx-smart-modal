@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, VERSION } from '@angular/core';
 import { Router } from '@angular/router';
-import {NgxSmartModalComponent, NgxSmartModalService} from '../../ngx-smart-modal';
+import { NgxSmartModalComponent, NgxSmartModalService } from '../../ngx-smart-modal';
 
 @Component({
   selector: 'app-main',
@@ -30,7 +30,7 @@ export class MainComponent implements AfterViewInit {
     const obj: Object = {
       prop1: 'test',
       prop2: true,
-      prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
+      prop3: [{ a: 'a', b: 'b' }, { c: 'c', d: 'd' }],
       prop4: 327652175423
     };
 
