@@ -228,7 +228,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize')
-  private targetPlacement() {
+  public targetPlacement() {
     if (!this.nsmDialog || !this.nsmContent || !this.nsmOverlay || !this.target) {
       return;
     }
