@@ -8,16 +8,9 @@ import { NgxSmartModalService } from '../ngx-smart-modal';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
- 
   constructor() {
   }
 
-
-
   ngAfterViewInit() {
-    
   }
-
- 
-
 }
