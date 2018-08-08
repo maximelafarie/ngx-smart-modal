@@ -192,11 +192,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   public hasData(): boolean {
-    return !!this._data;
+    return this._data !== null;
   }
 
   public setData(data: any, force?: boolean): any {
-    if (!this._data || (!!this._data && force)) {
+    if (!this._data || (this.hasData() && force)) {
       setTimeout(() => {
         this._data = data;
         this.onDataAdded.emit(this._data);
