@@ -63,7 +63,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public overlayVisible: boolean = false;
   public openedClass: boolean = false;
 
-  private _data: any = null;
+  private _data: any;
 
   @ViewChild('nsmContent') private nsmContent: ElementRef | undefined;
   @ViewChild('nsmDialog') private nsmDialog: ElementRef | undefined;
@@ -192,11 +192,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   public hasData(): boolean {
-    return !!this._data;
+    return this._data !== undefined;
   }
 
   public setData(data: any, force?: boolean): any {
-    if (!this._data || (!!this._data && force)) {
+    if (!this.hasData() || (this.hasData() && force)) {
       setTimeout(() => {
         this._data = data;
         this.onDataAdded.emit(this._data);
@@ -210,7 +210,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public removeData(): void {
     setTimeout(() => {
-      this._data = null;
+      this._data = undefined;
       this.onDataRemoved.emit(true);
     });
   }
