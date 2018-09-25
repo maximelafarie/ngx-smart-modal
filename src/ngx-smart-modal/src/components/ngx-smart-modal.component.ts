@@ -91,6 +91,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this._ngxSmartModalService.removeModal(this.identifier);
+    window.removeEventListener('keyup', this.escapeKeyboardEvent);
   }
 
   public open(top?: boolean): void {
@@ -113,6 +114,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     });
 
     this.onOpen.emit(this);
+
+    if (this.escapable) {
+      window.addEventListener('keyup', this.escapeKeyboardEvent);
+    }
   }
 
   public close(): void {
@@ -134,6 +139,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       me.onCloseFinished.emit(me);
       me.onAnyCloseEventFinished.emit(me);
     }, this.hideDelay);
+
+    window.removeEventListener('keyup', this.escapeKeyboardEvent);
   }
 
   public dismiss(e: any): void {
@@ -160,6 +167,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         me.onDismissFinished.emit(me);
         me.onAnyCloseEventFinished.emit(me);
       }, this.hideDelay);
+
+      window.removeEventListener('keyup', this.escapeKeyboardEvent);
     }
   }
 
@@ -215,15 +224,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('document:keyup', ['$event'])
-  public escapeKeyboardEvent(event: KeyboardEvent) {
-    if (event.keyCode === 27 && this.visible) {
-      if (!this.escapable) {
-        return false;
-      } else {
-        this.onEscape.emit(this);
-        this._ngxSmartModalService.closeLatestModal();
-      }
+  public escapeKeyboardEvent = (event: KeyboardEvent) => {
+    if (event.keyCode === 27) {
+      this.onEscape.emit(this);
+      this._ngxSmartModalService.closeLatestModal();
     }
   }
 
