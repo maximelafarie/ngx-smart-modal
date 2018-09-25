@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, VERSION } from '@angular/core';
+import { AfterViewInit, Component, VERSION, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../ngx-smart-modal';
 
@@ -19,7 +19,7 @@ export class MainComponent implements AfterViewInit {
     'In vel lorem sollicitudin, aliquet nunc vel, rutrum libero. Vivamus eu leo at odio sodales rutrum id a erat. Integer pellentesque condimentum velit a sollicitudin. Maecenas lectus neque, interdum at leo ut, molestie iaculis mauris. Sed ut nisl lorem. Mauris vitae dolor in lorem fringilla suscipit vel sed ligula. Nullam sodales blandit faucibus. Nulla dignissim mollis aliquam. Vivamus lacinia aliquam diam vitae vulputate. Pellentesque nec vulputate lorem, vel volutpat odio. Duis eleifend ipsum eros, quis dapibus lectus condimentum gravida. Nunc blandit leo lacus, a ultrices tellus fermentum et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla eu blandit nunc.'
   ];
 
-  constructor(public ngxSmartModalService: NgxSmartModalService, private router: Router) {
+  constructor(public ngxSmartModalService: NgxSmartModalService, private router: Router, private cdr: ChangeDetectorRef) {
   }
 
   public log(msg: string) {
@@ -51,6 +51,9 @@ export class MainComponent implements AfterViewInit {
     this.ngxSmartModalService.getModal('classicModal').onAnyCloseEventFinished.subscribe((modal: NgxSmartModalComponent) => {
       console.log('All close events are ended!', modal);
     });
+
+    // Needed to avoid "Expression has changed since the last check cycle..."
+    this.cdr.detectChanges();
   }
 
   goFeature() {
