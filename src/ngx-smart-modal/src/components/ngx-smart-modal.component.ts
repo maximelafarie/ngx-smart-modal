@@ -92,6 +92,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this._ngxSmartModalService.removeModal(this.identifier);
     window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    if (!this._ngxSmartModalService.getModalStack.length) {
+      this._renderer.removeClass(document.body, 'dialog-open');
+    }
   }
 
   public open(top?: boolean): void {
@@ -206,10 +209,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public setData(data: any, force?: boolean): any {
     if (!this.hasData() || (this.hasData() && force)) {
-      setTimeout(() => {
-        this._data = data;
-        this.onDataAdded.emit(this._data);
-      });
+      this._data = data;
+      this.onDataAdded.emit(this._data);
+      this._changeDetectorRef.markForCheck();
     }
   }
 
@@ -218,10 +220,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   public removeData(): void {
-    setTimeout(() => {
-      this._data = undefined;
-      this.onDataRemoved.emit(true);
-    });
+    this._data = undefined;
+    this.onDataRemoved.emit(true);
+    this._changeDetectorRef.markForCheck();
   }
 
   public escapeKeyboardEvent = (event: KeyboardEvent) => {

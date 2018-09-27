@@ -1,4 +1,4 @@
-![ngx-smart-modal](https://user-images.githubusercontent.com/5319267/28756216-65c335c4-756a-11e7-9ac5-6a0e0cd8ea22.png)
+![ngx-smart-modal-banner](src/assets/banner.jpg)
 
 [![Join the chat at https://gitter.im/ngx-smart-modal/Lobby](https://badges.gitter.im/ngx-smart-modal/Lobby.svg)](https://gitter.im/ngx-smart-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Greenkeeper badge](https://badges.greenkeeper.io/biig-io/ngx-smart-modal.svg)](https://greenkeeper.io/)
@@ -163,8 +163,6 @@ The below documentation will use the following pattern:
 - `force` (boolean) | true ― _If true and if you declare another modal instance with the same identifier that another, the service will override it by the new you declare in the modal stack._
 
 - `customClass` (string) | `'nsm-dialog-animation-fade'` ― _All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated class names_
-
-- `visible` (boolean) | `false` ― _Define if the modal is shown or not. Automatically toggled with open() and close()/dismiss() methods._
 
 - `backdrop` (boolean) | `true` ― _Enable / disable the backdrop of a modal. **Tip**: when you want to encapsulate several modals, set this options at true for the parent modal and false for the others._
 
