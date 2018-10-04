@@ -1,3 +1,35 @@
+<a name="7.1.0"></a>
+# 7.1.0 (Oct 4, 2018)
+
+### Bug Fixes
+* Fix hasData return while data is false when casted as a boolean (pull #128, fixes #127)
+* Fix an addresses keyup issue (pull #141)
+* Fix remaining body class even if no modal is opened (pull #143, fixes #119)
+* Fix hasData() method returning undefined value after setData (pull #143, fixes #108)
+
+
+<a name="7.0.0"></a>
+# 7.0.0 (Jul 16, 2018)
+
+### Features
+* **BREAKING CHANGES**: refactor modal templating with new selectors and containers (DOM)
+* Fix lint, refactor ngClass
+* Add an option to display the modal at the location of a target element
+* Add custom class to center a modal vertically
+* Replaced Angular cycle checks timeouts by observables
+
+
+<a name="6.0.0"></a>
+# 6.0.0 (Jul 16, 2018)
+
+### Features
+* **BREAKING CHANGES**: Move modal component style to separated SCSS/CSS files
+* Add default animations css class (top, right, bottom, left)
+* Add SCSS variables to improve customization possibilities
+* Add allowOutsideClick option (pull #84)
+* Enhance Events triggering on open and close actions
+
+
 <a name="5.0.0"></a>
 # 5.0.0 (Feb 28, 2018)
 
