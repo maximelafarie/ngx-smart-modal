@@ -1,5 +1,5 @@
-$roboto-font-path: "/assets/fonts/roboto/";
-$materialize-font-path: "/assets/fonts/material-design-icons/material-icons.css";
+$roboto-font-path: "~materialize-sass/fonts/roboto/";
+$materialize-font-path: "~material-design-icons/iconfont/material-icons.css";
 
 @import url("#{$materialize-font-path}");
 @import "~materialize-sass/sass/materialize";
