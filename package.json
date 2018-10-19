@@ -12,7 +12,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ghpages": "yarn && ng build --prod --aot --no-progress --base-href 'https://biig-io.github.io/ngx-smart-modal/'"
+    "ghpages": "yarn && ng build --prod --aot --no-progress --base-href '/ngx-smart-modal/'"
   },
   "private": true,
   "dependencies": {
