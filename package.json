@@ -1,6 +1,6 @@
 {
   "name": "ngx-smart-modal-demo",
-  "version": "2.0.0",
+  "version": "7.0.0",
   "description": "Angular-CLI demo of ngx-smart-modal",
   "license": "MIT",
   "scripts": {
@@ -16,52 +16,49 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^5.2.7",
-    "@angular/compiler": "^5.2.7",
-    "@angular/core": "^5.2.7",
-    "@angular/forms": "^5.2.7",
-    "@angular/http": "^5.2.7",
-    "@angular/platform-browser": "^5.2.7",
-    "@angular/platform-browser-dynamic": "^5.2.7",
-    "@angular/router": "^5.2.7",
-    "bootstrap": "4.0.0-alpha.6",
-    "core-js": "^2.4.1",
+    "@angular/animations": "~7.0.0",
+    "@angular/common": "~7.0.0",
+    "@angular/compiler": "~7.0.0",
+    "@angular/core": "~7.0.0",
+    "@angular/forms": "~7.0.0",
+    "@angular/http": "~7.0.0",
+    "@angular/platform-browser": "~7.0.0",
+    "@angular/platform-browser-dynamic": "~7.0.0",
+    "@angular/router": "~7.0.0",
+    "bootstrap": "^4.1.3",
+    "core-js": "^2.5.4",
     "foundation": "^4.2.1-1",
     "material-design-icons": "^3.0.1",
     "materialize-sass": "^0.98.2",
-    "rxjs": "^5.4.1",
-    "zone.js": "^0.8.20"
+    "rxjs": "~6.3.3",
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^0.8.1",
-    "@angular/cli": "1.6.2",
-    "@angular/compiler-cli": "^5.2.7",
-    "@angular/language-service": "^5.2.7",
-    "@types/jasmine": "^2.8.6",
-    "@types/jasminewd2": "~2.0.2",
-    "@types/node": "^8.5.10",
-    "codelyzer": "~4.0.2",
-    "commitizen": "^2.9.6",
+    "@angular-devkit/build-angular": "~0.10.0",
+    "@angular/cli": "~7.0.1",
+    "@angular/compiler-cli": "~7.0.0",
+    "@angular/language-service": "~7.0.0",
+    "@types/jasmine": "~2.8.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codelyzer": "~4.5.0",
+    "commitizen": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
-    "jasmine-core": "~2.8.0",
+    "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~2.0.0",
+    "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
-    "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^1.4.2",
-    "karma-jasmine": "~1.1.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.2.2",
-    "ts-node": "~4.1.0",
-    "tslint": "~5.9.0",
-    "typescript": ">=2.4.2 <2.6.0"
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.11.0",
+    "typescript": "~3.1.1"
   },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
-    },
-    "greenkeeper": {
-      "emails": false
     }
   }
 }
