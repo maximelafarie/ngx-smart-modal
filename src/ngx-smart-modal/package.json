@@ -27,6 +27,7 @@
   "homepage": "https://github.com/biig-io/ngx-smart-modal",
   "keywords": [
     "ngx-smart-modal",
+    "ngx",
     "smart",
     "modal",
     "typescript",
@@ -34,7 +35,8 @@
     "angular2",
     "angular4",
     "angular5",
-    "ngx"
+    "angular6",
+    "angular7"
   ],
   "license": "MIT",
   "peerDependencies": {

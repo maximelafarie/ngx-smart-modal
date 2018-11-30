@@ -10,3 +10,21 @@
   color: white;
   text-align: center;
 }
+
+.footer {
+  a {
+    color: #fff;
+  }
+}
+
+#biig-link {
+  display: block;
+  opacity: .5;
+  margin-top: 10px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 1;
+  }
+}
