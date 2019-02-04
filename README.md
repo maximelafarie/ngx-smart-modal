@@ -7,7 +7,7 @@
 `ngx-smart-modal` is a lightweight and very complete Angular library for managing modals inside any Angular project. It was built for modern browsers using TypeScript, HTML5 and Angular >=2.4.0.
 
 ## Demo
-http://biig-io.github.io/ngx-smart-modal/
+https://biig-io.github.io/ngx-smart-modal/
 
 
 ## No external library, no jQuery! 🤘
@@ -18,7 +18,7 @@ To avoid imposing you to download a CSS library by using this package, you simpl
 > Don't panic! We already thought about that! And because we want to be as neutral as we can, we made it very flexible for you to style it!
 > So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class in the `[customClass]="'modal'"` (e.g.: bootstrap). And the rest of the modal DOM elements has just to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
 
-Check out the [documentation](https://github.com/biig-io/ngx-smart-modal#parameters--options) & [demo](https://github.com/biig-io/ngx-smart-modal) for more information and examples!
+Check out the [documentation](https://github.com/biig-io/ngx-smart-modal#parameters--options) & [demo](https://biig-io.github.io/ngx-smart-modal/) for more information and examples!
 
 See the [changelog](https://github.com/biig-io/ngx-smart-modal/blob/master/CHANGELOG.md) for recent changes.
 
