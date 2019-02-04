@@ -20,7 +20,9 @@
 #biig-link {
   display: block;
   opacity: .5;
+  margin: 0 auto;
   margin-top: 10px;
+  width: 30px;
 
   &:hover,
   &:focus,
