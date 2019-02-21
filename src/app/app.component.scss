@@ -20,6 +20,7 @@ $coal: #202129;
 $coal-dust: #edeeee;
 
 // font import
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,500);
 
 // font
@@ -30,9 +31,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
   font-family: $font-face;
   font-size: 16px;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8', GradientType=1 );
@@ -50,16 +48,6 @@ pre {
   color: #fbaf5c;
   margin: 0;
   padding: 1rem;
-}
-
-.nsm-dialog {
-  &.large-modal {
-    max-width: none;
-  }
-
-  &.medium-modal {
-    max-width: 1280px;
-  }
 }
 
 .container {
@@ -204,14 +192,20 @@ h1 {
   }
 
   &.no-padding {
+    padding: 0;
+
     .nsm-content {
       padding: 0 !important;
     }
   }
-}
 
-.nsm-dialog.no-padding {
-  padding: 0;
+  &.large-modal {
+    max-width: none;
+  }
+
+  &.medium-modal {
+    max-width: 1280px;
+  }
 }
 
 .white {
