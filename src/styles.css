@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,500);
-html, body {
+
+html,
+body {
   position: relative;
   height: 100%;
   margin: 0;
@@ -23,13 +26,16 @@ pre {
   border-left: 0.5rem solid rgba(0, 0, 0, 0.5);
   color: #fbaf5c;
   margin: 0;
-  padding: 1rem; }
+  padding: 1rem;
+}
 
 .large-modal {
-  max-width: none !important; }
+  max-width: none !important;
+}
 
 .dialog.medium-modal {
-  max-width: 1280px !important; }
+  max-width: 1280px !important;
+}
 
 .container {
   position: relative;
@@ -43,10 +49,13 @@ pre {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center; }
-  .container .title {
-    color: #fff;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
+  align-items: center;
+}
+
+.container .title {
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
 
 .modal-image {
   max-width: 100%;
@@ -58,7 +67,8 @@ pre {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 10px auto; }
+  margin: 10px auto;
+}
 
 .button {
   display: flex;
@@ -84,61 +94,83 @@ pre {
   appearance: none;
   justify-content: center;
   align-items: center;
-  flex: 0 0 160px; }
-  .button:hover {
-    transition: all 60ms ease;
-    opacity: .85; }
-  .button:active {
-    transition: all 60ms ease;
-    opacity: .75; }
-  .button:focus {
-    outline: 1px dotted #959595;
-    outline-offset: -4px; }
+  flex: 0 0 160px;
+}
+
+.button:hover {
+  transition: all 60ms ease;
+  opacity: .85;
+}
+
+.button:active {
+  transition: all 60ms ease;
+  opacity: .75;
+}
+
+.button:focus {
+  outline: 1px dotted #959595;
+  outline-offset: -4px;
+}
 
 .button.-regular {
   color: #202129;
-  background-color: #edeeee; }
-  .button.-regular:hover {
-    color: #202129;
-    background-color: #e1e2e2;
-    opacity: 1; }
-  .button.-regular:active {
-    background-color: #d5d6d6;
-    opacity: 1; }
+  background-color: #edeeee;
+}
+
+.button.-regular:hover {
+  color: #202129;
+  background-color: #e1e2e2;
+  opacity: 1;
+}
+
+.button.-regular:active {
+  background-color: #d5d6d6;
+  opacity: 1;
+}
 
 .button.-dark {
   color: #fff;
-  background: #333030; }
-  .button.-dark:focus {
-    outline: 1px dotted white;
-    outline-offset: -4px; }
+  background: #333030;
+}
+
+.button.-dark:focus {
+  outline: 1px dotted white;
+  outline-offset: -4px;
+}
 
 .button.-green {
   color: #fff;
-  background: #3ac569; }
+  background: #3ac569;
+}
 
 .button.-blue {
   color: #fff;
-  background: #2b90d9; }
+  background: #2b90d9;
+}
 
 .button.-salmon {
   color: #fff;
-  background: #f32c52; }
+  background: #f32c52;
+}
 
 .button.-sun {
   color: #f15c5c;
-  background: #feee7d; }
+  background: #feee7d;
+}
 
 .button.-alge {
   color: #f4f7f7;
-  background: #79a8a9; }
+  background: #79a8a9;
+}
 
 .button.-flower {
   color: #fe8cdf;
-  background: #353866; }
+  background: #353866;
+}
 
 .dialog .button:first-of-type {
-  margin-left: 0; }
+  margin-left: 0;
+}
 
 .footer {
   font-weight: 400;
@@ -146,6 +178,7 @@ pre {
   line-height: 2;
   text-align: center;
   font-size: 12px;
-  color: #fff; }
+  color: #fff;
+}
 
 /*# sourceMappingURL=styles.css.map */
