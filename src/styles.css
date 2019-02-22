@@ -7,14 +7,16 @@ body {
   position: relative;
   height: 100%;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   transform: translate3d(0, 0, 0);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8', GradientType=1 );
-  background: #eee linear-gradient(135deg, #2980b9 0%, #9b59b6 100%) fixed; }
+  background: #eee linear-gradient(135deg, #2980b9 0%, #9b59b6 100%) fixed;
+}
 
 pre {
   display: block;
@@ -22,8 +24,8 @@ pre {
   font-family: monospace;
   white-space: pre;
   overflow-x: auto;
-  background-color: rgba(0, 0, 0, 0.75);
-  border-left: 0.5rem solid rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, .75);
+  border-left: .5rem solid rgba(0, 0, 0, .5);
   color: #fbaf5c;
   margin: 0;
   padding: 1rem;
@@ -54,14 +56,15 @@ pre {
 
 .container .title {
   color: #fff;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
 
 .modal-image {
   max-width: 100%;
   border-radius: 3px;
   height: auto;
-  display: block; }
+  display: block;
+}
 
 .buttons {
   display: flex;
