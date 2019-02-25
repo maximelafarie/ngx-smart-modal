@@ -1,4 +1,4 @@
-import { inject, TestBed, async, tick } from '@angular/core/testing';
+import { inject, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
@@ -79,7 +79,7 @@ describe('NgxSmartModalService', () => {
 
         expect(myModal).toEqual(app);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
-        ngxSmartModalService.addModal({id: 'FakeModal', modal: myModal}, true);
+        ngxSmartModalService.addModal({ id: 'FakeModal', modal: myModal }, true);
         expect(ngxSmartModalService.modalStack.length).toEqual(1);
 
         expect(ngxSmartModalService.getModal('FakeModal')).toBeTruthy();
@@ -157,7 +157,7 @@ describe('NgxSmartModalService', () => {
         const obj = {
           prop1: 'test',
           prop2: true,
-          prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
+          prop3: [{ a: 'a', b: 'b' }, { c: 'c', d: 'd' }],
           prop4: 327652175423
         };
         app.identifier = 'myModal';
@@ -184,7 +184,7 @@ describe('NgxSmartModalService', () => {
         const obj = {
           prop1: 'test',
           prop2: true,
-          prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
+          prop3: [{ a: 'a', b: 'b' }, { c: 'c', d: 'd' }],
           prop4: 327652175423
         };
         app.identifier = 'myModal';
@@ -224,4 +224,106 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
+  it('should getModalData', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    spyOn(service, 'getModal').and.returnValue({ getData: (() => 'test data') });
+
+    expect(service.getModalData('test')).toEqual('test data');
+
+    expect(service.getModal).toHaveBeenCalledWith('test');
+  }));
+
+  it('should setModalData', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+
+    service.addModal({ id: 'test', modal: app });
+
+    spyOn(service, 'getModal').and.callThrough();
+
+    service.setModalData('test data', 'test', true);
+
+    expect(service.getModalData('test')).toEqual('test data');
+  }));
+
+  it('should resetModalData', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+    app._data = 'test data';
+
+    service.addModal({ id: 'test', modal: app });
+
+    spyOn(service, 'getModal').and.callThrough();
+
+    service.resetModalData('test');
+
+    expect(service.getModalData('test')).toEqual(undefined);
+  }));
+
+  it('should get ( modal )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    spyOn(service, 'getModal').and.returnValue('fake');
+
+    service.get('test');
+
+    expect(service.get('test') as any).toEqual('fake');
+  }));
+
+  it('should open', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+
+    service.addModal({ id: 'test', modal: app });
+
+    service.open('test');
+
+    expect(service.getModal('test').visible).toEqual(true);
+  }));
+
+  it('should close', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+    app.openedClass = true;
+
+    service.addModal({ id: 'test', modal: app });
+
+    service.close('test');
+
+    expect(service.getModal('test').openedClass).toEqual(false);
+  }));
+
+  it('should toggle', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+
+    service.addModal({ id: 'test', modal: app });
+
+    service.toggle('test');
+
+    expect(service.getModal('test').visible).toEqual(true);
+  }));
+  /*
+  it('should closeLatestModal', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+      const fixture = TestBed.createComponent(NgxSmartModalComponent);
+      const app = fixture.debugElement.componentInstance;
+      app.identifier = 'test';
+
+      service.addModal({ id: 'test', modal: app });
+      service.open('test');
+
+      const app2 = fixture.debugElement.componentInstance;
+      app2.identifier = 'test2';
+
+      service.addModal({ id: 'test2', modal: app2 });
+      service.open('test2');
+
+      service.closeLatestModal();
+
+      expect(service.getModal('test').openedClass).toEqual(true);
+      expect(service.getModal('test2').openedClass).toEqual(false);
+  }));
+  */
 });
