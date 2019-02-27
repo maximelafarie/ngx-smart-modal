@@ -73,8 +73,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     private _renderer: Renderer2,
     private _changeDetectorRef: ChangeDetectorRef,
     private _ngxSmartModalService: NgxSmartModalService
-  ) {
-  }
+  ) { }
 
   public ngOnInit() {
     if (!!this.identifier && this.identifier.length) {
@@ -97,6 +96,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Open the modal instance
+   *
+   * @param top open the modal top of all other
+   */
   public open(top?: boolean): void {
     if (top) {
       this.layerPosition = this._ngxSmartModalService.getHigherIndex();
@@ -123,6 +127,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Close the modal instance
+   */
   public close(): void {
     const me = this;
 
@@ -146,6 +153,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     window.removeEventListener('keyup', this.escapeKeyboardEvent);
   }
 
+  /**
+   * Dismiss the modal instance
+   *
+   * @param e the event sent by the browser
+   */
   public dismiss(e: any): void {
     const me = this;
 
@@ -175,6 +187,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Toggle visibility of the modal instance
+   *
+   * @param top open the modal top of all other
+   */
   public toggle(top?: boolean) {
     if (this.visible) {
       this.close();
@@ -183,6 +200,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Add a custom class to the modal instance
+   *
+   * @param className the class to add
+   */
   public addCustomClass(className: string): void {
     if (!this.customClass.length) {
       this.customClass = className;
@@ -191,6 +213,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Remove a custom class to the modal instance
+   *
+   * @param className the class to remove
+   */
   public removeCustomClass(className?: string): void {
     if (className) {
       this.customClass = this.customClass.replace(className, '').trim();
@@ -199,14 +226,26 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Returns the visibility state of the modal instance
+   */
   public isVisible(): boolean {
     return this.visible;
   }
 
+  /**
+   * Checks if data is attached to the modal instance
+   */
   public hasData(): boolean {
     return this._data !== undefined;
   }
 
+  /**
+   * Attach data to the modal instance
+   *
+   * @param data the data to attach
+   * @param force override potentially attached data
+   */
   public setData(data: any, force?: boolean): any {
     if (!this.hasData() || (this.hasData() && force)) {
       this._data = data;
@@ -215,23 +254,37 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Retrieve the data attached to the modal instance
+   */
   public getData(): any {
     return this._data;
   }
 
+  /**
+   * Remove the data attached to the modal instance
+   */
   public removeData(): void {
     this._data = undefined;
     this.onDataRemoved.emit(true);
     this._changeDetectorRef.markForCheck();
   }
 
+  /**
+   * Close the latest opened modal if escape key event is emitted
+   */
   public escapeKeyboardEvent = (event: KeyboardEvent) => {
     if (event.keyCode === 27) {
-      this.onEscape.emit(this);
-      this._ngxSmartModalService.closeLatestModal();
+      if (this.layerPosition === this._ngxSmartModalService.getTopOpenedModal().layerPosition) {
+        this.onEscape.emit(this);
+        this._ngxSmartModalService.closeLatestModal();
+      }
     }
   }
 
+  /**
+   * Listens for window resize event and recalculates modal instance position if it is element-relative
+   */
   @HostListener('window:resize')
   public targetPlacement() {
     if (!this.nsmDialog || !this.nsmContent || !this.nsmOverlay || !this.target) {

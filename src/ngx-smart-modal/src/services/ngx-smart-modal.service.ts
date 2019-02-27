@@ -5,7 +5,6 @@ import { ModalInstance } from './modal-instance';
 @Injectable()
 export class NgxSmartModalService {
   public modalStack: ModalInstance[] = [];
-  private debouncer: any;
 
   /**
    * Add a new modal instance. This step is essential and allows to retrieve any modal at any time.
@@ -17,9 +16,7 @@ export class NgxSmartModalService {
    */
   public addModal(modalInstance: ModalInstance, force?: boolean): void {
     if (force) {
-      const i: number = this.modalStack.findIndex((o: ModalInstance) => {
-        return o.id === modalInstance.id;
-      });
+      const i: number = this.modalStack.findIndex((o: ModalInstance) => o.id === modalInstance.id);
       if (i > -1) {
         this.modalStack[i].modal = modalInstance.modal;
       } else {
@@ -36,9 +33,13 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    */
   public getModal(id: string): NgxSmartModalComponent {
-    return this.modalStack.filter((o: any) => {
-      return o.id === id;
-    })[0].modal;
+    const i = this.modalStack.find((o: ModalInstance) => o.id === id);
+
+    if (i !== undefined) {
+      return i.modal
+    } else {
+      throw new Error(`Cannot find modal with identifier ${id}`);
+    }
   }
 
   /**
@@ -57,13 +58,9 @@ export class NgxSmartModalService {
    * @param force Tell the modal to open top of all other opened modals
    */
   public open(id: string, force = false): void {
-    const instance = this.modalStack.find((o: ModalInstance) => {
-      return o.id === id;
-    });
-    if (!!instance) {
-      instance.modal.open(force);
-    } else {
-      throw new Error('Modal not found');
+    let i
+    if (i = this.get(id)) {
+      i.open(force);
     }
   }
 
@@ -73,13 +70,9 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    */
   public close(id: string): void {
-    const instance = this.modalStack.find((o: ModalInstance) => {
-      return o.id === id;
-    });
-    if (!!instance) {
-      instance.modal.close();
-    } else {
-      throw new Error('Modal not found');
+    let i
+    if (i = this.get(id)) {
+      i.close();
     }
   }
 
@@ -90,14 +83,10 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    * @param force Tell the modal to open top of all other opened modals
    */
-  public toggle(id: string, force = false) {
-    const instance = this.modalStack.find((o: ModalInstance) => {
-      return o.id === id;
-    });
-    if (!!instance) {
-      instance.modal.toggle(force);
-    } else {
-      throw new Error('Modal not found');
+  public toggle(id: string, force = false): void {
+    let i
+    if (i = this.get(id)) {
+      i.toggle(force);
     }
   }
 
@@ -116,13 +105,22 @@ export class NgxSmartModalService {
    * @returns an array that contains all the opened modals.
    */
   public getOpenedModals(): ModalInstance[] {
-    const modals: ModalInstance[] = [];
-    this.modalStack.forEach((o: ModalInstance) => {
-      if (o.modal.visible) {
-        modals.push(o);
-      }
-    });
-    return modals;
+    return this.modalStack.filter((o: ModalInstance) => o.modal.visible);
+  }
+
+  /**
+   * Retrieve the opened modal with highest z-index.
+   *
+   * @returns the opened modal with highest z-index.
+   */
+  public getTopOpenedModal(): NgxSmartModalComponent {
+    if (!this.getOpenedModals().length) {
+      throw new Error('No modal is opened');
+    }
+
+    return this.getOpenedModals()
+      .map((o: ModalInstance) => o.modal)
+      .reduce((highest, item) => item.layerPosition > highest.layerPosition ? item : highest, this.getOpenedModals()[0].modal);
   }
 
   /**
@@ -133,12 +131,7 @@ export class NgxSmartModalService {
    * @returns a higher index from all the existing modal instances.
    */
   public getHigherIndex(): number {
-    const index: number[] = [1041];
-    const modals: ModalInstance[] = this.getModalStack();
-    modals.forEach((o: ModalInstance) => {
-      index.push(o.modal.layerPosition);
-    });
-    return Math.max(...index) + 1;
+    return Math.max(...this.modalStack.map(o => o.modal.layerPosition), 1041) + 1;
   }
 
   /**
@@ -157,11 +150,11 @@ export class NgxSmartModalService {
    * @returns the removed modal instance.
    */
   public removeModal(id: string): void {
-    const i: number = this.modalStack.findIndex((o: any) => {
-      return o.id === id;
-    });
+    const i: number = this.modalStack.findIndex((o: any) => o.id === id);
     if (i > -1) {
       this.modalStack.splice(i, 1);
+    } else {
+      throw new Error(`Cannot find modal with identifier ${id}`);
     }
   }
 
@@ -177,10 +170,9 @@ export class NgxSmartModalService {
    * @returns true if the given modal exists and the process has been tried, either false.
    */
   public setModalData(data: any, id: string, force?: boolean): boolean {
-    if (!!this.modalStack.find((o: ModalInstance) => {
-        return o.id === id;
-      })) {
-      this.getModal(id).setData(data, force);
+    let i;
+    if (i = this.get(id)) {
+      i.setData(data, force);
       return true;
     } else {
       return false;
@@ -194,7 +186,10 @@ export class NgxSmartModalService {
    * @returns the associated modal data.
    */
   public getModalData(id: string): any {
-    return this.getModal(id).getData();
+    let i
+    if (i = this.get(id)) {
+      return i.getData();
+    }
   }
 
   /**
@@ -204,9 +199,7 @@ export class NgxSmartModalService {
    * @returns the removed data or false if modal doesn't exist.
    */
   public resetModalData(id: string): any | boolean {
-    if (!!this.modalStack.find((o: ModalInstance) => {
-        return o.id === id;
-      })) {
+    if (!!this.modalStack.find((o: ModalInstance) => o.id === id)) {
       const removed: any = this.getModal(id).getData();
       this.getModal(id).removeData();
       return removed;
@@ -221,16 +214,10 @@ export class NgxSmartModalService {
    * escape key press event.
    */
   public closeLatestModal(): void {
-    const me = this;
-    clearTimeout(this.debouncer);
-    this.debouncer = setTimeout(() => {
-      let tmp: ModalInstance | undefined;
-      me.getOpenedModals().forEach((m: ModalInstance) => {
-        if (m.modal.layerPosition > (!!tmp ? tmp.modal.layerPosition : 0 && m.modal.escapable)) {
-          tmp = m;
-        }
-      });
-      return !!tmp ? tmp.modal.close() : false;
-    }, 100);
+    if (!this.getOpenedModals().length) {
+      return;
+    }
+
+    this.getTopOpenedModal().close();
   }
 }
