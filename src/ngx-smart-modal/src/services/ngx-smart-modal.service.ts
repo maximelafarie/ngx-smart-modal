@@ -36,7 +36,7 @@ export class NgxSmartModalService {
     const i = this.modalStack.find((o: ModalInstance) => o.id === id);
 
     if (i !== undefined) {
-      return i.modal
+      return i.modal;
     } else {
       throw new Error(`Cannot find modal with identifier ${id}`);
     }
@@ -58,7 +58,7 @@ export class NgxSmartModalService {
    * @param force Tell the modal to open top of all other opened modals
    */
   public open(id: string, force = false): void {
-    let i
+    let i;
     if (i = this.get(id)) {
       i.open(force);
     }
@@ -70,7 +70,7 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    */
   public close(id: string): void {
-    let i
+    let i;
     if (i = this.get(id)) {
       i.close();
     }
@@ -84,7 +84,7 @@ export class NgxSmartModalService {
    * @param force Tell the modal to open top of all other opened modals
    */
   public toggle(id: string, force = false): void {
-    let i
+    let i;
     if (i = this.get(id)) {
       i.toggle(force);
     }
@@ -131,7 +131,7 @@ export class NgxSmartModalService {
    * @returns a higher index from all the existing modal instances.
    */
   public getHigherIndex(): number {
-    return Math.max(...this.modalStack.map(o => o.modal.layerPosition), 1041) + 1;
+    return Math.max(...this.modalStack.map((o) => o.modal.layerPosition), 1041) + 1;
   }
 
   /**
@@ -153,8 +153,6 @@ export class NgxSmartModalService {
     const i: number = this.modalStack.findIndex((o: any) => o.id === id);
     if (i > -1) {
       this.modalStack.splice(i, 1);
-    } else {
-      throw new Error(`Cannot find modal with identifier ${id}`);
     }
   }
 
@@ -186,7 +184,7 @@ export class NgxSmartModalService {
    * @returns the associated modal data.
    */
   public getModalData(id: string): any {
-    let i
+    let i;
     if (i = this.get(id)) {
       return i.getData();
     }
@@ -214,10 +212,6 @@ export class NgxSmartModalService {
    * escape key press event.
    */
   public closeLatestModal(): void {
-    if (!this.getOpenedModals().length) {
-      return;
-    }
-
     this.getTopOpenedModal().close();
   }
 }

@@ -23,6 +23,29 @@ describe('NgxSmartModalComponent', () => {
     expect(app).toBeTruthy();
   }));
 
+  it('should create a modal ( with autostart )', async(() => {
+    const ngxSmartModalService = TestBed.get(NgxSmartModalService);
+
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    app.autostart = true;
+
+    spyOn(ngxSmartModalService, 'open');
+
+    app.ngOnInit();
+
+    expect(ngxSmartModalService.open).toHaveBeenCalledWith('myModal');
+  }));
+
+  it('should create a modal ( no identifier )', async(() => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = '';
+
+    expect(() => { app.ngOnInit(); }).toThrow(new Error('identifier field isn’t set. Please set one before calling <ngx-smart-modal> in a template.'));
+  }));
+
   it('should open and close the modal directly', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
@@ -274,6 +297,17 @@ describe('NgxSmartModalComponent', () => {
     app.open();
   });
 
+  it('should add uniq custom class', () => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    app.customClass = '';
+
+    app.addCustomClass('firstClass');
+
+    expect(app.customClass).toEqual('firstClass');
+  });
+
   it('should remove additional class of the modal', (done) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
@@ -360,4 +394,46 @@ describe('NgxSmartModalComponent', () => {
     expect(app.isVisible()).toBeTruthy();
   }));
 
+  it('should escapeKeyboardEvent', async(() => {
+    const ngxSmartModalService = TestBed.get(NgxSmartModalService);
+
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    app.visible = true;
+
+    spyOn(ngxSmartModalService, 'getTopOpenedModal').and.returnValue({ layerPosition: 1041 });
+    spyOn(app.onEscape, 'emit');
+    spyOn(ngxSmartModalService, 'closeLatestModal');
+
+    app.escapeKeyboardEvent({ keyCode: 27 });
+
+    expect(app.onEscape.emit).toHaveBeenCalled();
+    expect(ngxSmartModalService.closeLatestModal).toHaveBeenCalled();
+  }));
+
+  it('should targetPlacement', async(() => {
+    const attr = { top: 80, left: 400, height: 300, width: 500 };
+    const objectHtml = { getBoundingClientRect: () => attr, left: 200, top: 200 };
+
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    app.target = '.test';
+    app.nsmContent = { nativeElement: objectHtml };
+    app.nsmOverlay = { nativeElement: objectHtml };
+    app.nsmDialog = { nativeElement: objectHtml };
+
+    spyOn(document, 'querySelector').and.returnValue(objectHtml);
+    spyOn(window, 'getComputedStyle').and.returnValue({ marginLeft: 120, marginTop: 300 });
+
+    app._renderer.setStyle = (ele: any, key: string, val: string) => {
+      ele.key = val;
+    };
+
+    app.targetPlacement();
+
+    expect(app.nsmContent.nativeElement.top).toEqual(200);
+    expect(app.nsmContent.nativeElement.left).toEqual(200);
+  }));
 });

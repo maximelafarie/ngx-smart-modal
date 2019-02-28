@@ -224,6 +224,17 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
+  it('should addModal ( force )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+
+    service.addModal({ id: 'test', modal: app });
+    service.addModal({ id: 'test', modal: app }, true);
+
+    expect(service.getModalStackCount()).toEqual(1);
+  }));
+
   it('should getModalData', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     spyOn(service, 'getModal').and.returnValue({ getData: (() => 'test data') });
 
@@ -243,6 +254,8 @@ describe('NgxSmartModalService', () => {
 
     service.setModalData('test data', 'test', true);
 
+    expect(service.setModalData('test data', 'test', true)).toEqual(true);
+
     expect(service.getModalData('test')).toEqual('test data');
   }));
 
@@ -259,6 +272,10 @@ describe('NgxSmartModalService', () => {
     service.resetModalData('test');
 
     expect(service.getModalData('test')).toEqual(undefined);
+  }));
+
+  it('should resetModalData ( innexistant )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    expect(service.resetModalData('fake')).toEqual(false);
   }));
 
   it('should get ( modal )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
@@ -305,25 +322,51 @@ describe('NgxSmartModalService', () => {
 
     expect(service.getModal('test').visible).toEqual(true);
   }));
-  /*
-  it('should closeLatestModal', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-      const fixture = TestBed.createComponent(NgxSmartModalComponent);
-      const app = fixture.debugElement.componentInstance;
-      app.identifier = 'test';
 
-      service.addModal({ id: 'test', modal: app });
-      service.open('test');
+  it('should getModalStack', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    (service as any).modalStack = 'fake data';
 
-      const app2 = fixture.debugElement.componentInstance;
-      app2.identifier = 'test2';
-
-      service.addModal({ id: 'test2', modal: app2 });
-      service.open('test2');
-
-      service.closeLatestModal();
-
-      expect(service.getModal('test').openedClass).toEqual(true);
-      expect(service.getModal('test2').openedClass).toEqual(false);
+    expect((service as any).getModalStack()).toEqual('fake data');
   }));
-  */
+
+  it('should getModal ( innexistant )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    expect(() => { service.getModal('fake'); }).toThrow(new Error('Cannot find modal with identifier fake'));
+  }));
+
+  it('should getTopOpenedModal ( no modal )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    spyOn(service, 'getOpenedModals').and.returnValue([]);
+
+    expect(() => { service.getTopOpenedModal(); }).toThrow(new Error('No modal is opened'));
+  }));
+
+  it('should getTopOpenedModal ', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const modalStack = [
+      { modal: { layerPosition: 900, visible: true } },
+      { modal: { layerPosition: 2000, visible: true } },
+      { modal: { layerPosition: 1000, visible: true } }
+    ];
+
+    spyOn(service, 'getOpenedModals').and.returnValue(modalStack);
+
+    expect((service as any).getTopOpenedModal()).toEqual(modalStack[1].modal);
+  }));
+
+  it('should getHigherIndex', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    (service as any).modalStack = [
+      { modal: { layerPosition: 900 } },
+      { modal: { layerPosition: 2000 } },
+      { modal: { layerPosition: 1000 } }
+    ];
+
+    expect(service.getHigherIndex()).toEqual(2001);
+  }));
+
+  it('should closeLatestModal', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    spyOn(service, 'getOpenedModals').and.returnValue(['test']);
+    spyOn(service, 'getTopOpenedModal').and.returnValue({ close: () => 'test_close' });
+
+    service.closeLatestModal();
+
+    expect(service.getTopOpenedModal).toHaveBeenCalled();
+  }));
 });
