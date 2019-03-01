@@ -39,32 +39,32 @@ You can take a look on [this diagram](https://github.com/biig-io/ngx-smart-modal
 
 ## Setup
 To use `ngx-smart-modal` in your project install it via [npm](https://www.npmjs.com/package/ngx-smart-modal):
-```
+```sh
 npm i ngx-smart-modal --save
 ```
 or with [yarn](https://yarnpkg.com/en/package/ngx-smart-modal):
-```
+```sh
 yarn add ngx-smart-modal
 ```
 ⚠️ If you have the following warning after install **(for NgxSmartModal <= 5.0.0)**:
-```
+```sh
 npm WARN ngx-smart-modal@x.x.x requires a peer of web-animations-js@>=x.x.x but none was installed.
 ```
 or
-```
+```sh
 warning "ngx-smart-modal@x.x.x" has unmet peer dependency "web-animations-js@>=x.x.x".
 ```
 Just run:
-```
+```sh
 npm i web-animations-js --save
 ```
 or
-```
+```sh
 yarn add web-animations-js
 ```
 
 **If you're using SystemJS**
-```
+```javascript
 System.config({
   map: {
     'ngx-smart-modal': 'node_modules/ngx-smart-modal/bundles/ngx-smart-modal.umd.js'
@@ -97,7 +97,7 @@ export class AppModule { }
 
 And import `ngx-smart-modal.scss` or `ngx-smart-modal.css` in a global style file (e.g. `styles.scss` or `styles.css` in classic Angular projects or any other scss/css file it imports):
 Example with **styles.scss**:
-```typescript
+```scss
 /* You can add global styles to this file, and also import other style files */
 @import "~ngx-smart-modal/ngx-smart-modal";
 @import "app/app.component";
@@ -109,7 +109,7 @@ Example with **styles.scss**:
 ## Style & customization
 ⚠️ **For `ngx-smart-modal` >= 6.0.0 only!**
 `ngx-smart-modal` provides built-in [SCSS variables](https://sass-lang.com/guide#topic-2) that you can override easily like it (assuming you imported `ngx-smart-modal.scss` as explained above):
-```typescript
+```scss
 /* You can add global styles to this file, and also import other style files */
 /* NgxSmartModal variables override */
 $color-overlay: rgba(0, 0, 0, .7);
