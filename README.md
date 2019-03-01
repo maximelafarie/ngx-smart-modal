@@ -74,7 +74,7 @@ System.config({
 
 Then add
 `NgxSmartModalModule` (with `.forRoot()` or `.forChild()` depending if the module which you import the library into is the main module of your project or a nested module) and `NgxSmartModalService` to your project `NgModule`
-```
+```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
@@ -97,11 +97,11 @@ export class AppModule { }
 
 And import `ngx-smart-modal.scss` or `ngx-smart-modal.css` in a global style file (e.g. `styles.scss` or `styles.css` in classic Angular projects or any other scss/css file it imports):
 Example with **styles.scss**:
-```
+```typescript
 /* You can add global styles to this file, and also import other style files */
 @import "~ngx-smart-modal/ngx-smart-modal";
 @import "app/app.component";
-...
+// ...
 ```
 [Demo example here](https://github.com/biig-io/ngx-smart-modal/blob/master/src/styles.scss)
 
@@ -109,14 +109,14 @@ Example with **styles.scss**:
 ## Style & customization
 ⚠️ **For `ngx-smart-modal` >= 6.0.0 only!**
 `ngx-smart-modal` provides built-in [SCSS variables](https://sass-lang.com/guide#topic-2) that you can override easily like it (assuming you imported `ngx-smart-modal.scss` as explained above):
-```
+```typescript
 /* You can add global styles to this file, and also import other style files */
 /* NgxSmartModal variables override */
 $color-overlay: rgba(0, 0, 0, .7);
 $dialog-position-top: 20%;
 
 @import "~ngx-smart-modal/ngx-smart-modal";
-...
+// ...
 ```
 _Note that variables needs to be overridden **before** `@import`!_
 
@@ -175,7 +175,7 @@ The below documentation will use the following pattern:
 
 ## Manipulate modals
 You can use it directly in your component's template like this
-```
+```typescript
 <ngx-smart-modal #myModal identifier="myModal">
   <h1>Title</h1>
   <p>Some stuff...</p>
@@ -184,12 +184,12 @@ You can use it directly in your component's template like this
 </ngx-smart-modal>
 ```
 At this point, the modal instance is stored in the `NgxSmartModalService`. You can do absolutely what you want with it, anywhere in your app. For example, from a component :
-```
+```typescript
 import { Component } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
-  ...
+  // ...
 })
 export class AppComponent {
   constructor(public ngxSmartModalService: NgxSmartModalService) {
@@ -203,12 +203,12 @@ Then in the AppComponent view you can open any modal with no need to be in the s
 
 ## Manipulate data
 You can associate data with any created modal. To do that, simply use the `setModalData()` from the `NgxSmartModalService`:
-```
+```typescript
 import { AfterViewInit, Component } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
-  ...
+  // ...
 })
 export class AppComponent implements AfterViewInit {
   constructor(public ngxSmartModalService: NgxSmartModalService) {
@@ -227,7 +227,7 @@ export class AppComponent implements AfterViewInit {
 }
 ```
 After that, you can retrieve the modal data directly from the view with the `getData()` modal property. To avoid any errors with unavailable data, you can use the `hasData()` modal property (It's dynamic. If data comes after a certain time its value will automatically change to `true`):
-```
+```html
 <ngx-smart-modal #myModal identifier="myModal">
   <div *ngIf="myModal.hasData()">
     <pre>{{ myModal.getData() | json }}</pre>
@@ -253,7 +253,7 @@ After that, you can retrieve the modal data directly from the view with the `get
  - `onDataRemoved` data were removed from the modal (using `removeData()`)
 
 You can handle events directly from the view...
-```
+```html
 <ngx-smart-modal #myModal identifier="myModal" (onOpen)="log('Modal opened!')" (onClose)="log('Modal closed!')" (onDismiss)="log('Modal dismissed!')">
   <h1>Title</h1>
   <p>Some stuff...</p>
@@ -262,9 +262,9 @@ You can handle events directly from the view...
 </ngx-smart-modal>
 ```
 ...and execute component's functions:
-```
+```typescript
 @Component({
-  ...
+  // ...
 })
 export class AppComponent {
   constructor() {
@@ -277,7 +277,7 @@ export class AppComponent {
 ```
 
 Or you also can declare modal in any template (e.g.: the Rickroll demo modal)...
-```
+```html
 <ngx-smart-modal #videoModal identifier="videoModal" customClass="medium-modal">
   <h1>Hey, I Rickrolled You!</h1>
   <iframe #rickroll width="1280" height="720"
@@ -288,9 +288,9 @@ Or you also can declare modal in any template (e.g.: the Rickroll demo modal)...
 </ngx-smart-modal>
 ```
 ... and listen to its events from any component:
-```
+```typescript
 export class AppComponent implements AfterViewInit {
-  ...
+  // ...
   constructor(public ngxSmartModalService: NgxSmartModalService) {
   }
 
@@ -305,12 +305,12 @@ export class AppComponent implements AfterViewInit {
 
 ## API
 `ngx-smart-modal` also comes with the `NgxSmartModalService` that you can use in any component like this:
-```
+```typescript
 import { Component } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
-  ...
+  // ...
 })
 export class AppComponent {
   constructor(public ngxSmartModalService: NgxSmartModalService) {
