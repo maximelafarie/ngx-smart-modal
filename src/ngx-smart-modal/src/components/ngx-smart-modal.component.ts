@@ -20,14 +20,16 @@ import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
          (click)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog
+           [attr.aria-hidden]="openedClass ? false : true">
         <div class="nsm-content" #nsmContent>
           <div class="nsm-body">
             <ng-content></ng-content>
           </div>
-          <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
+          <button type="button" *ngIf="closable" (click)="close()" role="button" aria-label="Close modal" class="nsm-dialog-btn-close">
             <img
-              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDMsNi4wNThjLTguMDc3LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDksMEw2LjA1OCw0NzYuNjkzYy04LjA3Nyw4LjA3Ny04LjA3NywyMS4xNzIsMCwyOS4yNDkgICAgQzEwLjA5Niw1MDkuOTgyLDE1LjM5LDUxMiwyMC42ODMsNTEyYzUuMjkzLDAsMTAuNTg2LTIuMDE5LDE0LjYyNS02LjA1OUw1MDUuOTQzLDM1LjMwNiAgICBDNTE0LjAxOSwyNy4yMyw1MTQuMDE5LDE0LjEzNSw1MDUuOTQzLDYuMDU4eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDIsNDc2LjY5NEwzNS4zMDYsNi4wNTljLTguMDc2LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDgsMGMtOC4wNzcsOC4wNzYtOC4wNzcsMjEuMTcxLDAsMjkuMjQ4bDQ3MC42MzYsNDcwLjYzNiAgICBjNC4wMzgsNC4wMzksOS4zMzIsNi4wNTgsMTQuNjI1LDYuMDU4YzUuMjkzLDAsMTAuNTg3LTIuMDE5LDE0LjYyNC02LjA1N0M1MTQuMDE4LDQ5Ny44NjYsNTE0LjAxOCw0ODQuNzcxLDUwNS45NDIsNDc2LjY5NHoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDMsNi4wNThjLTguMDc3LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDksMEw2LjA1OCw0NzYuNjkzYy04LjA3Nyw4LjA3Ny04LjA3NywyMS4xNzIsMCwyOS4yNDkgICAgQzEwLjA5Niw1MDkuOTgyLDE1LjM5LDUxMiwyMC42ODMsNTEyYzUuMjkzLDAsMTAuNTg2LTIuMDE5LDE0LjYyNS02LjA1OUw1MDUuOTQzLDM1LjMwNiAgICBDNTE0LjAxOSwyNy4yMyw1MTQuMDE5LDE0LjEzNSw1MDUuOTQzLDYuMDU4eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDIsNDc2LjY5NEwzNS4zMDYsNi4wNTljLTguMDc2LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDgsMGMtOC4wNzcsOC4wNzYtOC4wNzcsMjEuMTcxLDAsMjkuMjQ4bDQ3MC42MzYsNDcwLjYzNiAgICBjNC4wMzgsNC4wMzksOS4zMzIsNi4wNTgsMTQuNjI1LDYuMDU4YzUuMjkzLDAsMTAuNTg3LTIuMDE5LDE0LjYyNC02LjA1N0M1MTQuMDE4LDQ5Ny44NjYsNTE0LjAxOCw0ODQuNzcxLDUwNS45NDIsNDc2LjY5NHoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K"
+              alt="Cross to close the modal"/>
           </button>
         </div>
       </div>
@@ -83,6 +85,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       if (this.autostart) {
         this._ngxSmartModalService.open(this.identifier);
       }
+
     } else {
       throw new Error('identifier field isn’t set. Please set one before calling <ngx-smart-modal> in a template.');
     }
@@ -117,6 +120,12 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         this.targetPlacement();
       }
 
+      if (this.nsmDialog) {
+        this.nsmDialog.nativeElement.setAttribute('tabIndex', '-1');
+        this.nsmDialog.nativeElement.setAttribute('role', 'dialog');
+        this.nsmDialog.nativeElement.setAttribute('aria-modal', 'true');
+        this.nsmDialog.nativeElement.focus();
+      }
       this._changeDetectorRef.markForCheck();
     });
 
@@ -124,6 +133,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
     if (this.escapable) {
       window.addEventListener('keyup', this.escapeKeyboardEvent);
+    }
+
+    if (this.backdrop) {
+      window.addEventListener('keyup', this.trapFocusModal);
     }
   }
 
@@ -142,6 +155,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
 
     setTimeout(() => {
+      if (this.nsmDialog) {
+        this.nsmDialog.nativeElement.removeAttribute('tabIndex');
+      }
       me.visibleChange.emit(me.visible);
       me.visible = false;
       me.overlayVisible = false;
@@ -151,6 +167,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }, this.hideDelay);
 
     window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    window.removeEventListener('keyup', this.trapFocusModal);
   }
 
   /**
@@ -178,12 +195,16 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         me.visible = false;
         me.visibleChange.emit(me.visible);
         me.overlayVisible = false;
+        if (this.nsmDialog) {
+          this.nsmDialog.nativeElement.removeAttribute('tabIndex');
+        }
         me._changeDetectorRef.markForCheck();
         me.onDismissFinished.emit(me);
         me.onAnyCloseEventFinished.emit(me);
       }, this.hideDelay);
 
       window.removeEventListener('keyup', this.escapeKeyboardEvent);
+      window.removeEventListener('keyup', this.trapFocusModal);
     }
   }
 
@@ -280,6 +301,22 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         this._ngxSmartModalService.closeLatestModal();
       }
     }
+  }
+
+  /**
+   * While modal is open, the focus stay on it
+   */
+  public trapFocusModal = (event: KeyboardEvent) => {
+    if (
+      event.keyCode === 9 &&
+      this.nsmDialog &&
+      this.nsmContent &&
+      this._ngxSmartModalService.getTopOpenedModal() === this &&
+      !this.nsmDialog.nativeElement.contains(document.activeElement)
+    ) {
+        event.preventDefault();
+        this.nsmDialog.nativeElement.focus();
+      }
   }
 
   /**
