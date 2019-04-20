@@ -240,6 +240,7 @@ After that, you can retrieve the modal data directly from the view with the `get
 `ngx-smart-modal` comes with several built-in events:
 
  - `onOpen`: modal is opening
+ - `onOpenFinished`: modal has been opened
  - `onClose`: modal is closing
  - `onCloseFinished`: modal has been closed
  - `onDismiss`: modal is closing by clicking on its backdrop

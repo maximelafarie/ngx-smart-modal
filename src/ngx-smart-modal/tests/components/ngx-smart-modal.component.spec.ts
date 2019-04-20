@@ -58,6 +58,18 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
+  it('should open modal and emit when it is totaly visible', (done) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'myModal';
+    expect(app.isVisible()).toBeFalsy();
+    app.open(true);
+    app.onOpenFinished.subscribe(() => {
+      expect(app.isVisible()).toBeTruthy();
+      done();
+    });
+  });
+
   it('should toggle the modal directly', async(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;

@@ -55,6 +55,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Output() public onAnyCloseEvent: EventEmitter<any> = new EventEmitter();
   @Output() public onAnyCloseEventFinished: EventEmitter<any> = new EventEmitter();
   @Output() public onOpen: EventEmitter<any> = new EventEmitter();
+  @Output() public onOpenFinished: EventEmitter<any> = new EventEmitter();
   @Output() public onEscape: EventEmitter<any> = new EventEmitter();
   @Output() public onDataAdded: EventEmitter<any> = new EventEmitter();
   @Output() public onDataRemoved: EventEmitter<any> = new EventEmitter();
@@ -110,6 +111,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this.overlayVisible = true;
     this.visible = true;
 
+    this.onOpen.emit(this);
+
     setTimeout(() => {
       this.openedClass = true;
 
@@ -118,9 +121,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       }
 
       this._changeDetectorRef.markForCheck();
+      this.onOpenFinished.emit(this);
     });
 
-    this.onOpen.emit(this);
 
     if (this.escapable) {
       window.addEventListener('keyup', this.escapeKeyboardEvent);
