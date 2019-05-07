@@ -7,8 +7,9 @@ import {
   Component,
   EventEmitter,
   HostListener,
-  ChangeDetectorRef, ViewChild, ElementRef,
+  ChangeDetectorRef, ViewChild, ElementRef, Inject, PLATFORM_ID,
 } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
 
@@ -72,7 +73,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   constructor(
     private _renderer: Renderer2,
     private _changeDetectorRef: ChangeDetectorRef,
-    private _ngxSmartModalService: NgxSmartModalService
+    private _ngxSmartModalService: NgxSmartModalService,
+    @Inject(DOCUMENT) private _document: Document,
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) { }
 
   public ngOnInit() {
@@ -90,9 +93,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this._ngxSmartModalService.removeModal(this.identifier);
-    window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    this.isBrowser() && window.removeEventListener('keyup', this.escapeKeyboardEvent);
     if (!this._ngxSmartModalService.getModalStack.length) {
-      this._renderer.removeClass(document.body, 'dialog-open');
+      this._renderer.removeClass(this._document.body, 'dialog-open');
     }
   }
 
@@ -106,7 +109,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       this.layerPosition = this._ngxSmartModalService.getHigherIndex();
     }
 
-    this._renderer.addClass(document.body, 'dialog-open');
+    this._renderer.addClass(this._document.body, 'dialog-open');
     this.overlayVisible = true;
     this.visible = true;
 
@@ -123,7 +126,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this.onOpen.emit(this);
 
     if (this.escapable) {
-      window.addEventListener('keyup', this.escapeKeyboardEvent);
+      this.isBrowser() && window.addEventListener('keyup', this.escapeKeyboardEvent);
     }
   }
 
@@ -138,7 +141,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this.onAnyCloseEvent.emit(this);
 
     if (this._ngxSmartModalService.getOpenedModals().length < 2) {
-      this._renderer.removeClass(document.body, 'dialog-open');
+      this._renderer.removeClass(this._document.body, 'dialog-open');
     }
 
     setTimeout(() => {
@@ -150,7 +153,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       me.onAnyCloseEventFinished.emit(me);
     }, this.hideDelay);
 
-    window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    this.isBrowser() && window.removeEventListener('keyup', this.escapeKeyboardEvent);
   }
 
   /**
@@ -171,7 +174,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       this.onAnyCloseEvent.emit(this);
 
       if (this._ngxSmartModalService.getOpenedModals().length < 2) {
-        this._renderer.removeClass(document.body, 'dialog-open');
+        this._renderer.removeClass(this._document.body, 'dialog-open');
       }
 
       setTimeout(() => {
@@ -183,7 +186,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         me.onAnyCloseEventFinished.emit(me);
       }, this.hideDelay);
 
-      window.removeEventListener('keyup', this.escapeKeyboardEvent);
+      this.isBrowser() && window.removeEventListener('keyup', this.escapeKeyboardEvent);
     }
   }
 
@@ -291,7 +294,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const targetElementRect = document.querySelector(this.target).getBoundingClientRect();
+    const targetElementRect = this._document.querySelector(this.target).getBoundingClientRect();
     const bodyRect = this.nsmOverlay.nativeElement.getBoundingClientRect();
 
     const nsmContentRect = this.nsmContent.nativeElement.getBoundingClientRect();
@@ -319,5 +322,12 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
     this._renderer.setStyle(this.nsmContent.nativeElement, 'top', offsetTop + 'px');
     this._renderer.setStyle(this.nsmContent.nativeElement, 'left', offsetLeft + 'px');
+  }
+
+  /**
+   * Is current platform browser
+   */
+  public isBrowser(): boolean {
+    return isPlatformBrowser(this._platformId);
   }
 }
