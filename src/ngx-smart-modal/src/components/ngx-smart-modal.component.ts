@@ -18,7 +18,7 @@ import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
     <div *ngIf="overlayVisible"
          [style.z-index]="visible ? layerPosition-1 : -1"
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
-         (click)="dismiss($event)" #nsmOverlay>
+         (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
            [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
         <div class="nsm-content" #nsmContent>
