@@ -3,9 +3,9 @@ $color-overlay: rgba(0, 0, 0, .5) !default;
 
 // Position of dialog
 $dialog-position-top: 1.75rem !default;
-$dialog-position-bottom: auto !default;
-$dialog-position-left: auto !default;
-$dialog-position-right: auto !default;
+$dialog-position-bottom: 1.75rem !default;
+$dialog-position-left: 1.75rem !default;
+$dialog-position-right: 1.75rem !default;
 
 // Transition time
 // !! The same as the hideDelay variable defined in ngx-smart-modal.component.ts

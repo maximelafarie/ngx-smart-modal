@@ -66,11 +66,18 @@ pre {
   .title {
     color: #fff;
     text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    margin: 10px auto 50px;
   }
 }
 
 h1 {
   margin: 5px auto;
+}
+
+.small-p {
+  font-size: .85em;
+  color: white;
+  text-align: center;
 }
 
 .modal-image {
@@ -90,7 +97,6 @@ h1 {
 
 .button {
   display: flex;
-  overflow: hidden;
   margin: 10px;
   padding: 12px 12px;
   cursor: pointer;
@@ -111,6 +117,8 @@ h1 {
   appearance: none;
   justify-content: center;
   align-items: center;
+  position: relative;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
 
   &:hover {
     transition: all 60ms ease;
@@ -125,6 +133,18 @@ h1 {
   &:focus {
     outline: 1px dotted #959595;
     outline-offset: -4px;
+  }
+
+  span {
+    position: absolute;
+    border-radius: 3px;
+    color: #fff;
+    background-color: red;
+    padding: 1px 5px;
+    top: -5px;
+    right: -7px;
+    font-size: 12px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
   }
 }
 
@@ -241,4 +261,24 @@ h1 {
   text-align: center;
   font-size: 12px;
   color: #fff;
+}
+
+.footer {
+  a {
+    color: #fff;
+  }
+}
+
+#biig-link {
+  display: block;
+  opacity: .5;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 30px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 1;
+  }
 }
