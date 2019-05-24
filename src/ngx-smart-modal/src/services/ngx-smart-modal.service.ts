@@ -214,11 +214,8 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    * @param force Tell the modal to open top of all other opened modals
    */
-  public open(id: string, force = false): void {
-    let i;
-    if (i = this.get(id)) {
-      this._openModal(i, force);
-    }
+  public open(id: string, force = false): boolean {
+    return this._openModal(this.get(id), force);
   }
 
   /**
@@ -226,11 +223,8 @@ export class NgxSmartModalService {
    *
    * @param id The modal identifier used at creation time.
    */
-  public close(id: string): void {
-    let i;
-    if (i = this.get(id)) {
-      this._closeModal(i);
-    }
+  public close(id: string): boolean {
+    return this._closeModal(this.get(id));
   }
 
   /**
@@ -240,11 +234,8 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    * @param force Tell the modal to open top of all other opened modals
    */
-  public toggle(id: string, force = false): void {
-    let i;
-    if (i = this.get(id)) {
-      this._toggleModal(i, force);
-    }
+  public toggle(id: string, force = false): boolean {
+    return this._toggleModal(this.get(id), force);
   }
 
   /**

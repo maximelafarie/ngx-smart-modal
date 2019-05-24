@@ -293,18 +293,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       offsetTop = bodyRect.height - (nsmDialogRect.top + nsmContentRect.height) - marginTop;
     }
 
-    if (offsetTop < 0) {
-      offsetTop = 0;
-    }
-
-    this._renderer.setStyle(this.nsmContent.nativeElement, 'top', offsetTop + 'px');
+    this._renderer.setStyle(this.nsmContent.nativeElement, 'top', (offsetTop < 0 ? 0 : offsetTop) + 'px');
     this._renderer.setStyle(this.nsmContent.nativeElement, 'left', offsetLeft + 'px');
   }
 
   private _sendEvent(name: string, extraData?: any): void {
     const data = {
-      instance: { id: this.identifier, modal: this },
-      extraData: extraData
+      extraData: extraData,
+      instance: { id: this.identifier, modal: this }
     };
 
     const event = new CustomEvent(NgxSmartModalConfig.prefixEvent + name, { detail: data });

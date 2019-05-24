@@ -87,6 +87,8 @@ export class MainComponent implements AfterViewInit {
     this.ngxSmartModalService.create('dynamicModal2', FakeComponent).open();
 
     this.ngxSmartModalService.create('dynamicModal3', this.tpl).open();
+
+    console.log(this.ngxSmartModalService.open('test333'));
   }
 
 }
