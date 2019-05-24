@@ -7,14 +7,11 @@ import { NgxSmartModalComponent } from '../components/ngx-smart-modal.component'
 
 @NgModule({
   declarations: [NgxSmartModalComponent],
-  exports: [NgxSmartModalComponent],
   entryComponents: [NgxSmartModalComponent],
+  exports: [NgxSmartModalComponent],
   imports: [CommonModule]
 })
 export class NgxSmartModalModule {
-  constructor(private serivce: NgxSmartModalService) {
-  }
-
   /**
    * Use in AppModule: new instance of NgxSmartModal.
    */
@@ -39,5 +36,8 @@ export class NgxSmartModalModule {
         NgxSmartModalStackService
       ]
     };
+  }
+
+  constructor(private serivce: NgxSmartModalService) {
   }
 }

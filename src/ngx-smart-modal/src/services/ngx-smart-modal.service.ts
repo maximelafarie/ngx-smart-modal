@@ -11,7 +11,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 
 import { NgxSmartModalComponent } from '../../src/components/ngx-smart-modal.component';
-import { NgxSmartModalConfig, NgxSmartModalOptions } from '../../src/config/ngx-smart-modal.config';
+import { NgxSmartModalConfig, INgxSmartModalOptions } from '../../src/config/ngx-smart-modal.config';
 import { NgxSmartModalStackService } from '../../src/services/ngx-smart-modal-stack.service';
 import { ModalInstance } from './modal-instance';
 
@@ -212,7 +212,7 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    * @param content The modal content ( string, templateRef or Component )
    */
-  public create<T>(id: string, content: Content<T>, options: NgxSmartModalOptions = {}) {
+  public create<T>(id: string, content: Content<T>, options: INgxSmartModalOptions = {}) {
     try {
       return this.getModal(id);
     } catch (e) {

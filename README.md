@@ -147,7 +147,7 @@ To change this effect, you can use the `customClass` option (see below) but you 
  - `.nsm-centered`: the modal is centered vertically
 
 
-## Parameters ( NgxSmartModalOptions )
+## Parameters ( INgxSmartModalOptions )
 `ngx-smart-modal` comes with some parameters / options in order to make it fit your needs. The following parameters / options needs to be used like this: `<ngx-smart-modal [parameter-or-option-name]="value"></ngx-smart-modal>`
 
 The below documentation will use the following pattern:
@@ -347,7 +347,7 @@ export class AppComponent {
 }
 ```
 **List of available methods**:
- - `create(id: string, content: string or Component or TemplateRef, options: NgxSmartModalOptions)`: create a new modal and return the modal instance ⚠️Only for `NgxSmartModal >= 7.2.0`!
+ - `create(id: string, content: string or Component or TemplateRef, options: INgxSmartModalOptions)`: create a new modal and return the modal instance ⚠️Only for `NgxSmartModal >= 7.2.0`!
  - `addModal(modalInstance: ModalInstance, force?: boolean)`: add a new modal instance
  - `getModal(id: string)`: retrieve a modal instance by its identifier
  - `get(id: string)`: retrieve a modal instance by its identifier (alias of `getModal`)

@@ -4,6 +4,8 @@
         "node_modules/codelyzer"
     ],
     "rules": {
+        "object-literal-shorthand": false,
+        "no-empty": [true, "allow-empty-catch"],
         "no-trailing-whitespace": false,
         "max-line-length": [true, 10000],
         "angular-whitespace": [

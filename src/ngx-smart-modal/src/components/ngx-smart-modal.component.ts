@@ -251,7 +251,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     try {
       this._changeDetectorRef.detectChanges();
     } catch (e) {
-
     }
 
     this._changeDetectorRef.markForCheck();
