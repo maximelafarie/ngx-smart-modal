@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
+import { NgxSmartModalStackService } from '../services/ngx-smart-modal-stack.service';
 import { NgxSmartModalComponent } from '../components/ngx-smart-modal.component';
 
 @NgModule({
@@ -21,7 +22,8 @@ export class NgxSmartModalModule {
     return {
       ngModule: NgxSmartModalModule,
       providers: [
-        NgxSmartModalService
+        NgxSmartModalService,
+        NgxSmartModalStackService
       ]
     };
   }
@@ -33,7 +35,8 @@ export class NgxSmartModalModule {
     return {
       ngModule: NgxSmartModalModule,
       providers: [
-        NgxSmartModalService
+        NgxSmartModalService,
+        NgxSmartModalStackService
       ]
     };
   }

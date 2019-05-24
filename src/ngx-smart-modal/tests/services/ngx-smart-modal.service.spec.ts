@@ -4,6 +4,7 @@ import { inject, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
+import { NgxSmartModalStackService } from '../../src/services/ngx-smart-modal-stack.service';
 
 @Component({
   selector: 'ngx-smart-modal-test-fake',
@@ -26,7 +27,8 @@ describe('NgxSmartModalService', () => {
         BrowserModule,
       ],
       providers: [
-        NgxSmartModalService
+        NgxSmartModalService,
+        NgxSmartModalStackService
       ],
     }).overrideModule(BrowserDynamicTestingModule, {
       set: {
@@ -188,20 +190,13 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._dismissModal(app)).toBeFalsy();
   })));
 
-  it('should add modal ( force )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    const fixture = TestBed.createComponent(NgxSmartModalComponent);
-    const app = fixture.debugElement.componentInstance;
-    app.identifier = 'test';
+  it('should add modal ( force )', inject([NgxSmartModalService, NgxSmartModalStackService], 
+    (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
+    spyOn(stackService, 'addModal');
 
-    service.addModal({ id: 'test', modal: app });
-    service.addModal({ id: 'test', modal: app }, true);
+    service.addModal({fake: 'obj' } as any, true);
 
-    expect(service.getModalStackCount()).toEqual(1);
-
-    app.identifier = 'test2';
-    service.addModal({ id: 'test2', modal: app }, true);
-
-    expect(service.getModalStackCount()).toEqual(2);
+    expect(stackService.addModal).toHaveBeenCalledWith({fake: 'obj' }, true);
   }));
 
   it('should get modal data', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
@@ -290,42 +285,29 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._toggleModal).toHaveBeenCalledWith('fake', true);
   }));
 
-  it('should get modal stack', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    (service as any)._modalStack = [];
+  it('should get modal stack', inject([NgxSmartModalService, NgxSmartModalStackService], 
+    (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
+    spyOn(stackService, 'getModalStack').and.returnValue('fake');
 
-    expect(service.getModalStack()).toEqual([]);
+    expect(service.getModalStack()).toEqual('fake' as any);
   }));
 
   it('should get modal ( innexistant )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     expect(() => { service.getModal('fake'); }).toThrow(new Error('Cannot find modal with identifier fake'));
   }));
 
-  it('should get top opened modal ( no modal )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    spyOn(service, 'getOpenedModals').and.returnValue([]);
+  it('should get top opened modal', inject([NgxSmartModalService, NgxSmartModalStackService], 
+    (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
+    spyOn(stackService, 'getTopOpenedModal').and.returnValue('fake');
 
-    expect(() => { service.getTopOpenedModal(); }).toThrow(new Error('No modal is opened'));
+    expect(service.getTopOpenedModal()).toEqual('fake' as any);
   }));
 
-  it('should get top opened modal ', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    const modalStack = [
-      { modal: { layerPosition: 900, visible: true } },
-      { modal: { layerPosition: 2000, visible: true } },
-      { modal: { layerPosition: 1000, visible: true } }
-    ];
+  it('should get higher index', inject([NgxSmartModalService, NgxSmartModalStackService], 
+    (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
+    spyOn(stackService, 'getHigherIndex').and.returnValue(777);
 
-    spyOn(service, 'getOpenedModals').and.returnValue(modalStack);
-
-    expect((service as any).getTopOpenedModal()).toEqual(modalStack[1].modal);
-  }));
-
-  it('should get higher index', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    (service as any)._modalStack = [
-      { modal: { layerPosition: 900 } },
-      { modal: { layerPosition: 2000 } },
-      { modal: { layerPosition: 1000 } }
-    ];
-
-    expect(service.getHigherIndex()).toEqual(2001);
+    expect(service.getHigherIndex()).toEqual(777);
   }));
 
   it('should close latest modal', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
