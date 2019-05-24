@@ -224,41 +224,15 @@ export class NgxSmartModalService {
       componentRef.instance.identifier = id;
       componentRef.instance.createFrom = 'service';
 
-      if (typeof options.closable === 'boolean') {
-        componentRef.instance.closable = options.closable;
-      }
-
-      if (typeof options.escapable === 'boolean') {
-        componentRef.instance.escapable = options.escapable;
-      }
-
-      if (typeof options.dismissable === 'boolean') {
-        componentRef.instance.dismissable = options.dismissable;
-      }
-
-      if (typeof options.customClass === 'string') {
-        componentRef.instance.customClass = options.customClass;
-      }
-
-      if (typeof options.backdrop === 'boolean') {
-        componentRef.instance.backdrop = options.backdrop;
-      }
-
-      if (typeof options.force === 'boolean') {
-        componentRef.instance.force = options.force;
-      }
-
-      if (typeof options.hideDelay === 'number') {
-        componentRef.instance.hideDelay = options.hideDelay;
-      }
-
-      if (typeof options.autostart === 'boolean') {
-        componentRef.instance.autostart = options.autostart;
-      }
-
-      if (typeof options.target === 'string') {
-        componentRef.instance.target = options.target;
-      }
+      if (typeof options.closable === 'boolean') { componentRef.instance.closable = options.closable; }
+      if (typeof options.escapable === 'boolean') { componentRef.instance.escapable = options.escapable; }
+      if (typeof options.dismissable === 'boolean') { componentRef.instance.dismissable = options.dismissable; }
+      if (typeof options.customClass === 'string') { componentRef.instance.customClass = options.customClass; }
+      if (typeof options.backdrop === 'boolean') { componentRef.instance.backdrop = options.backdrop; }
+      if (typeof options.force === 'boolean') { componentRef.instance.force = options.force; }
+      if (typeof options.hideDelay === 'number') { componentRef.instance.hideDelay = options.hideDelay; }
+      if (typeof options.autostart === 'boolean') { componentRef.instance.autostart = options.autostart; }
+      if (typeof options.target === 'string') { componentRef.instance.target = options.target; }
 
       this._appRef.attachView(componentRef.hostView);
 
@@ -318,9 +292,7 @@ export class NgxSmartModalService {
     modal.addBodyClass();
     modal.overlayVisible = true;
     modal.visible = true;
-
     modal.onOpen.emit(modal);
-
     modal.markForCheck();
 
     setTimeout(() => {
@@ -415,9 +387,6 @@ export class NgxSmartModalService {
 
     if (content instanceof TemplateRef) {
       const viewRef = content.createEmbeddedView(null as any);
-
-      // In earlier versions, you may need to add this line
-      // this.appRef.attachView(viewRef);
 
       return [viewRef.rootNodes];
     }
