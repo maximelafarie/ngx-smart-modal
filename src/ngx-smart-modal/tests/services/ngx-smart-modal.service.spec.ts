@@ -272,15 +272,6 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._openModal).toHaveBeenCalledWith('fake', true);
   }));
 
-  it('should open ( invalid id )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    spyOn(service, 'get').and.returnValue(undefined);
-    spyOn(service as any, '_openModal');
-
-    service.open('test');
-
-    expect((service as any)._openModal).not.toHaveBeenCalled();
-  }));
-
   it('should close', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     spyOn(service, 'get').and.returnValue('fake');
     spyOn(service as any, '_closeModal');
@@ -290,15 +281,6 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._closeModal).toHaveBeenCalledWith('fake');
   }));
 
-  it('should close ( invalid id )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    spyOn(service, 'get').and.returnValue(undefined);
-    spyOn(service as any, '_closeModal');
-
-    service.close('test');
-    
-    expect((service as any)._closeModal).not.toHaveBeenCalled();
-  }));
-
   it('should toggle', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     spyOn(service, 'get').and.returnValue('fake');
     spyOn(service as any, '_toggleModal');
@@ -306,15 +288,6 @@ describe('NgxSmartModalService', () => {
     service.toggle('test', true);
 
     expect((service as any)._toggleModal).toHaveBeenCalledWith('fake', true);
-  }));
-
-  it('should toggle ( invalid id )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    spyOn(service, 'get').and.returnValue(undefined);
-    spyOn(service as any, '_toggleModal');
-
-    service.toggle('test');
-
-    expect((service as any)._toggleModal).not.toHaveBeenCalled();
   }));
 
   it('should get modal stack', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
