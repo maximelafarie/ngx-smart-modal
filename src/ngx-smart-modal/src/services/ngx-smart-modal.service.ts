@@ -13,6 +13,7 @@ import { DOCUMENT } from '@angular/common';
 import { NgxSmartModalComponent } from '../../src/components/ngx-smart-modal.component';
 import { NgxSmartModalConfig, INgxSmartModalOptions } from '../../src/config/ngx-smart-modal.config';
 import { NgxSmartModalStackService } from '../../src/services/ngx-smart-modal-stack.service';
+
 import { ModalInstance } from './modal-instance';
 
 export type Content<T> = string | TemplateRef<T> | Type<T>;
