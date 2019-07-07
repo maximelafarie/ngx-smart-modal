@@ -214,4 +214,14 @@ export class NgxSmartModalService {
   public closeLatestModal(): void {
     this.getTopOpenedModal().close();
   }
+
+  /**
+   * Close all opened modals without need of knowing their identifiers
+   */
+  public closeAll(): void {
+    let openModals = this.getOpenedModals();
+    openModals.forEach(function(item) {
+      item.modal.close();
+    });
+  }
 }

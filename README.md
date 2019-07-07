@@ -335,6 +335,7 @@ export class AppComponent {
  - `getModalData(id: string)`: retrieve modal data by its identifier
  - `resetModalData(id: string)`: reset the data attached to a given modal
  - `closeLatestModal()`: Close the latest opened modal **if it has been declared as escapable**
+ - `closeAll()`: Close all opened modal without knowing their identifier
 
 To get more details about the available methods, their parameters and what they return, please take a look at **[ngx-smart-modal.service.ts](https://github.com/biig-io/ngx-smart-modal/blob/master/src/ngx-smart-modal/src/services/ngx-smart-modal.service.ts)** file (well documented).
 
