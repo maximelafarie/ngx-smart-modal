@@ -369,4 +369,40 @@ describe('NgxSmartModalService', () => {
 
     expect(service.getTopOpenedModal).toHaveBeenCalled();
   }));
+
+  it('should closeAll', async(() => {
+    inject([NgxSmartModalService],
+      (ngxSmartModalService: NgxSmartModalService) => {
+        const firstFixture = TestBed.createComponent(NgxSmartModalComponent);
+        const secFixture = TestBed.createComponent(NgxSmartModalComponent);
+        const thirdFixture = TestBed.createComponent(NgxSmartModalComponent);
+        const firstApp = firstFixture.debugElement.componentInstance;
+        const secApp = secFixture.debugElement.componentInstance;
+        const thirdApp = thirdFixture.debugElement.componentInstance;
+        firstApp.identifier = 'myFirstModal';
+        secApp.identifier = 'mySecModal';
+        thirdApp.identifier = 'myThirdModal';
+
+        spyOn(ngxSmartModalService, 'closeAll').and.callThrough();
+        spyOn(ngxSmartModalService, 'getOpenedModals').and.callThrough();
+
+        ngxSmartModalService.getModal('myFirstModal').onOpen.subscribe(() => {
+          ngxSmartModalService.getModal('mySecModal').open();
+        })
+        ngxSmartModalService.getModal('mySecModal').onOpen.subscribe(() => {
+          ngxSmartModalService.getModal('myThirdModal').open();
+        })
+        ngxSmartModalService.getModal('myFirstModal').open();
+        expect(firstApp.visible).toBeTruthy();
+        expect(secApp.visible).toBeTruthy();
+        expect(thirdApp.visible).toBeTruthy();
+        ngxSmartModalService.closeAll();
+        tick();
+        expect(ngxSmartModalService.closeAll).toHaveBeenCalled();
+        expect(ngxSmartModalService.getOpenedModals).toHaveBeenCalled();
+        expect(firstApp.visible).toBeFalsy();
+        expect(secApp.visible).toBeFalsy();
+        expect(thirdApp.visible).toBeFalsy();
+      });
+  }));
 });

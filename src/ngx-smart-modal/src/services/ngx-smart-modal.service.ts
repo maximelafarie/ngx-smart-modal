@@ -219,9 +219,8 @@ export class NgxSmartModalService {
    * Close all opened modals without need of knowing their identifiers
    */
   public closeAll(): void {
-    let openModals = this.getOpenedModals();
-    openModals.forEach(function(item) {
-      item.modal.close();
+    this.getOpenedModals().forEach((instance: ModalInstance) => {
+      instance.modal.close();
     });
   }
 }
