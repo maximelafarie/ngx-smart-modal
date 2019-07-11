@@ -125,7 +125,10 @@ The below documentation will use the following pattern:
 
 - `$color-overlay` (hex / rgb / rgba) | `rgba(0, 0, 0, .5)` ― _Modifies the modals overlay background color_
 
-- `$dialog-position-top` (px / %) | `5%` ― _Defines the position of the modal from the top of the screen_
+- `$dialog-position-top` (px / %) | `1.75rem` ― _Defines the position of the modal from the top of the screen_
+- `$dialog-position-right` (px / %) | `auto` ― _Defines the position of the modal from the right of the screen_
+- `$dialog-position-bottom` (px / %) | `auto` ― _Defines the position of the modal from the bottom of the screen_
+- `$dialog-position-left` (px / %) | `auto` ― _Defines the position of the modal from the left of the screen_
 
 - `$transition-duration` (duration) | `500ms` ― _Defines the transition effect duration. **Keep in mind you also need to set the same time (in ms) in the `hideDelay` modal option (see below)**_
 
