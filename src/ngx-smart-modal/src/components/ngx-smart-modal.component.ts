@@ -93,7 +93,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this._ngxSmartModalService.removeModal(this.identifier);
-    this.isBrowser() && window.removeEventListener('keyup', this.escapeKeyboardEvent);
+
+    if (this.isBrowser) {
+      window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    }
+
     if (!this._ngxSmartModalService.getModalStack.length) {
       this._renderer.removeClass(this._document.body, 'dialog-open');
     }
@@ -125,8 +129,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
     this.onOpen.emit(this);
 
-    if (this.escapable) {
-      this.isBrowser() && window.addEventListener('keyup', this.escapeKeyboardEvent);
+    if (this.escapable && this.isBrowser) {
+      window.addEventListener('keyup', this.escapeKeyboardEvent);
     }
   }
 
@@ -153,7 +157,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       me.onAnyCloseEventFinished.emit(me);
     }, this.hideDelay);
 
-    this.isBrowser() && window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    if (this.isBrowser) {
+      window.removeEventListener('keyup', this.escapeKeyboardEvent);
+    }
   }
 
   /**
@@ -186,7 +192,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
         me.onAnyCloseEventFinished.emit(me);
       }, this.hideDelay);
 
-      this.isBrowser() && window.removeEventListener('keyup', this.escapeKeyboardEvent);
+      if (this.isBrowser) {
+        window.removeEventListener('keyup', this.escapeKeyboardEvent);
+      }
     }
   }
 
@@ -327,7 +335,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   /**
    * Is current platform browser
    */
-  public isBrowser(): boolean {
+  private get isBrowser(): boolean {
     return isPlatformBrowser(this._platformId);
   }
 }
