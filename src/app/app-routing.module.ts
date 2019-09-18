@@ -17,6 +17,7 @@ import { ApiComponent } from './doc/parts/api/api.component';
 import { OptionsComponent } from './doc/parts/options/options.component';
 import { EventsComponent } from './doc/parts/events/events.component';
 import { StyleComponent } from './doc/parts/style/style.component';
+import { MiscComponent } from './doc/parts/misc/misc.component';
 
 const routerOptions: ExtraOptions = {
   useHash: false,
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'options', component: OptionsComponent },
       { path: 'events', component: EventsComponent },
       { path: 'style', component: StyleComponent },
+      { path: 'misc', component: MiscComponent },
     ]
   },
   {

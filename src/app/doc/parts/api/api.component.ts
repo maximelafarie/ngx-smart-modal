@@ -181,7 +181,7 @@ export class AppComponent {
       ],
       return: {
         type: 'boolean',
-        description: 'If data successfully bound to the modal <code>true</code>, either<code>false</code >'
+        description: 'If data successfully bound to the modal <code>true</code>, either<code>false</code>'
       }
     },
     {
@@ -211,7 +211,7 @@ export class AppComponent {
       ],
       return: {
         type: 'any | boolean',
-        description: 'The removed data. <code>false</code> if modal not found.'
+        description: 'The removed data. <code>false</code> if modal not found'
       }
     },
     {
@@ -220,6 +220,31 @@ export class AppComponent {
       params: [],
       return: {
         type: 'void'
+      }
+    },
+    {
+      name: ['create(id: string, content: Content<T>, options?: INgxSmartModalOptions)'],
+      description: 'Create dynamic NgxSmartModalComponent',
+      params: [
+        {
+          name: 'id',
+          type: 'string',
+          description: 'The <code>identifier</code> of the modal you want to create'
+        },
+        {
+          name: 'content',
+          type: 'Content<T>',
+          description: 'The modal content (String, TemplateRef or Component)'
+        },
+        {
+          name: 'options',
+          type: 'INgxSmartModalOptions',
+          description: 'The modal options. It is the same as the one you may use with template declaration'
+        },
+      ],
+      return: {
+        type: 'ComponentFactory<NgxSmartModalComponent>',
+        description: 'An instance of <code>NgxSmartModalComponent</code>'
       }
     },
   ];

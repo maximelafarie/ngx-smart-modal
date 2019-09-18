@@ -15,11 +15,12 @@ import { HomeComponent } from './doc/parts/home/home.component';
 import { StartComponent } from './doc/parts/start/start.component';
 import { ApiComponent } from './doc/parts/api/api.component';
 import { OptionsComponent } from './doc/parts/options/options.component';
+import { StyleComponent } from './doc/parts/style/style.component';
+import { MiscComponent } from './doc/parts/misc/misc.component';
 
 /* Pipes */
 import { SafeHtmlPipe } from './_pipes/safe-html.pipe';
 import { EventsComponent } from './doc/parts/events/events.component';
-import { StyleComponent } from './doc/parts/style/style.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { StyleComponent } from './doc/parts/style/style.component';
     ApiComponent,
     OptionsComponent,
     EventsComponent,
-    StyleComponent
+    StyleComponent,
+    MiscComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,8 @@
     <div class="theme-content-description">How to use ngx-smart-modal in your projects</div>
 </div>
 
-<div class="siimple-h5">Installation</div>
+<div id="install"
+     class="siimple-h4">Installation</div>
 
 <div class="siimple-paragraph">
     To use <code>ngx-smart-modal</code> in your project install it via <a class="siimple-link"
@@ -74,3 +75,41 @@
        target="_blank"
        href="https://github.com/biig-io/ngx-smart-modal/blob/master/src/styles.scss">Demo example here</a>
 </div>
+
+<div id="modals"
+     class="siimple-h4">Manipulate modals</div>
+
+<div class="siimple-paragraph">You can use it directly in your component's template like this:</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_HTML }}</pre>
+<div class="siimple-paragraph">
+    At this point, the modal instance is stored in the <code>NgxSmartModalService</code>. You can do absolutely what you
+    want with it, anywhere in your app. For example, from a component :
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_COMP }}</pre>
+<div class="siimple-paragraph">
+    Then in the <code>AppComponent</code> view you can open any modal with no need to be in the same view:
+</div>
+<pre class="siimple-pre">{{ CODES?.INLINE_EXAMPLE }}</pre>
+
+<div id="modals"
+     class="siimple-h5">Open modals via class reference</div>
+<div class="siimple-tip siimple-tip--warning siimple-tip--exclamation">
+    This documentation part is for <strong>ngx-smart-modal >= 7.2.0 only</strong>!
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_CLASS_REF }}</pre>
+
+
+<div id="data"
+     class="siimple-h4">Manipulate data</div>
+
+<div class="siimple-paragraph">
+    You can associate data with any created modal. To do that, simply use the <code>setModalData()</code> from the
+    <code>NgxSmartModalService</code>:
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_DATA }}</pre>
+<div class="siimple-paragraph">
+    After that, you can retrieve the modal data directly from the view with the <code>getData()</code> modal property.
+    To avoid any errors with unavailable data, you can use the <code>hasData()</code> modal property (It's dynamic. If
+    data comes after a certain time its value will automatically change to <code>true</code>):
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_DATA_HTML }}</pre>

@@ -14,6 +14,26 @@
        routerLinkActive="siimple-list-item--selected">
         <div class="siimple-list-title">Getting started</div>
         <div class="siimple-list-description">How to start things right</div>
+        <div class="siimple-sub-nav"
+             *ngIf="routeIs('/start')">
+            <a class="siimple-link"
+               routerLink="/start"
+               fragment="install">
+                Installation
+            </a>
+
+            <a class="siimple-link"
+               routerLink="/start"
+               fragment="modals">
+                Manipulate modals
+            </a>
+
+            <a class="siimple-link"
+               routerLink="/start"
+               fragment="data">
+                Manipulate data
+            </a>
+        </div>
     </a>
 
     <a class="siimple-list-item"
@@ -60,6 +80,14 @@
        routerLinkActive="siimple-list-item--selected">
         <div class="siimple-list-title">Style & customization</div>
         <div class="siimple-list-description">How to make ngx-smart-modal fit your needs</div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/misc"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Misc</div>
+        <div class="siimple-list-description">Miscellaneous things you need to know...</div>
     </a>
 
 </div>

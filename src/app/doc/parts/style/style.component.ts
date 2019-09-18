@@ -63,6 +63,12 @@ $dialog-position-top: 20%;
       defaultValue: 'ease-in-out',
       description: 'Specifies the speed curve of the transition effect (<a target="_blank" href="https://www.w3schools.com/cssref/css3_pr_transition-timing-function.asp" class="siimple-link">available speed curves here</a>)'
     },
+    {
+      name: '$opened-modal-body-overflow',
+      type: '<a href="https://www.w3schools.com/cssref/pr_pos_overflow.asp" class="siimple-link" target="_blank">overflow</a>',
+      defaultValue: 'hidden',
+      description: 'Defines the page scroll lock behavior if a modal is opened'
+    },
   ];
 
   public readonly SCSS_CLASS: DocClass[] = [
