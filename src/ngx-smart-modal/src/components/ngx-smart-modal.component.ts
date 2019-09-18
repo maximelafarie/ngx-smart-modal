@@ -70,9 +70,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any;
 
-  @ViewChild('nsmContent') private nsmContent: ElementRef | undefined;
-  @ViewChild('nsmDialog') private nsmDialog: ElementRef | undefined;
-  @ViewChild('nsmOverlay') private nsmOverlay: ElementRef | undefined;
+  @ViewChild('nsmContent', null) private nsmContent: ElementRef | undefined;
+  @ViewChild('nsmDialog', null) private nsmDialog: ElementRef | undefined;
+  @ViewChild('nsmOverlay', null) private nsmOverlay: ElementRef | undefined;
 
   constructor(
     private _renderer: Renderer2,
@@ -105,7 +105,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Close the modal instance
-   * 
+   *
    * @returns the modal component
    */
   public close(): NgxSmartModalComponent {
@@ -138,7 +138,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    */
   public toggle(top?: boolean): NgxSmartModalComponent {
     this._sendEvent('toggle', { top: top });
-    
+
     return this;
   }
 
@@ -214,7 +214,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Remove the data attached to the modal instance
-   * 
+   *
    * @returns the modal component
    */
   public removeData(): NgxSmartModalComponent {
@@ -227,7 +227,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Add body class modal opened
-   * 
+   *
    * @returns the modal component
    */
   public addBodyClass(): NgxSmartModalComponent {
@@ -238,7 +238,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Add body class modal opened
-   * 
+   *
    * @returns the modal component
    */
   public removeBodyClass(): NgxSmartModalComponent {

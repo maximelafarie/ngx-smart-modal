@@ -1,0 +1,41 @@
+<div>
+    <div class="theme-content-title">Events</div>
+    <div class="theme-content-description">List of available events and how to handle them</div>
+</div>
+
+<div id="list"
+     class="siimple-h5">List of available events</div>
+<div class="siimple-paragraph">
+    <code>ngx-smart-modal</code> comes with several built-in events:
+</div>
+
+<div class="siimple-table">
+    <div class="siimple-table-header">
+        <div class="siimple-table-row">
+            <div class="siimple-table-cell">Event</div>
+            <div class="siimple-table-cell">Description</div>
+        </div>
+    </div>
+    <div class="siimple-table-body"
+         *ngFor="let event of EVENTS">
+        <div class="siimple-table-row">
+            <div class="siimple-table-cell">{{ event?.name }}</div>
+            <div class="siimple-table-cell" [innerHTML]="event?.description | safeHtml"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id="handle"
+     class="siimple-h5">Handle events</div>
+
+<div class="siimple-paragraph">You can handle events directly from the view...</div>
+<pre class="siimple-pre">{{ CODES?.HTML_EVENT }}</pre>
+<div class="siimple-paragraph">...and execute component's functions:</div>
+<pre class="siimple-pre">{{ CODES?.COMP_FUNC }}</pre>
+
+<div class="siimple-paragraph">Or you also can declare the modal in any template (e.g.: the Rickroll demo modal)...
+</div>
+<pre class="siimple-pre">{{ CODES?.RICKROLL_MODAL_HTML }}</pre>
+<div class="siimple-paragraph">... and listen to its events from any component:</div>
+<pre class="siimple-pre">{{ CODES?.LISTEN_EVENT_EXAMPLE }}</pre>

@@ -1,0 +1,218 @@
+<div>
+    <div class="theme-content-title">What is ngx-smart-modal</div>
+    <div class="theme-content-description">A quick dive into ngx-smart-modal</div>
+</div>
+
+<div class="siimple-paragraph">
+    <code>ngx-smart-modal</code> is a lightweight and very complete Angular library for managing modals inside any
+    Angular
+    project. It
+    was built for modern browsers using TypeScript, HTML5 and Angular >=2.4.0.
+</div>
+
+<div class="siimple-h5">No external library, no jQuery! 🤘</div>
+<!-- <img class="siimple--rounded paddingless"
+     src="assets/css_frameworks.png"
+     alt=""> -->
+<div class="siimple-paragraph">
+    To avoid imposing you to download a CSS library by using this package, you simply have to use our built-in
+    SCSS/CSS file
+    with custom animations and overridable variables. So get rid of being forced to use a CSS library you don't want
+    to! In
+    addition, it doesn't use jQuery either!
+</div>
+
+<div class="siimple-blockquote">
+    <strong>But... I'm using Bootstrap (or Materialize, Foundation or anything else)!</strong><br><br>
+    Don't panic! We already thought about that! And because we want to be as neutral as we can, we made it very flexible
+    for
+    you to style it! So if your app uses a CSS framework that has some modal styles, you simply have to pick up its
+    class
+    names and set the main class in the [customClass]="'modal'" (e.g.: bootstrap). And the rest of the modal DOM
+    elements
+    has just to be set in the ngx-smart-modal component (e.g.: modal-dialog, modal-content, modal-header, etc.).
+</div>
+
+<div class="siimple-h5">Features</div>
+
+<div class="siimple-paragraph">
+    <ul>
+        <li>Handle large quantity of modals anywhere in your app</li>
+        <li>Customize the style of your modals through custom CSS classes and SCSS variables!</li>
+        <li>No external CSS library is used so you can easily override the modals default style</li>
+        <li>Pass data to any modal and retrieve it very simply in the modal view (or anywhere else)</li>
+        <li>Events on <code>open</code>, <code>close</code>, <code>dismiss</code>, <code>escape</code> and more for each
+            modal</li>
+        <li>Manage all your modal stack and data with very fast methods</li>
+        <li>Very smart <code>z-index</code> computation (no ugly glitches or problems with a modal inside another)</li>
+        <li>A modal in a modal in a modal in a modal... I guess you got it!</li>
+        <li>AoT compilation support</li>
+    </ul>
+</div>
+
+<div class="siimple-h5">How it works</div>
+
+<div class="siimple-paragraph">
+    Basically, imagine that the component is based on a service that stores any modals you create in order to let you
+    pick
+    them up and manage them anywhere in your app at any time.
+</div>
+<img class="siimple--rounded paddingless"
+     src="assets/sequence_diagram.png"
+     alt="">
+
+<div class="siimple-h5">Contributors</div>
+
+<div class="siimple-paragraph">
+    Many thanks to all contributors which help to maintain the library up to date and make it more and more awesome
+    every day. We love you all! ♥️
+</div>
+
+<div class="contributors-list"
+     *ngIf="!loading; else loadingSpinner">
+    <div *ngFor="let contributor of contributors"
+         class="siimple-card">
+        <div class="siimple-card-header">
+            <a [href]="contributor?.html_url"
+               title="Go to {{contributor?.login}}'s GitHub profile'"
+               target="_blank"
+               class="siimple-link">
+                <img [src]="contributor?.avatar_url"
+                     alt="{{ contributor?.login }}'s avatar">
+            </a>
+        </div>
+        <div class="siimple-card-body">
+            <a [href]="contributor?.html_url"
+               title="Go to {{contributor?.login}}'s GitHub profile'"
+               target="_blank"
+               class="siimple-link">{{ contributor?.login }}</a>
+            <span class="siimple-tag siimple-tag--primary siimple-tag--rounded"
+                  title="Number of contributions">
+                {{ contributor?.contributions }}
+            </span>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="siimple-spinner siimple-spinner--primary"></div>
+</ng-template>
+
+<!--
+    <div class="siimple-blockquote">Added in <strong>v3.1.0</strong></div>
+    <div class="siimple-alert siimple-alert--error">
+        <div class="siimple-alert-title">Alert title</div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+    <div class="siimple-alert siimple-alert--primary">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+    <div class="siimple-alert siimple-alert--success">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+    <div class="siimple-alert siimple-alert--warning">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+    <div class="siimple-alert siimple-alert--error">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+    <ul>
+        <li style="line-height:22px;margin-bottom:5px;"><code class="siimple-code">siimple-card-header</code>:
+            the card header.</li>
+        <li style="line-height:22px;margin-bottom:5px;"><code class="siimple-code">siimple-card-body</code>:
+            the card body, generally where you can
+            place your content.</li>
+        <li style="line-height:22px;margin-bottom:5px;"><code class="siimple-code">siimple-card-footer</code>:
+            the card footer.</li>
+    </ul>
+    <div class="sd-snippet-demo">
+        <div class="siimple-card"
+             style="max-width:300px;margin-bottom:0px;">
+            <div class="siimple-card-header">Card header</div>
+            <div class="siimple-card-body">Card content</div>
+            <div class="siimple-card-footer">Card footer</div>
+        </div>
+    </div>
+    <div class="siimple-paragraph">
+        You can place more than one card body elements:
+    </div>
+    <div class="sd-snippet-demo">
+        <div class="siimple-card"
+             style="max-width:300px;margin-bottom:0px">
+            <div class="siimple-card-header">Card header</div>
+            <div class="siimple-card-body">Card body 1</div>
+            <div class="siimple-card-body">Card body 2</div>
+            <div class="siimple-card-body">Card body 3</div>
+            <div class="siimple-card-footer">Card footer</div>
+        </div>
+    </div>
+    <pre class="sd-snippet-code">&lt;div class="siimple-card" style="max-width:300px"&gt;
+                &lt;div class="siimple-card-header"&gt;
+                Card header
+                &lt;/div&gt;
+                &lt;div class="siimple-card-body"&gt;
+                Card body 1
+                &lt;/div&gt;
+                &lt;div class="siimple-card-body"&gt;
+                Card body 2
+                &lt;/div&gt;
+                &lt;div class="siimple-card-body"&gt;
+                Card body 3
+                &lt;/div&gt;
+                &lt;div class="siimple-card-footer"&gt;
+                Card footer
+                &lt;/div&gt;
+                &lt;/div&gt;
+            </pre>
+
+    <div class="siimple-h5">Title and subtitle</div>
+    <div class="siimple-paragraph">
+        Card body can contain a <strong>title</strong> with the class <code
+              class="siimple-code">siimple-card-title</code> and a <strong>subtitle</strong> with the
+        class <code class="siimple-code">siimple-card-subtitle</code>.
+    </div>
+    <div class="sd-snippet-demo">
+        <div class="siimple-card"
+             style="max-width:300px;margin-bottom:0px;">
+            <div class="siimple-card-body">
+                <div class="siimple-card-title">Special card title</div>
+                <div class="siimple-card-subtitle">Special card subtitle</div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+            </div>
+        </div>
+    </div>
+    <pre class="sd-snippet-code">&lt;div class="siimple-card" style="max-width:300px;"&gt;
+                        &lt;div class="siimple-card-body"&gt;
+                        &lt;div class="siimple-card-title"&gt;Special card title&lt;/div&gt;
+                        &lt;div class="siimple-card-subtitle"&gt;Special card subtitle&lt;/div&gt;
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                        &lt;/div&gt;
+                        &lt;/div&gt;
+                    </pre>
+
+
+
+    <div class="theme-navigation">
+
+        <a class="theme-navigation-prev"
+           href="/components/breadcrumb.html">
+            <div class="theme-navigation-title">Previous</div>
+            <div class="theme-navigation-detail">Breadcrumb</div>
+        </a>
+
+
+        <a class="theme-navigation-next"
+           href="/components/list.html">
+            <div class="theme-navigation-title">Next</div>
+            <div class="theme-navigation-detail">List</div>
+        </a>
+
+    </div>
+
+    <div class="theme-content-changes">
+        Found a mistake or want to help improve this documentation?
+        <a href="https://github.com/siimple/siimple/issues/new"
+           class="siimple-link"
+           target="_blank">Suggest changes</a>.
+    </div>
+ -->

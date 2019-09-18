@@ -1,0 +1,271 @@
+$maxWidth: 960px;
+$cardWidth: 100px;
+$cardHeight: 130px;
+
+// colors
+$dark: #333030;
+$ocean: #2b90d9;
+$grass: #3ac569;
+$snow: #fff;
+$salmon: #f32c52;
+$sun: #feee7d;
+$alge: #79a8a9;
+$flower: #353866;
+$coal: #202129;
+$coal-dust: #edeeee;
+
+.container {
+  > h3 {
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
+}
+
+.small-p {
+  font-size: .85em;
+  color: white;
+  text-align: center;
+}
+
+.footer {
+  a {
+    color: #fff;
+  }
+}
+
+#biig-link {
+  display: block;
+  opacity: .5;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 30px;
+
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 1;
+  }
+}
+
+pre {
+  display: block;
+  unicode-bidi: embed;
+  font-family: monospace;
+  white-space: pre;
+  overflow-x: auto;
+  background-color: rgba(0, 0, 0, .75);
+  border-left: .5rem solid rgba(0, 0, 0, .5);
+  color: #fbaf5c;
+  margin: 0;
+  padding: 1rem;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+  }
+}
+
+h1 {
+  margin: 5px auto;
+}
+
+.modal-image {
+  max-width: 100%;
+  border-radius: 3px;
+  height: auto;
+  display: block;
+}
+
+// button styles
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px auto;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  margin: 10px;
+  padding: 12px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 60ms ease-in-out;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none !important;
+  text-transform: none;
+  color: #fff;
+  border: 0 none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
+
+  &:hover {
+    transition: all 60ms ease;
+    opacity: .85;
+  }
+
+  &:active {
+    transition: all 60ms ease;
+    opacity: .75;
+  }
+
+  &:focus {
+    outline: 1px dotted #959595;
+    outline-offset: -4px;
+  }
+
+  span {
+    position: absolute;
+    border-radius: 3px;
+    color: #fff;
+    background-color: red;
+    padding: 1px 5px;
+    top: -5px;
+    right: -7px;
+    font-size: 12px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
+  }
+}
+
+.button.-regular {
+  color: #202129;
+  background-color: #edeeee;
+
+  &:hover {
+    color: #202129;
+    background-color: #e1e2e2;
+    opacity: 1;
+  }
+
+  &:active {
+    background-color: #d5d6d6;
+    opacity: 1;
+  }
+}
+
+.button.-dark {
+  color: $snow;
+  background: $dark;
+
+  &:focus {
+    outline: 1px dotted white;
+    outline-offset: -4px;
+  }
+
+  a {
+    color: #fff;
+  }
+}
+
+.button.-green {
+  color: $snow;
+  background: $grass;
+}
+
+.button.-blue {
+  color: $snow;
+  background: $ocean;
+}
+
+.button.-salmon {
+  color: $snow;
+  background: $salmon;
+}
+
+.button.-sun {
+  color: #f15c5c;
+  background: $sun;
+}
+
+.button.-alge {
+  color: #f4f7f7;
+  background: $alge;
+}
+
+.button.-flower {
+  color: #fe8cdf;
+  background: $flower;
+}
+
+.nsm-dialog {
+  .button {
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+
+  &.no-padding {
+    padding: 0;
+
+    .nsm-content {
+      padding: 0 !important;
+    }
+  }
+
+  &.large-modal {
+    max-width: none;
+  }
+
+  &.medium-modal {
+    max-width: 1280px;
+  }
+}
+
+.white {
+  color: $snow;
+  padding: 20px 0;
+}
+
+.go-back {
+  display: block;
+
+  a {
+    color: #edeeee !important;
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #e1e2e2 !important;
+      text-decoration: underline;
+    }
+  }
+}
+
+.h-block {
+  color: white;
+}
+
+.footer {
+  font-weight: 400;
+  margin-top: 3rem;
+  line-height: 2;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+}
