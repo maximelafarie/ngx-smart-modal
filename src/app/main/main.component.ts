@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, VERSION, ChangeDetectorRef } from '@angular/core';
+
+import { AfterViewInit, Component, VERSION, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../ngx-smart-modal';
+import { FakeComponent } from './../fake/fake.component';
 
 @Component({
   selector: 'app-main',
@@ -18,6 +21,8 @@ export class MainComponent implements AfterViewInit {
     'Vestibulum ultricies accumsan pharetra. Cras at imperdiet diam. Suspendisse potenti. Pellentesque in sodales purus. Sed mattis nibh in pharetra pellentesque. In hac habitasse platea dictumst. Nulla facilisi.',
     'In vel lorem sollicitudin, aliquet nunc vel, rutrum libero. Vivamus eu leo at odio sodales rutrum id a erat. Integer pellentesque condimentum velit a sollicitudin. Maecenas lectus neque, interdum at leo ut, molestie iaculis mauris. Sed ut nisl lorem. Mauris vitae dolor in lorem fringilla suscipit vel sed ligula. Nullam sodales blandit faucibus. Nulla dignissim mollis aliquam. Vivamus lacinia aliquam diam vitae vulputate. Pellentesque nec vulputate lorem, vel volutpat odio. Duis eleifend ipsum eros, quis dapibus lectus condimentum gravida. Nunc blandit leo lacus, a ultrices tellus fermentum et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla eu blandit nunc.'
   ];
+
+  @ViewChild(TemplateRef) tpl: TemplateRef<any>;
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private router: Router, private cdr: ChangeDetectorRef) {
   }
@@ -76,4 +81,11 @@ export class MainComponent implements AfterViewInit {
     this.router.navigate(['/', 'autostart']);
   }
 
+  goNewDynamic() {
+    this.ngxSmartModalService.create('dynamicModal1', 'Hello, I\'m simple text !').open();
+
+    this.ngxSmartModalService.create('dynamicModal2', FakeComponent).open();
+
+    this.ngxSmartModalService.create('dynamicModal3', this.tpl).open();
+  }
 }

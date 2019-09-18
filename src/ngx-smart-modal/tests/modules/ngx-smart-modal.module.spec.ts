@@ -1,11 +1,11 @@
-import { ModuleWithProviders } from '@angular/core';
 import { NgxSmartModalModule } from '../../';
+import { NgxSmartModalService } from '../../src/ngx-smart-modal';
 
-describe('PerformanceModule', () => {
+describe('NgxSmartModalModule', () => {
   let ngxSmartModalModule: NgxSmartModalModule;
 
   beforeEach(() => {
-    ngxSmartModalModule = new NgxSmartModalModule();
+    ngxSmartModalModule = new NgxSmartModalModule({} as NgxSmartModalService);
   });
 
   it('should create an instance', () => {

@@ -12,7 +12,6 @@ https://biig-io.github.io/ngx-smart-modal/
 ## No external library, no jQuery! 🤘
 To avoid imposing you to download a CSS library by using this package, you simply have to use our built-in SCSS/CSS file with custom animations and overridable variables. So get rid of being forced to use a CSS library you don't want to! In addition, it doesn't use jQuery either!
 
-![NgxSmartModal is the CSS frameworks's friend!](src/assets/css_frameworks.png)
 > #### But... I'm using Bootstrap (or Materialize, Foundation or anything else)!
 > Don't panic! We already thought about that! And because we want to be as neutral as we can, we made it very flexible for you to style it!
 > So if your app uses a CSS framework that has some modal styles, you simply have to pick up its class names and set the main class in the `[customClass]="'modal'"` (e.g.: bootstrap). And the rest of the modal DOM elements has just to be set in the `ngx-smart-modal` component (e.g.: modal-dialog, modal-content, modal-header, etc.).
@@ -126,9 +125,9 @@ The below documentation will use the following pattern:
 - `$color-overlay` (hex / rgb / rgba) | `rgba(0, 0, 0, .5)` ― _Modifies the modals overlay background color_
 
 - `$dialog-position-top` (px / %) | `1.75rem` ― _Defines the position of the modal from the top of the screen_
-- `$dialog-position-right` (px / %) | `auto` ― _Defines the position of the modal from the right of the screen_
-- `$dialog-position-bottom` (px / %) | `auto` ― _Defines the position of the modal from the bottom of the screen_
-- `$dialog-position-left` (px / %) | `auto` ― _Defines the position of the modal from the left of the screen_
+- `$dialog-position-right` (px / %) | `1.75rem` ― _Defines the position of the modal from the right of the screen_
+- `$dialog-position-bottom` (px / %) | `1.75rem` ― _Defines the position of the modal from the bottom of the screen_
+- `$dialog-position-left` (px / %) | `1.75rem` ― _Defines the position of the modal from the left of the screen_
 
 - `$transition-duration` (duration) | `500ms` ― _Defines the transition effect duration. **Keep in mind you also need to set the same time (in ms) in the `hideDelay` modal option (see below)**_
 
@@ -148,7 +147,7 @@ To change this effect, you can use the `customClass` option (see below) but you 
  - `.nsm-centered`: the modal is centered vertically
 
 
-## Parameters / Options
+## Parameters ( INgxSmartModalOptions )
 `ngx-smart-modal` comes with some parameters / options in order to make it fit your needs. The following parameters / options needs to be used like this: `<ngx-smart-modal [parameter-or-option-name]="value"></ngx-smart-modal>`
 
 The below documentation will use the following pattern:
@@ -176,7 +175,7 @@ The below documentation will use the following pattern:
 
 
 ## Manipulate modals
-You can use it directly in your component's template like this
+### You can use it directly in your component's template like this
 ```typescript
 <ngx-smart-modal #myModal identifier="myModal">
   <h1>Title</h1>
@@ -201,6 +200,33 @@ export class AppComponent {
 Then in the AppComponent view you can open any modal with no need to be in the same view:
 ```
 <button (click)="ngxSmartModalService.getModal('myModal').open()">Open myModal</button>
+```
+
+### You can also create your modal from your typescript file ( since 7.2.0 )
+```typescript
+import { Component } from '@angular/core';
+
+import { MyComponent } from 'xxxx';
+
+import { NgxSmartModalService } from 'ngx-smart-modal';
+
+@Component({
+  // ...
+})
+export class AppComponent {
+  @ViewChild(TemplateRef) tpl: TemplateRef<any>;
+
+  constructor(private ngxSmartModalService: NgxSmartModalService) {
+    // simple text content
+    this.ngxSmartModalService.create('myModal1', 'content').open();
+
+    // component
+    this.ngxSmartModalService.create('myModal2', MyComponent).open();
+
+    // or templateRef
+    this.ngxSmartModalService.create('myModal3', this.tpl).open();
+  }
+}
 ```
 
 ## Manipulate data
@@ -243,6 +269,7 @@ After that, you can retrieve the modal data directly from the view with the `get
 `ngx-smart-modal` comes with several built-in events:
 
  - `onOpen`: modal is opening
+ - `onOpenFinished`: modal has been opened
  - `onClose`: modal is closing
  - `onCloseFinished`: modal has been closed
  - `onDismiss`: modal is closing by clicking on its backdrop
@@ -320,6 +347,7 @@ export class AppComponent {
 }
 ```
 **List of available methods**:
+ - `create(id: string, content: string or Component or TemplateRef, options: INgxSmartModalOptions)`: create a new modal and return the modal instance ⚠️Only for `NgxSmartModal >= 7.2.0`!
  - `addModal(modalInstance: ModalInstance, force?: boolean)`: add a new modal instance
  - `getModal(id: string)`: retrieve a modal instance by its identifier
  - `get(id: string)`: retrieve a modal instance by its identifier (alias of `getModal`)

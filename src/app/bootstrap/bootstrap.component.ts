@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { NgxSmartModalService } from 'src/ngx-smart-modal';
 
 @Component({
   selector: 'app-bootstrap',
@@ -8,7 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class BootstrapComponent implements OnInit {
 
-  constructor() {
+  constructor(public ngxSmartModalService: NgxSmartModalService) {
   }
 
   ngOnInit() {

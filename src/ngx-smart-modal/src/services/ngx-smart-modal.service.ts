@@ -1,10 +1,34 @@
-import { Injectable } from '@angular/core';
-import { NgxSmartModalComponent } from '../../';
+import {
+  Injectable,
+  ComponentFactoryResolver,
+  ApplicationRef,
+  Injector,
+  EmbeddedViewRef,
+  Inject,
+  TemplateRef,
+  Type
+} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
+import { NgxSmartModalComponent } from '../../src/components/ngx-smart-modal.component';
+import { NgxSmartModalConfig, INgxSmartModalOptions } from '../../src/config/ngx-smart-modal.config';
+import { NgxSmartModalStackService } from '../../src/services/ngx-smart-modal-stack.service';
+
 import { ModalInstance } from './modal-instance';
+
+export type Content<T> = string | TemplateRef<T> | Type<T>;
 
 @Injectable()
 export class NgxSmartModalService {
-  public modalStack: ModalInstance[] = [];
+  constructor(
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private _appRef: ApplicationRef,
+    private _injector: Injector,
+    @Inject(DOCUMENT) private _document: any,
+    private _modalStack: NgxSmartModalStackService
+  ) {
+    this._addEvents();
+  }
 
   /**
    * Add a new modal instance. This step is essential and allows to retrieve any modal at any time.
@@ -15,16 +39,7 @@ export class NgxSmartModalService {
    * @returns nothing special.
    */
   public addModal(modalInstance: ModalInstance, force?: boolean): void {
-    if (force) {
-      const i: number = this.modalStack.findIndex((o: ModalInstance) => o.id === modalInstance.id);
-      if (i > -1) {
-        this.modalStack[i].modal = modalInstance.modal;
-      } else {
-        this.modalStack.push(modalInstance);
-      }
-      return;
-    }
-    this.modalStack.push(modalInstance);
+    this._modalStack.addModal(modalInstance, force);
   }
 
   /**
@@ -33,13 +48,7 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    */
   public getModal(id: string): NgxSmartModalComponent {
-    const i = this.modalStack.find((o: ModalInstance) => o.id === id);
-
-    if (i !== undefined) {
-      return i.modal;
-    } else {
-      throw new Error(`Cannot find modal with identifier ${id}`);
-    }
+    return this._modalStack.getModal(id);
   }
 
   /**
@@ -57,11 +66,8 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    * @param force Tell the modal to open top of all other opened modals
    */
-  public open(id: string, force = false): void {
-    let i;
-    if (i = this.get(id)) {
-      i.open(force);
-    }
+  public open(id: string, force = false): boolean {
+    return this._openModal(this.get(id), force);
   }
 
   /**
@@ -69,11 +75,8 @@ export class NgxSmartModalService {
    *
    * @param id The modal identifier used at creation time.
    */
-  public close(id: string): void {
-    let i;
-    if (i = this.get(id)) {
-      i.close();
-    }
+  public close(id: string): boolean {
+    return this._closeModal(this.get(id));
   }
 
   /**
@@ -83,11 +86,8 @@ export class NgxSmartModalService {
    * @param id The modal identifier used at creation time.
    * @param force Tell the modal to open top of all other opened modals
    */
-  public toggle(id: string, force = false): void {
-    let i;
-    if (i = this.get(id)) {
-      i.toggle(force);
-    }
+  public toggle(id: string, force = false): boolean {
+    return this._toggleModal(this.get(id), force);
   }
 
   /**
@@ -96,7 +96,7 @@ export class NgxSmartModalService {
    * @returns an array that contains all modal instances.
    */
   public getModalStack(): ModalInstance[] {
-    return this.modalStack;
+    return this._modalStack.getModalStack();
   }
 
   /**
@@ -105,7 +105,7 @@ export class NgxSmartModalService {
    * @returns an array that contains all the opened modals.
    */
   public getOpenedModals(): ModalInstance[] {
-    return this.modalStack.filter((o: ModalInstance) => o.modal.visible);
+    return this._modalStack.getOpenedModals();
   }
 
   /**
@@ -114,13 +114,7 @@ export class NgxSmartModalService {
    * @returns the opened modal with highest z-index.
    */
   public getTopOpenedModal(): NgxSmartModalComponent {
-    if (!this.getOpenedModals().length) {
-      throw new Error('No modal is opened');
-    }
-
-    return this.getOpenedModals()
-      .map((o: ModalInstance) => o.modal)
-      .reduce((highest, item) => item.layerPosition > highest.layerPosition ? item : highest, this.getOpenedModals()[0].modal);
+    return this._modalStack.getTopOpenedModal();
   }
 
   /**
@@ -131,7 +125,7 @@ export class NgxSmartModalService {
    * @returns a higher index from all the existing modal instances.
    */
   public getHigherIndex(): number {
-    return Math.max(...this.modalStack.map((o) => o.modal.layerPosition), 1041) + 1;
+    return this._modalStack.getHigherIndex();
   }
 
   /**
@@ -140,7 +134,7 @@ export class NgxSmartModalService {
    * @returns the number of modal instances.
    */
   public getModalStackCount(): number {
-    return this.modalStack.length;
+    return this._modalStack.getModalStackCount();
   }
 
   /**
@@ -150,10 +144,7 @@ export class NgxSmartModalService {
    * @returns the removed modal instance.
    */
   public removeModal(id: string): void {
-    const i: number = this.modalStack.findIndex((o: any) => o.id === id);
-    if (i > -1) {
-      this.modalStack.splice(i, 1);
-    }
+    this._modalStack.removeModal(id);
   }
 
   /**
@@ -188,6 +179,8 @@ export class NgxSmartModalService {
     if (i = this.get(id)) {
       return i.getData();
     }
+
+    return null;
   }
 
   /**
@@ -197,7 +190,7 @@ export class NgxSmartModalService {
    * @returns the removed data or false if modal doesn't exist.
    */
   public resetModalData(id: string): any | boolean {
-    if (!!this.modalStack.find((o: ModalInstance) => o.id === id)) {
+    if (!!this._modalStack.getModalStack().find((o: ModalInstance) => o.id === id)) {
       const removed: any = this.getModal(id).getData();
       this.getModal(id).removeData();
       return removed;
@@ -213,5 +206,220 @@ export class NgxSmartModalService {
    */
   public closeLatestModal(): void {
     this.getTopOpenedModal().close();
+  }
+
+  /**
+   * Create dynamic NgxSmartModalComponent
+   * @param id The modal identifier used at creation time.
+   * @param content The modal content ( string, templateRef or Component )
+   */
+  public create<T>(id: string, content: Content<T>, options: INgxSmartModalOptions = {}) {
+    try {
+      return this.getModal(id);
+    } catch (e) {
+      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(NgxSmartModalComponent);
+      const ngContent = this._resolveNgContent(content);
+
+      const componentRef = componentFactory.create(this._injector, ngContent);
+
+      componentRef.instance.identifier = id;
+      componentRef.instance.createFrom = 'service';
+
+      if (typeof options.closable === 'boolean') { componentRef.instance.closable = options.closable; }
+      if (typeof options.escapable === 'boolean') { componentRef.instance.escapable = options.escapable; }
+      if (typeof options.dismissable === 'boolean') { componentRef.instance.dismissable = options.dismissable; }
+      if (typeof options.customClass === 'string') { componentRef.instance.customClass = options.customClass; }
+      if (typeof options.backdrop === 'boolean') { componentRef.instance.backdrop = options.backdrop; }
+      if (typeof options.force === 'boolean') { componentRef.instance.force = options.force; }
+      if (typeof options.hideDelay === 'number') { componentRef.instance.hideDelay = options.hideDelay; }
+      if (typeof options.autostart === 'boolean') { componentRef.instance.autostart = options.autostart; }
+      if (typeof options.target === 'string') { componentRef.instance.target = options.target; }
+
+      this._appRef.attachView(componentRef.hostView);
+
+      const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+      document.body.appendChild(domElem);
+
+      return componentRef.instance;
+    }
+  }
+
+  private _addEvents() {
+    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'create', ((e: CustomEvent) => {
+      this._initModal(e.detail.instance);
+    }) as EventListener);
+
+    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'delete', ((e: CustomEvent) => {
+      this._deleteModal(e.detail.instance);
+    }) as EventListener);
+
+    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'open', ((e: CustomEvent) => {
+      this._openModal(e.detail.instance.modal, e.detail.top);
+    }) as EventListener);
+
+    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'toggle', ((e: CustomEvent) => {
+      this._toggleModal(e.detail.instance.modal, e.detail.top);
+    }) as EventListener);
+
+    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'close', ((e: CustomEvent) => {
+      this._closeModal(e.detail.instance.modal);
+    }) as EventListener);
+
+    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'dismiss', ((e: CustomEvent) => {
+      this._dismissModal(e.detail.instance.modal);
+    }) as EventListener);
+
+    window.addEventListener('keyup', this._escapeKeyboardEvent);
+  }
+
+  private _initModal(modalInstance: ModalInstance) {
+    modalInstance.modal.layerPosition += this.getModalStackCount();
+    this.addModal(modalInstance, modalInstance.modal.force);
+
+    if (modalInstance.modal.autostart) {
+      this.open(modalInstance.id);
+    }
+  }
+
+  private _openModal(modal: NgxSmartModalComponent, top?: boolean): boolean {
+    if (modal.visible) {
+      return false;
+    }
+
+    if (top) {
+      modal.layerPosition = this.getHigherIndex();
+    }
+
+    modal.addBodyClass();
+    modal.overlayVisible = true;
+    modal.visible = true;
+    modal.onOpen.emit(modal);
+    modal.markForCheck();
+
+    setTimeout(() => {
+      modal.openedClass = true;
+
+      if (modal.target) {
+        modal.targetPlacement();
+      }
+
+      modal.markForCheck();
+      modal.onOpenFinished.emit(modal);
+    });
+
+    return true;
+  }
+
+  private _toggleModal(modal: NgxSmartModalComponent, top?: boolean): boolean {
+    if (modal.visible) {
+      return this._closeModal(modal);
+    } else {
+      return this._openModal(modal, top);
+    }
+  }
+
+  private _closeModal(modal: NgxSmartModalComponent): boolean {
+    if (!modal.openedClass) {
+      return false;
+    }
+
+    modal.openedClass = false;
+    modal.onClose.emit(modal);
+    modal.onAnyCloseEvent.emit(modal);
+
+    if (this.getOpenedModals().length < 2) {
+      modal.removeBodyClass();
+    }
+
+    setTimeout(() => {
+      modal.visibleChange.emit(modal.visible);
+      modal.visible = false;
+      modal.overlayVisible = false;
+      modal.markForCheck();
+      modal.onCloseFinished.emit(modal);
+      modal.onAnyCloseEventFinished.emit(modal);
+    }, modal.hideDelay);
+
+    return true;
+  }
+
+  private _dismissModal(modal: NgxSmartModalComponent): boolean {
+    if (!modal.openedClass) {
+      return false;
+    }
+
+    modal.openedClass = false;
+    modal.onDismiss.emit(modal);
+    modal.onAnyCloseEvent.emit(modal);
+
+    if (this.getOpenedModals().length < 2) {
+      modal.removeBodyClass();
+    }
+
+    setTimeout(() => {
+      modal.visible = false;
+      modal.visibleChange.emit(modal.visible);
+      modal.overlayVisible = false;
+      modal.markForCheck();
+      modal.onDismissFinished.emit(modal);
+      modal.onAnyCloseEventFinished.emit(modal);
+    }, modal.hideDelay);
+
+    return true;
+  }
+
+  private _deleteModal(modalInstance: ModalInstance) {
+    this.removeModal(modalInstance.id);
+
+    if (!this.getModalStack().length) {
+      modalInstance.modal.removeBodyClass();
+    }
+  }
+
+  /**
+   * Resolve content according to the types
+   * @param content The modal content ( string, templateRef or Component )
+   */
+  private _resolveNgContent<T>(content: Content<T>) {
+    if (typeof content === 'string') {
+      const element = this._document.createTextNode(content);
+      return [[element]];
+    }
+
+    if (content instanceof TemplateRef) {
+      const viewRef = content.createEmbeddedView(null as any);
+
+      return [viewRef.rootNodes];
+    }
+
+    const factory = this._componentFactoryResolver.resolveComponentFactory(content);
+    const componentRef = factory.create(this._injector);
+
+    return [[componentRef.location.nativeElement], [this._document.createTextNode('')]];
+  }
+
+  /**
+   * Close the latest opened modal if escape key event is emitted
+   * @param event The Keyboard Event
+   */
+  private _escapeKeyboardEvent = (event: KeyboardEvent) => {
+    if (event.keyCode === 27) {
+      try {
+        const modal = this.getTopOpenedModal();
+
+        if (!modal.escapable) {
+          return false;
+        }
+
+        modal.onEscape.emit(modal);
+        this.closeLatestModal();
+
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    return false;
   }
 }
