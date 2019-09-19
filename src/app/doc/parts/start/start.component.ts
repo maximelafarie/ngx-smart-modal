@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -65,7 +66,11 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
   // ...
 })
 export class AppComponent {
+  // If Angular < 8
   @ViewChild(TemplateRef) tpl: TemplateRef<any>;
+
+  // If Angular >= 8
+  //@ViewChild(TemplateRef, { static: false }) tpl: TemplateRef<any>;
 
   constructor(private ngxSmartModalService: NgxSmartModalService) {
     // simple text content
