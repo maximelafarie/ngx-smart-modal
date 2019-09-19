@@ -98,6 +98,12 @@ $gold: #e09f05 !default;
     color: $white;
   }
 
+  hr.siimple-hr {
+    border: 0;
+    height: 2px;
+    background: $laine;
+  }
+
   .siimple-h1 {
     display: block;
     font-size: 40px;
