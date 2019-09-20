@@ -44,7 +44,7 @@
       ],
       "@app/pipes/*": [
         "src/app/_pipes/*"
-      ],
+      ]
     },
     "lib": [
       "es2018",
