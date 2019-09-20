@@ -1,0 +1,56 @@
+<div>
+    <div class="theme-content-title">API</div>
+    <div class="theme-content-description">List of available methods</div>
+</div>
+
+<div class="siimple-paragraph">
+    <code>ngx-smart-modal</code> comes with the <code>NgxSmartModalService</code> that you can use in any
+    component like this:
+</div>
+
+<pre class="siimple-pre">{{ CODES?.SERVICE_IMPORT }}</pre>
+
+
+<div class="siimple-h4">List of available methods</div>
+
+
+<section class="code-section siimple--mb-5"
+         *ngFor="let method of METHODS">
+    <div class="siimple-h5">
+        <ng-container *ngFor="let methodName of method.name; last as isLast">
+            <code>{{ methodName }}</code>
+            <span *ngIf="method.name?.length > 1 && !isLast"> / </span>
+        </ng-container>
+    </div>
+    <div class="siimple-paragraph"
+         [innerHTML]="method?.description | safeHtml"></div>
+
+    <ng-container *ngIf="method.params?.length">
+        <div class="siimple-h6">Parameters</div>
+        <div class="siimple-table">
+            <div class="siimple-table-body">
+                <div class="siimple-table-row"
+                     *ngFor="let param of method.params">
+                    <div class="siimple-table-cell">{{ param.name }}</div>
+                    <div class="siimple-table-cell"><code>{{ param.type }}</code></div>
+                    <div class="siimple-table-cell"
+                         [innerHTML]="param.description | safeHtml"></div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="siimple-h6">Returns</div>
+    <div class="siimple-paragraph">
+        <code>{{ method.return.type }}</code>
+        <span class="siimple--pl-1"
+              [innerHTML]="method.return?.description | safeHtml"></span>
+    </div>
+</section>
+
+<div class="siimple-paragraph">
+    To get more details about the available methods, their parameters and what they return, please take a look at
+    <strong><a class="siimple-link"
+           href="https://github.com/biig-io/ngx-smart-modal/blob/master/src/ngx-smart-modal/src/services/ngx-smart-modal.service.ts">ngx-smart-modal.service.ts</a></strong>
+    file (well documented).
+</div>

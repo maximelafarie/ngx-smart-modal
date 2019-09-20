@@ -136,13 +136,13 @@ describe('NgxSmartModalComponent', () => {
   }));
 
   it('should has data', async(() => {
-    component['_data'] = { fake: 'data' };
+    (component as any)._data = { fake: 'data' };
 
     expect(component.hasData()).toBeTruthy();
   }));
 
   it('should set data if not data', async(() => {
-    component['_data'] = undefined;
+    (component as any)._data = undefined;
 
     component.setData('test data');
 
@@ -150,7 +150,7 @@ describe('NgxSmartModalComponent', () => {
   }));
 
   it('should set data if data', async(() => {
-    component['_data'] = 'test';
+    (component as any)._data = 'test';
 
     component.setData('test data');
 
@@ -158,7 +158,7 @@ describe('NgxSmartModalComponent', () => {
   }));
 
   it('should set force data if data', async(() => {
-    component['_data'] = 'test';
+    (component as any)._data = 'test';
 
     component.setData('test data', true);
 
@@ -166,7 +166,7 @@ describe('NgxSmartModalComponent', () => {
   }));
 
   it('should remove data', async(() => {
-    component['_data'] = 'test';
+    (component as any)._data = 'test';
 
     component.removeData();
 
@@ -181,18 +181,18 @@ describe('NgxSmartModalComponent', () => {
     component.removeBodyClass();
   }));
 
-  it('should targetPlacement is no target', async(() => {
+  it('should targetPlacement if no target', async(() => {
     component.target = '';
 
     expect(component.targetPlacement()).toBeFalsy();
   }));
 
-  it('should targetPlacement is target is invalid', async(() => {
+  it('should targetPlacement if target is invalid', async(() => {
     component.target = 'invalid';
 
-    component['nsmContent'] = { fake: 'obj' } as any;
-    component['nsmOverlay'] = { fake: 'obj' } as any;
-    component['nsmDialog'] = { fake: 'obj' } as any;
+    (component as any).nsmContent = { fake: 'obj' } as any;
+    (component as any).nsmOverlay = { fake: 'obj' } as any;
+    (component as any).nsmDialog = { fake: 'obj' } as any;
 
     spyOn(document, 'querySelector').and.returnValue(false);
 
@@ -202,20 +202,20 @@ describe('NgxSmartModalComponent', () => {
   it('should targetPlacement', async(() => {
     const attr1 = { height: 350, width: 500 };
     const objectHtml1 = { getBoundingClientRect: () => attr1 };
-    (component as any).nsmContent = { nativeElement: objectHtml1 };
+    (component as any).nsmContent = { first: { nativeElement: objectHtml1 }, length: 1 };
 
     let attr2 = { width: 1280, height: 800 };
     let objectHtml2 = { getBoundingClientRect: () => attr2 };
-    (component as any).nsmOverlay = { nativeElement: objectHtml2 };
+    (component as any).nsmOverlay = { first: { nativeElement: objectHtml2 }, length: 1 };
 
     const attr3 = { left: 380, top: 28 };
     const objectHtml3 = { getBoundingClientRect: () => attr3 };
-    (component as any).nsmDialog = { nativeElement: objectHtml3 };
+    (component as any).nsmDialog = { first: { nativeElement: objectHtml3 }, length: 1 };
 
     (component as any).target = '.test';
     let attrTarget = { left: 1070, top: 310, width: 160, height: 40 };
     let objectHtmlTarget = { getBoundingClientRect: () => attrTarget };
-    (component as any).nsmDialog = { nativeElement: objectHtmlTarget };
+    (component as any).nsmDialog = { first: { nativeElement: objectHtmlTarget }, length: 1 };
 
     spyOn(document, 'querySelector').and.returnValue(objectHtmlTarget);
     spyOn(window, 'getComputedStyle').and.returnValue({ marginLeft: 0, marginTop: 28 });
@@ -228,18 +228,18 @@ describe('NgxSmartModalComponent', () => {
 
     component.targetPlacement();
 
-    expect((component as any)._renderer.setStyle).toHaveBeenCalledWith((component as any).nsmContent.nativeElement, 'top', '0px');
-    expect((component as any)._renderer.setStyle).toHaveBeenCalledWith((component as any).nsmContent.nativeElement, 'left', '-290px');
+    expect((component as any)._renderer.setStyle).toHaveBeenCalledWith((component as any).nsmContent.first.nativeElement, 'top', '0px');
+    expect((component as any)._renderer.setStyle).toHaveBeenCalledWith((component as any).nsmContent.first.nativeElement, 'left', '-290px');
 
     attrTarget = { left: 80, top: 310, width: 160, height: 40 };
     objectHtmlTarget = { getBoundingClientRect: () => attrTarget };
-    (component as any).nsmDialog = { nativeElement: objectHtmlTarget };
+    (component as any).nsmDialog = { first: { nativeElement: objectHtmlTarget }, length: 1 };
 
     component.targetPlacement();
 
     attr2 = { width: 1280, height: 200 };
     objectHtml2 = { getBoundingClientRect: () => attr2 };
-    (component as any).nsmOverlay = { nativeElement: objectHtml2 };
+    (component as any).nsmOverlay = { first: { nativeElement: objectHtml2 }, length: 1 };
 
     component.targetPlacement();
   }));

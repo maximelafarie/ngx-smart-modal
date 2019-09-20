@@ -8,8 +8,9 @@ import {
   EventEmitter,
   HostListener,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef
+  ViewChildren,
+  ElementRef,
+  QueryList
 } from '@angular/core';
 
 import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
@@ -70,9 +71,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any;
 
-  @ViewChild('nsmContent') private nsmContent: ElementRef | undefined;
-  @ViewChild('nsmDialog') private nsmDialog: ElementRef | undefined;
-  @ViewChild('nsmOverlay') private nsmOverlay: ElementRef | undefined;
+  @ViewChildren('nsmContent') private nsmContent!: QueryList<ElementRef>;
+  @ViewChildren('nsmDialog') private nsmDialog!: QueryList<ElementRef>;
+  @ViewChildren('nsmOverlay') private nsmOverlay!: QueryList<ElementRef>;
 
   constructor(
     private _renderer: Renderer2,
@@ -105,7 +106,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Close the modal instance
-   * 
+   *
    * @returns the modal component
    */
   public close(): NgxSmartModalComponent {
@@ -138,7 +139,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    */
   public toggle(top?: boolean): NgxSmartModalComponent {
     this._sendEvent('toggle', { top: top });
-    
+
     return this;
   }
 
@@ -214,7 +215,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Remove the data attached to the modal instance
-   * 
+   *
    * @returns the modal component
    */
   public removeData(): NgxSmartModalComponent {
@@ -227,7 +228,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Add body class modal opened
-   * 
+   *
    * @returns the modal component
    */
   public addBodyClass(): NgxSmartModalComponent {
@@ -238,7 +239,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Add body class modal opened
-   * 
+   *
    * @returns the modal component
    */
   public removeBodyClass(): NgxSmartModalComponent {
@@ -261,7 +262,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    */
   @HostListener('window:resize')
   public targetPlacement(): boolean | void {
-    if (!this.nsmDialog || !this.nsmContent || !this.nsmOverlay || !this.target) {
+    if (!this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
       return false;
     }
     const targetElement = document.querySelector(this.target);
@@ -271,13 +272,13 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
 
     const targetElementRect = targetElement.getBoundingClientRect();
-    const bodyRect = this.nsmOverlay.nativeElement.getBoundingClientRect();
+    const bodyRect = this.nsmOverlay.first.nativeElement.getBoundingClientRect();
 
-    const nsmContentRect = this.nsmContent.nativeElement.getBoundingClientRect();
-    const nsmDialogRect = this.nsmDialog.nativeElement.getBoundingClientRect();
+    const nsmContentRect = this.nsmContent.first.nativeElement.getBoundingClientRect();
+    const nsmDialogRect = this.nsmDialog.first.nativeElement.getBoundingClientRect();
 
-    const marginLeft = parseInt(getComputedStyle(this.nsmContent.nativeElement).marginLeft as any, 10);
-    const marginTop = parseInt(getComputedStyle(this.nsmContent.nativeElement).marginTop as any, 10);
+    const marginLeft = parseInt(getComputedStyle(this.nsmContent.first.nativeElement).marginLeft as any, 10);
+    const marginTop = parseInt(getComputedStyle(this.nsmContent.first.nativeElement).marginTop as any, 10);
 
     let offsetTop = targetElementRect.top - nsmDialogRect.top - ((nsmContentRect.height - targetElementRect.height) / 2);
     let offsetLeft = targetElementRect.left - nsmDialogRect.left - ((nsmContentRect.width - targetElementRect.width) / 2);
@@ -292,8 +293,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
       offsetTop = bodyRect.height - (nsmDialogRect.top + nsmContentRect.height) - marginTop;
     }
 
-    this._renderer.setStyle(this.nsmContent.nativeElement, 'top', (offsetTop < 0 ? 0 : offsetTop) + 'px');
-    this._renderer.setStyle(this.nsmContent.nativeElement, 'left', offsetLeft + 'px');
+    this._renderer.setStyle(this.nsmContent.first.nativeElement, 'top', (offsetTop < 0 ? 0 : offsetTop) + 'px');
+    this._renderer.setStyle(this.nsmContent.first.nativeElement, 'left', offsetLeft + 'px');
   }
 
   private _sendEvent(name: string, extraData?: any): void {

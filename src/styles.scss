@@ -1,8 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Below import is for demo purposes */
+/* NgxSmartModal */
+@import 'ngx-smart-modal/src/ngx-smart-modal';
 
-/* To import the library styles in your app, use `@import "ngx-smart-modal/ngx-smart-modal";` */
+// fonts import
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 
-@import "ngx-smart-modal/src/ngx-smart-modal";
-@import "app/app.component";
+@import './app/_styles/override/siimple';
+@import './app/_styles/theme';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.siimple-container img {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #546778;
+  font-smooth: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  width: 100%;
+  height: auto;
+}
+
+code {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+  font-size: 12px;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: .2em .4em;
+}
+
+.code-section {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+#sidenav {
+  position: sticky;
+}
+
+.no-line-break {
+  white-space: nowrap;
+}
+
+app-demo {
+  @import './app/_styles/modules/demo';
+}

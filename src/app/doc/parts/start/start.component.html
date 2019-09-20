@@ -1,0 +1,115 @@
+<div>
+    <div class="theme-content-title">Getting started</div>
+    <div class="theme-content-description">How to use ngx-smart-modal in your projects</div>
+</div>
+
+<div id="install"
+     class="siimple-h4">Installation</div>
+
+<div class="siimple-paragraph">
+    To use <code>ngx-smart-modal</code> in your project install it via <a class="siimple-link"
+       href="https://www.npmjs.com/package/ngx-smart-modal"
+       target="_blank">npm</a>:
+</div>
+<pre class="siimple-pre">npm i ngx-smart-modal --save</pre>
+
+<div class="siimple-paragraph">
+    or with <a class="siimple-link"
+       href="https://yarnpkg.com/en/package/ngx-smart-modal"
+       target="_blank">yarn</a>:
+</div>
+<pre class="siimple-pre">yarn add ngx-smart-modal</pre>
+
+<div class="siimple-paragraph">
+    or even with <a class="siimple-link"
+       href="https://unpkg.com/ngx-smart-modal@latest/"
+       target="_blank">UNPKG</a>. E.g.: if you need to use <strong>ngx-smart-modal</strong> with direct file
+    imports, with project that use SystemJS or in live editors like JsFiddle, Codepen and so on:
+</div>
+<pre class="siimple-pre">https://unpkg.com/ngx-smart-modal@{{ libVersion }}/bundles/ngx-smart-modal.umd.js</pre>
+
+<div class="siimple-h5">Warnings</div>
+
+<div class="siimple-paragraph">
+    ⚠️ If you have the following warning after install <strong>(for NgxSmartModal &lt;= 5.0.0)</strong>:
+</div>
+
+<pre class="siimple-pre">{{ CODES?.ERROR_MSG_1 }}</pre>
+<div class="siimple-paragraph">or</div>
+<pre class="siimple-pre">{{ CODES?.ERROR_MSG_2 }}</pre>
+<div class="siimple-paragraph">just run</div>
+<pre class="siimple-pre">npm i web-animations-js --save</pre>
+<div class="siimple-paragraph">or</div>
+<pre class="siimple-pre">yarn add web-animations-js</pre>
+
+<div class="siimple-h5">If you're using SystemJS</div>
+
+<div class="siimple-paragraph">You need to import <strong>ngx-smart-modal</strong> this way:</div>
+<pre class="siimple-pre">{{ CODES?.SYSTEM_JS }}</pre>
+<div class="siimple-paragraph"><strong>Tip:</strong> you also can import <strong>ngx-smart-modal</strong> from <a
+       class="siimple-link"
+       href="https://unpkg.com/ngx-smart-modal@latest/"
+       target="_blank">UNPKG</a> with the import link below:</div>
+<pre class="siimple-pre">https://unpkg.com/ngx-smart-modal@{{ libVersion }}/bundles/ngx-smart-modal.umd.js</pre>
+
+
+
+<div class="siimple-h5">Import in Angular</div>
+<div class="siimple-paragraph">
+    Then add <code>NgxSmartModalModule</code> (with <code>.forRoot()</code> or <code>.forChild()</code> depending if
+    the module which you import the library into is the main module of your project or a nested module) and
+    <code>NgxSmartModalService</code> to your project <code>NgModule</code>
+</div>
+
+<pre class="siimple-pre">{{ CODES?.MODULE_IMPORT }}</pre>
+
+
+<div class="siimple-paragraph">
+    And import <code>ngx-smart-modal.scss</code> or <code>ngx-smart-modal.css</code> in a global style file (e.g.
+    <code>styles.scss</code> or <code>styles.css</code> in classic Angular projects or any other scss/css file it
+    imports). Example with <strong>styles.scss</strong>:
+</div>
+<pre class="siimple-pre">{{ CODES?.CSS_IMPORT }}</pre>
+<div class="siimple-paragraph">
+    <a class="siimple-link"
+       target="_blank"
+       href="https://github.com/biig-io/ngx-smart-modal/blob/master/src/styles.scss">Demo example here</a>
+</div>
+
+<div id="modals"
+     class="siimple-h4">Manipulate modals</div>
+
+<div class="siimple-paragraph">You can use it directly in your component's template like this:</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_HTML }}</pre>
+<div class="siimple-paragraph">
+    At this point, the modal instance is stored in the <code>NgxSmartModalService</code>. You can do absolutely what you
+    want with it, anywhere in your app. For example, from a component :
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_COMP }}</pre>
+<div class="siimple-paragraph">
+    Then in the <code>AppComponent</code> view you can open any modal with no need to be in the same view:
+</div>
+<pre class="siimple-pre">{{ CODES?.INLINE_EXAMPLE }}</pre>
+
+<div id="modals"
+     class="siimple-h5">Open modals via class reference</div>
+<div class="siimple-tip siimple-tip--warning siimple-tip--exclamation">
+    This documentation part is for <strong>ngx-smart-modal >= 7.2.0 only</strong>!
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_CLASS_REF }}</pre>
+
+
+<div id="data"
+     class="siimple-h4">Manipulate data</div>
+
+<div class="siimple-paragraph">
+    You can associate data with any created modal. To do that, simply use the <code>setModalData()</code> from the
+    <code>NgxSmartModalService</code>:
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_DATA }}</pre>
+<div class="siimple-paragraph">
+    After that, you can retrieve the modal data directly from the view with the <code>getData()</code> modal property.
+    To avoid any errors with unavailable data, you can use the <code>hasData()</code> modal property (It's dynamic. If
+    data comes after a certain time its value will automatically change to <code>true</code>):
+</div>
+<pre class="siimple-pre">{{ CODES?.MODAL_DATA_HTML }}</pre>

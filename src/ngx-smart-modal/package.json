@@ -82,7 +82,7 @@
     "stylelint-config-standard": "^18.2.0",
     "ts-loader": "3.1.1",
     "tslint": "5.8.0",
-    "typescript": "2.4.2",
+    "typescript": "~3.4.3",
     "uglify-js": "3.1.6",
     "webpack": "3.8.1",
     "zone.js": "0.8.18"

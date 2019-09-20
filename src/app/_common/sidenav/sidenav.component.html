@@ -1,0 +1,93 @@
+<div class="siimple-list siimple-list--hover">
+
+    <a class="siimple-list-item"
+       routerLink="/"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Introduction</div>
+        <div class="siimple-list-description">A quick dive into ngx-smart-modal</div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/start"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Getting started</div>
+        <div class="siimple-list-description">How to start things right</div>
+        <div class="siimple-sub-nav"
+             *ngIf="routeIs('/start')">
+            <a class="siimple-link"
+               routerLink="/start"
+               fragment="install">
+                Installation
+            </a>
+
+            <a class="siimple-link"
+               routerLink="/start"
+               fragment="modals">
+                Manipulate modals
+            </a>
+
+            <a class="siimple-link"
+               routerLink="/start"
+               fragment="data">
+                Manipulate data
+            </a>
+        </div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/api"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">API</div>
+        <div class="siimple-list-description">List of available methods</div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/options"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Options</div>
+        <div class="siimple-list-description">List of available options</div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/events"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Events</div>
+        <div class="siimple-list-description">List of available events and how to handle them</div>
+        <div class="siimple-sub-nav"
+             *ngIf="routeIs('/events')">
+            <a class="siimple-link"
+               routerLink="/events"
+               fragment="list">
+                Event list
+            </a>
+
+            <a class="siimple-link"
+               routerLink="/events"
+               fragment="handle">
+                Handle events
+            </a>
+        </div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/style"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Style & customization</div>
+        <div class="siimple-list-description">How to make ngx-smart-modal fit your needs</div>
+    </a>
+
+    <a class="siimple-list-item"
+       routerLink="/misc"
+       [routerLinkActiveOptions]="{exact: true}"
+       routerLinkActive="siimple-list-item--selected">
+        <div class="siimple-list-title">Misc</div>
+        <div class="siimple-list-description">Miscellaneous things you need to know...</div>
+    </a>
+
+</div>

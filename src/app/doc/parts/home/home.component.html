@@ -1,0 +1,103 @@
+<div>
+    <div class="theme-content-title">What is ngx-smart-modal</div>
+    <div class="theme-content-description">A quick dive into ngx-smart-modal</div>
+</div>
+
+<div class="siimple-paragraph">
+    <code>ngx-smart-modal</code> is a lightweight and very complete Angular library for managing modals inside any
+    Angular
+    project. It
+    was built for modern browsers using TypeScript, HTML5 and Angular >=2.4.0.
+</div>
+
+<div class="siimple-h5">No external library, no jQuery! 🤘</div>
+<!-- <img class="siimple--rounded paddingless"
+     src="assets/css_frameworks.png"
+     alt=""> -->
+<div class="siimple-paragraph">
+    To avoid imposing you to download a CSS library by using this package, you simply have to use our built-in
+    SCSS/CSS file
+    with custom animations and overridable variables. So get rid of being forced to use a CSS library you don't want
+    to! In
+    addition, it doesn't use jQuery either!
+</div>
+
+<div class="siimple-blockquote">
+    <strong>But... I'm using Bootstrap (or Materialize, Foundation or anything else)!</strong><br><br>
+    Don't panic! We already thought about that! And because we want to be as neutral as we can, we made it very flexible
+    for
+    you to style it! So if your app uses a CSS framework that has some modal styles, you simply have to pick up its
+    class
+    names and set the main class in the [customClass]="'modal'" (e.g.: bootstrap). And the rest of the modal DOM
+    elements
+    has just to be set in the ngx-smart-modal component (e.g.: modal-dialog, modal-content, modal-header, etc.).
+</div>
+
+<div class="siimple-h5">Features</div>
+
+<div class="siimple-paragraph">
+    <ul>
+        <li>Handle large quantity of modals anywhere in your app</li>
+        <li>Customize the style of your modals through custom CSS classes and SCSS variables!</li>
+        <li>No external CSS library is used so you can easily override the modals default style</li>
+        <li>Pass data to any modal and retrieve it very simply in the modal view (or anywhere else)</li>
+        <li>Events on <code>open</code>, <code>close</code>, <code>dismiss</code>, <code>escape</code> and more for each
+            modal</li>
+        <li>Manage all your modal stack and data with very fast methods</li>
+        <li>Very smart <code>z-index</code> computation (no ugly glitches or problems with a modal inside another)</li>
+        <li>A modal in a modal in a modal in a modal... I guess you got it!</li>
+        <li>AoT compilation support</li>
+    </ul>
+</div>
+
+<div class="siimple-h5">How it works</div>
+
+<div class="siimple-paragraph">
+    Basically, imagine that the component is based on a service that stores any modals you create in order to let you
+    pick
+    them up and manage them anywhere in your app at any time.
+</div>
+<img class="siimple--rounded paddingless"
+     src="assets/sequence_diagram.png"
+     alt="sequence_diagram">
+
+<div class="siimple-h5">Contributors</div>
+
+<div class="siimple-paragraph">
+    Many thanks to all contributors which help to maintain the library up to date and make it more and more awesome
+    every day. We love you all! ♥️
+</div>
+
+<div class="contributors-list"
+     *ngIf="!loading; else loadingSpinner">
+    <div *ngFor="let contributor of contributors"
+         class="siimple-card">
+        <div class="siimple-card-header">
+            <a [href]="contributor?.html_url"
+               title="Go to {{ contributor?.login }}'s GitHub profile'"
+               target="_blank"
+               class="siimple-link">
+                <img [src]="contributor?.avatar_url"
+                     alt="{{ contributor?.login }}'s avatar">
+            </a>
+        </div>
+        <div class="siimple-card-body">
+            <a [href]="contributor?.html_url"
+               title="Go to {{ contributor?.login }}'s GitHub profile'"
+               target="_blank"
+               class="siimple-link">{{ contributor?.login }}</a>
+            <span class="siimple-tag siimple-tag--primary siimple-tag--rounded"
+                  title="Number of contributions">
+                {{ contributor?.contributions }}
+            </span>
+        </div>
+    </div>
+    <div *ngIf="!contributors?.length">
+        We're unable to load the contributors list from GitHub for the moment... But feel free to check it on the <a
+           href="https://github.com/biig-io/ngx-smart-modal/graphs/contributors">contributors page</a>.
+    </div>
+</div>
+
+<ng-template #loadingSpinner>
+    <div class="siimple-spinner siimple-spinner--primary"></div>
+</ng-template>

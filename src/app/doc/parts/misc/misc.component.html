@@ -1,0 +1,48 @@
+<div>
+    <div class="theme-content-title">Misc</div>
+    <div class="theme-content-description">Miscellaneous things you need to know...</div>
+</div>
+
+<div id="upgrade"
+     class="siimple-h4">Precautions when upgrading to a newer version
+</div>
+
+<div class="siimple-h5">Upgrade from &lt;=5.x.x to 6.x.x</div>
+<div class="siimple-paragraph">
+    Make sure that you imported <code>ngx-smart-modal.scss</code> or <code>ngx-smart-modal.css</code> in a global style
+    file (e.g. <code>styles.scss</code> or <code>styles.css</code> in classic Angular projects or any other scss/css
+    file it imports).
+</div>
+
+<div class="siimple-h5">Upgrade from &lt;=6.x.x to &gt;=7.x.x</div>
+<div class="siimple-paragraph">
+    Nothing should break unless if you added custom style to the modal content. In this case, it may break your existing
+    style. To fix it, you simply have to add the <code>.nsm-body</code> selector after the <code>.nsm-dialog</code>
+    selector because from now, the modal content is wrapped in a <code>.nsm-body</code> block.
+</div>
+
+<hr class="siimple-hr">
+
+<div id="issues"
+     class="siimple-h4">Issues
+</div>
+
+<div class="siimple-paragraph">
+    If you wish to submit an issue, please use the available template to facilitate reading and comprehension of all
+    issues
+    encountered. You can find this template in <code>./github/issue_template.md</code>.
+</div>
+
+<hr class="siimple-hr">
+
+<div id="contribute"
+     class="siimple-h4">Contribute
+</div>
+
+<div class="siimple-paragraph">
+    Firstly fork this repo, then clone your fork and go inside the root of the freshly forked project. Run
+    <code>npm i</code> or <code>yarn</code> to install dependencies then <code>yarn start</code> to start the
+    angular-cli demo. To modify the library, go into <code>src/ngx-smart-modal</code> and do some code (and some tests)!
+    🤓 When you've finished, commit and push it to your forked repo, and make a PR to the official
+    <code>ngx-smart-modal</code> repo! Thank you for your support, you rock! 🤘🎸
+</div>
