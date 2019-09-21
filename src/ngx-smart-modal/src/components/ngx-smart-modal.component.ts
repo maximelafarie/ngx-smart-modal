@@ -23,7 +23,11 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog
+           [attr.aria-hidden]="openedClass ? false : true"
+           [attr.aria-label]="ariaLabel"
+           [attr.aria-labelledby]="ariaLabelledBy"
+           [attr.aria-describedby]="ariaDescribedBy">
         <div class="nsm-content" #nsmContent>
           <div class="nsm-body">
             <ng-content></ng-content>
@@ -49,6 +53,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
+  @Input() public ariaLabel: string;
+  @Input() public ariaLabelledBy: string;
+  @Input() public ariaDescribedBy: string;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -71,7 +78,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any;
 
-  @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
+  @ViewChildren('nsmContent') public nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') private nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
 

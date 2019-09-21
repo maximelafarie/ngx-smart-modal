@@ -68,6 +68,7 @@ body.dialog-open {
   max-width: 520px;
   margin: 0 auto;
   pointer-events: none;
+  outline: none;
 
   // When dialog is closing
   &.nsm-dialog-close {

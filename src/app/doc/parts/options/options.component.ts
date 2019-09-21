@@ -25,7 +25,7 @@ export class OptionsComponent implements OnInit {
       name: 'escapable',
       type: 'boolean',
       defaultValue: 'true',
-      description: 'Enable / disable the modal for listening to the escape keypress event (if pressed and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time)'
+      description: 'Enable / disable the modal for listening to the escape keypress event (if pressed and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time).  ⚠️ NOT RECOMMANDED for accessibility reasons.'
     },
     {
       name: 'dismissable',
@@ -75,6 +75,24 @@ export class OptionsComponent implements OnInit {
       defaultValue: 'undefined',
       description: 'Displays the modal relatively to the targeted element. ⚠️ Only for NgxSmartModal >= 7.0.0!'
     },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      defaultValue: 'undefined',
+      description: 'Define a accessible title for your modal.'
+    },
+    {
+      name: 'ariaLabelledBy',
+      type: 'string',
+      defaultValue: 'undefined',
+      description: 'Define a accessible title for your modal. Enter the id of your title content.'
+    },
+    {
+      name: 'ariaDescribedBy',
+      type: 'string',
+      defaultValue: 'undefined',
+      description: 'Define a accessible description for your modal. Enter the id of your description content.'
+    }
   ];
   // tslint:enable:max-line-length
 
