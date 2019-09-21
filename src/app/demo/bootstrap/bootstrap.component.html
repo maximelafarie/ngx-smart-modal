@@ -15,8 +15,11 @@
   </div>
 </div>
 
-<ngx-smart-modal #myBootstrapModal identifier="myBootstrapModal" [closable]="false"
-                 customClass="modal-content no-padding">
+<ngx-smart-modal #myBootstrapModal
+                 identifier="myBootstrapModal"
+                 customClass="modal-content no-padding"
+                 ariaLabel="Boostrap modal"
+                 [closable]="false">
   <div class="modal-header">
     <h5 class="modal-title">Modal title</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="myBootstrapModal.close()">

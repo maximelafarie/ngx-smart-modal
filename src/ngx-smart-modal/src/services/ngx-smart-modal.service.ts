@@ -21,6 +21,8 @@ export type Content<T> = string | TemplateRef<T> | Type<T>;
 
 @Injectable()
 export class NgxSmartModalService {
+  private lastElementFocused: any;
+
   constructor(
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _appRef: ApplicationRef,
@@ -236,6 +238,9 @@ export class NgxSmartModalService {
       if (typeof options.hideDelay === 'number') { componentRef.instance.hideDelay = options.hideDelay; }
       if (typeof options.autostart === 'boolean') { componentRef.instance.autostart = options.autostart; }
       if (typeof options.target === 'string') { componentRef.instance.target = options.target; }
+      if (typeof options.ariaLabel === 'string') { componentRef.instance.ariaLabel = options.ariaLabel; }
+      if (typeof options.ariaLabelledBy === 'string') { componentRef.instance.ariaLabelledBy = options.ariaLabelledBy; }
+      if (typeof options.ariaDescribedBy === 'string') { componentRef.instance.ariaDescribedBy = options.ariaDescribedBy; }
 
       this._appRef.attachView(componentRef.hostView);
 
@@ -294,6 +299,16 @@ export class NgxSmartModalService {
       return false;
     }
 
+    this.lastElementFocused = document.activeElement;
+
+    if (modal.escapable) {
+      window.addEventListener('keyup', this._escapeKeyboardEvent);
+    }
+
+    if (modal.backdrop) {
+      window.addEventListener('keydown', this._trapFocusModal);
+    }
+
     if (top) {
       modal.layerPosition = this.getHigherIndex();
     }
@@ -310,6 +325,11 @@ export class NgxSmartModalService {
       if (modal.target) {
         modal.targetPlacement();
       }
+
+      modal.nsmDialog.first.nativeElement.setAttribute('role', 'dialog');
+      modal.nsmDialog.first.nativeElement.setAttribute('tabIndex', '-1');
+      modal.nsmDialog.first.nativeElement.setAttribute('aria-modal', 'true');
+      modal.nsmDialog.first.nativeElement.focus();
 
       modal.markForCheck();
       modal.onOpenFinished.emit(modal);
@@ -337,15 +357,19 @@ export class NgxSmartModalService {
 
     if (this.getOpenedModals().length < 2) {
       modal.removeBodyClass();
+      window.removeEventListener('keyup', this._escapeKeyboardEvent);
+      window.removeEventListener('keydown', this._trapFocusModal);
     }
 
     setTimeout(() => {
       modal.visibleChange.emit(modal.visible);
       modal.visible = false;
       modal.overlayVisible = false;
+      modal.nsmDialog.first.nativeElement.removeAttribute('tabIndex');
       modal.markForCheck();
       modal.onCloseFinished.emit(modal);
       modal.onAnyCloseEventFinished.emit(modal);
+      this.lastElementFocused.focus();
     }, modal.hideDelay);
 
     return true;
@@ -411,7 +435,7 @@ export class NgxSmartModalService {
    * @param event The Keyboard Event
    */
   private _escapeKeyboardEvent = (event: KeyboardEvent) => {
-    if (event.keyCode === 27) {
+    if (event.key === 'Escape') {
       try {
         const modal = this.getTopOpenedModal();
 
@@ -436,5 +460,29 @@ export class NgxSmartModalService {
    */
   private get isBrowser(): boolean {
     return isPlatformBrowser(this._platformId);
+  }
+
+  /**
+   * While modal is open, the focus stay on it
+   * @param event The Keyboar dEvent
+   */
+  private _trapFocusModal = (event: KeyboardEvent) => {
+    if (event.key === 'Tab') {
+      try {
+        const modal = this.getTopOpenedModal();
+
+        if (!modal.nsmDialog.first.nativeElement.contains(document.activeElement)) {
+          event.preventDefault();
+          event.stopPropagation();
+          modal.nsmDialog.first.nativeElement.focus();
+        }
+
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    return false;
   }
 }
