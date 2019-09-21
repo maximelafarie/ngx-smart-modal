@@ -236,9 +236,9 @@ export class NgxSmartModalService {
       if (typeof options.hideDelay === 'number') { componentRef.instance.hideDelay = options.hideDelay; }
       if (typeof options.autostart === 'boolean') { componentRef.instance.autostart = options.autostart; }
       if (typeof options.target === 'string') { componentRef.instance.target = options.target; }
-      if (typeof options.ariaLabel === 'string') { componentRef.instance.ariaLabel = options.ariaLabel }
-      if (typeof options.ariaLabelledBy === 'string') { componentRef.instance.ariaLabelledBy = options.ariaLabelledBy }
-      if (typeof options.ariaDescribedBy === 'string') { componentRef.instance.ariaDescribedBy = options.ariaDescribedBy }
+      if (typeof options.ariaLabel === 'string') { componentRef.instance.ariaLabel = options.ariaLabel; }
+      if (typeof options.ariaLabelledBy === 'string') { componentRef.instance.ariaLabelledBy = options.ariaLabelledBy; }
+      if (typeof options.ariaDescribedBy === 'string') { componentRef.instance.ariaDescribedBy = options.ariaDescribedBy; }
 
       this._appRef.attachView(componentRef.hostView);
 
@@ -460,8 +460,8 @@ export class NgxSmartModalService {
           modal.nsmDialog.first.nativeElement.focus();
         }
 
-        return true
-      } catch(e) {
+        return true;
+      } catch (e) {
         return false;
       }
     }

@@ -53,9 +53,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
-  @Input() public ariaLabel: string;
-  @Input() public ariaLabelledBy: string;
-  @Input() public ariaDescribedBy: string;
+  @Input() public ariaLabel: string | null = null;
+  @Input() public ariaLabelledBy: string | null = null;
+  @Input() public ariaDescribedBy: string | null = null;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -78,8 +78,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any;
 
-  @ViewChildren('nsmContent') public nsmContent: QueryList<ElementRef>;
-  @ViewChildren('nsmDialog') private nsmDialog: QueryList<ElementRef>;
+  @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
+  @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
 
   constructor(
