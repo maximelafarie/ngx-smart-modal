@@ -29,8 +29,7 @@ import { NgxSmartModalModule } from '../../ngx-smart-modal';
     RouterModule,
     NgxSmartModalModule.forRoot()
   ],
-  entryComponents: [FakeComponent],
-  bootstrap: [DemoComponent]
+  entryComponents: [FakeComponent]
 })
 export class DemoModule {
 }
