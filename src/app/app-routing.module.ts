@@ -20,24 +20,11 @@ import { StyleComponent } from './doc/parts/style/style.component';
 import { MiscComponent } from './doc/parts/misc/misc.component';
 
 const routerOptions: ExtraOptions = {
-  useHash: false,
+  useHash: true,
   anchorScrolling: 'enabled'
 };
 
 const routes: Routes = [
-  {
-    path: '',
-    component: DocComponent,
-    children: [
-      { path: '', component: HomeComponent },
-      { path: 'start', component: StartComponent },
-      { path: 'api', component: ApiComponent },
-      { path: 'options', component: OptionsComponent },
-      { path: 'events', component: EventsComponent },
-      { path: 'style', component: StyleComponent },
-      { path: 'misc', component: MiscComponent },
-    ]
-  },
   {
     path: 'demo',
     component: DemoComponent,
@@ -51,7 +38,21 @@ const routes: Routes = [
       { path: '**', redirectTo: '/demo', pathMatch: 'full' }
     ]
   },
- /*  { path: '**', redirectTo: '', pathMatch: 'full' } */
+  {
+    path: '',
+    component: DocComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'start', component: StartComponent },
+      { path: 'api', component: ApiComponent },
+      { path: 'options', component: OptionsComponent },
+      { path: 'events', component: EventsComponent },
+      { path: 'style', component: StyleComponent },
+      { path: 'misc', component: MiscComponent },
+      { path: '**', redirectTo: '', pathMatch: 'full' }
+    ]
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
