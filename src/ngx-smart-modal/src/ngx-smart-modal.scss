@@ -42,6 +42,8 @@ body.dialog-open {
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  justify-content: center;
   overflow-x: hidden;
   overflow-y: auto;
   transition: background-color $transition-duration;
@@ -59,7 +61,7 @@ body.dialog-open {
 
 // Dialog modal
 .nsm-dialog {
-  position: relative;
+  position: absolute;
   opacity: 1;
   visibility: visible;
   min-height: 200px;
@@ -164,4 +166,12 @@ body.dialog-open {
   &.nsm-dialog-close {
     transform: translate3d(0, 50%, 0);
   }
+}
+
+.draggable{
+  cursor: move;
+}
+
+.draggable div{
+  cursor: default;
 }

@@ -37,6 +37,8 @@
                 style="position:absolute;top: 300px;left: 900px;">Custom target modal</button>
         <button class="button -regular"
                 (click)="goNewDynamic()">Create dynamic modal<span>new</span></button>
+        <button class="button -regular"
+                (click)="draggableModal.open()">Draggable modal<span>new</span></button>
     </div>
 
     <h3 class="title">Examples with CSS frameworks</h3>
@@ -342,4 +344,13 @@
     <p>{{ sampleText[3] }}</p>
     <button class="button -dark"
             (click)="customTarget.close()">Close</button>
+</ngx-smart-modal>
+
+<ngx-smart-modal #draggableModal [draggable]="true" [draggableEdges]="true"
+                 identifier="draggableModal">
+    <h1>Hey, you can drag me anywhere by holding my edges or handle!</h1>
+    <p>Add class ".draggable" to any element inside modal to make it a drag handle.</p><br>
+    <span class="draggable">Handle</span>
+    <span>Not handle</span>
+    <br><br>
 </ngx-smart-modal>

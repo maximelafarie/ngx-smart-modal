@@ -31,12 +31,12 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog
            [attr.aria-hidden]="openedClass ? false : true"
            [attr.aria-label]="ariaLabel"
            [attr.aria-labelledby]="ariaLabelledBy"
-           [attr.aria-describedby]="ariaDescribedBy">
-        <div class="nsm-content" #nsmContent>
+           [attr.aria-describedby]="ariaDescribedBy"
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
+        <div class="nsm-content" #nsmContent  [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-template #dynamicContent></ng-template>
             <ng-content></ng-content>
@@ -76,6 +76,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input() public ariaLabelledBy: string | null = null;
   @Input() public ariaDescribedBy: string | null = null;
   @Input() public refocus: boolean = true;
+  @Input() public draggable: boolean = false;
+  @Input() public draggableEdges: boolean = false;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -132,6 +134,51 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   public ngOnDestroy(): void {
     this._sendEvent('delete');
+  }
+
+  private offsetX = 0;
+  private offsetY = 0;
+  private positionX = 0;
+  private positionY = 0;
+  private dragging = false;
+  @HostListener('document:mousedown', ['$event'])
+  onMouseDown(e: MouseEvent) {
+    let src = e.srcElement as HTMLElement;
+
+    if (this.draggable && src && src.classList.contains('draggable') && !this.dragging) {
+      e.preventDefault();
+
+      this.dragging = true;
+
+      this.positionX = e.clientX;
+      this.positionY = e.clientY;
+
+      return false;
+    }
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  elementDrag(e: MouseEvent) {
+    if (this.dragging) {
+      if (!this.nsmDialog.length) {
+        return false;
+      }
+
+      e.preventDefault();
+
+      this.offsetX = this.positionX - e.clientX;
+      this.offsetY = this.positionY - e.clientY;
+      this.positionX = e.clientX;
+      this.positionY = e.clientY;
+
+      this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - this.offsetY) + "px";
+      this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - this.offsetX) + "px";
+    }
+  }
+
+  @HostListener('document:mouseup', ['$event'])
+  closeDragElement() {
+    this.dragging = false;
   }
 
   /**
