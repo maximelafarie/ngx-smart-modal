@@ -24,7 +24,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
            [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
-        <div class="nsm-content" #nsmContent>
+        <div class="nsm-content" #nsmContent  [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-content></ng-content>
           </div>
@@ -49,6 +49,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
+  @Input() public draggable: boolean = false;
+  @Input() public draggableEdges: boolean = false;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -90,6 +92,51 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this._sendEvent('delete');
+  }
+
+  private offsetX = 0;
+  private offsetY = 0;
+  private positionX = 0;
+  private positionY = 0;
+  private dragging = false;
+  @HostListener('document:mousedown', ['$event'])
+  onMouseDown(e: MouseEvent) {
+    let src = e.srcElement as HTMLElement;
+
+    if (this.draggable && src && src.classList.contains('draggable') && !this.dragging) {
+      e.preventDefault();
+
+      this.dragging = true;
+
+      this.positionX = e.clientX;
+      this.positionY = e.clientY;
+
+      return false;
+    }
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  elementDrag(e: MouseEvent) {
+    if (this.dragging) {
+      if (!this.nsmDialog.length) {
+        return false;
+      }
+
+      e.preventDefault();
+
+      this.offsetX = this.positionX - e.clientX;
+      this.offsetY = this.positionY - e.clientY;
+      this.positionX = e.clientX;
+      this.positionY = e.clientY;
+
+      this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - this.offsetY) + "px";
+      this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - this.offsetX) + "px";
+    }
+  }
+
+  @HostListener('document:mouseup', ['$event'])
+  closeDragElement() {
+    this.dragging = false;
   }
 
   /**
