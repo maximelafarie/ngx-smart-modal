@@ -24,7 +24,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
            [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
-        <div class="nsm-content" #nsmContent>
+        <div class="nsm-content" #nsmContent cdkDrag [cdkDragDisabled]="!draggable" cdkDragBoundary=".overlay">
           <div class="nsm-body">
             <ng-content></ng-content>
           </div>
@@ -49,6 +49,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
+  @Input() public draggable: boolean = false;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();

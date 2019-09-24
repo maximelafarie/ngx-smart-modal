@@ -4,12 +4,13 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
 import { NgxSmartModalStackService } from '../services/ngx-smart-modal-stack.service';
 import { NgxSmartModalComponent } from '../components/ngx-smart-modal.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [NgxSmartModalComponent],
   entryComponents: [NgxSmartModalComponent],
   exports: [NgxSmartModalComponent],
-  imports: [CommonModule]
+  imports: [CommonModule, DragDropModule]
 })
 export class NgxSmartModalModule {
   /**
