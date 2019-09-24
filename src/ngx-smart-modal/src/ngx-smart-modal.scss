@@ -168,10 +168,10 @@ body.dialog-open {
   }
 }
 
-.draggable{
+.draggable {
   cursor: move;
-}
 
-.draggable div{
-  cursor: default;
+  div {
+    cursor: default;
+  }
 }
