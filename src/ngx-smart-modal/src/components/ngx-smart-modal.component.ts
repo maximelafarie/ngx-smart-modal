@@ -71,9 +71,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any;
 
-  @ViewChildren('nsmContent') private nsmContent!: QueryList<ElementRef>;
-  @ViewChildren('nsmDialog') private nsmDialog!: QueryList<ElementRef>;
-  @ViewChildren('nsmOverlay') private nsmOverlay!: QueryList<ElementRef>;
+  @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
+  @ViewChildren('nsmDialog') private nsmDialog: QueryList<ElementRef>;
+  @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
 
   constructor(
     private _renderer: Renderer2,
