@@ -346,10 +346,25 @@
             (click)="customTarget.close()">Close</button>
 </ngx-smart-modal>
 
-<ngx-smart-modal #draggableModal [draggable]="true" [draggableEdges]="true"
+<ngx-smart-modal #draggableModal 
+                 [draggable]="true" 
+                 [draggableEdges]="true" 
                  identifier="draggableModal">
     <h1>Hey, you can drag me anywhere by holding my edges or handle!</h1>
     <p>Add class ".draggable" to any element inside modal to make it a drag handle.</p><br>
+    <span class="draggable">Handle</span>
+    <span>Not handle</span>
+    <br><br>
+    <button class="button -regular" (click)="secondDraggableModal.open()">Second draggable
+        modal<span>new</span></button>
+
+</ngx-smart-modal>
+
+<ngx-smart-modal #secondDraggableModal 
+                 [draggable]="true" 
+                 identifier="secondDraggableModal">
+    <h1>Hey, I will move independently from my parent!</h1>
+    <p>I can only be moved by a handle.</p><br>
     <span class="draggable">Handle</span>
     <span>Not handle</span>
     <br><br>

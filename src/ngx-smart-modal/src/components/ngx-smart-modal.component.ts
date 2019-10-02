@@ -141,11 +141,21 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   private positionX = 0;
   private positionY = 0;
   private dragging = false;
+  
+  /**
+  * Listens for mouse down event to initiate dragging of the modal
+  */
   @HostListener('document:mousedown', ['$event'])
   onMouseDown(e: MouseEvent) {
+    if (!this.nsmDialog.length) {
+      return false;
+    }
+
     let src = e.srcElement as HTMLElement;
 
-    if (this.draggable && src && src.classList.contains('draggable') && !this.dragging) {
+    let canBeMoved = this.nsmContent.last.nativeElement.contains(src);
+
+    if (this.draggable && src && src.classList.contains('draggable') && !this.dragging && src && canBeMoved) {
       e.preventDefault();
 
       this.dragging = true;
@@ -157,6 +167,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     }
   }
 
+  /**
+  * Listens for mouse move event and reflects the movement of the mouse to modal position
+  */
   @HostListener('document:mousemove', ['$event'])
   elementDrag(e: MouseEvent) {
     if (this.dragging) {
@@ -171,11 +184,15 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
       this.positionX = e.clientX;
       this.positionY = e.clientY;
 
+
       this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - this.offsetY) + "px";
       this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - this.offsetX) + "px";
     }
   }
 
+  /**
+  * Listens for mouse up event to stop moving dragged modal
+  */
   @HostListener('document:mouseup', ['$event'])
   closeDragElement() {
     this.dragging = false;
