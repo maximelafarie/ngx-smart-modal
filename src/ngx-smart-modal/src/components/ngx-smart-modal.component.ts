@@ -141,7 +141,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   private positionX = 0;
   private positionY = 0;
   private dragging = false;
-  
+
   /**
   * Listens for mouse down event to initiate dragging of the modal
   */
@@ -152,18 +152,19 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     let src = e.srcElement as HTMLElement;
+    if (src) {
+      let canBeMoved = this.nsmContent.last.nativeElement.contains(src) && this.draggable && !this.dragging;
 
-    let canBeMoved = this.nsmContent.last.nativeElement.contains(src);
+      if (src.classList.contains('draggable') && canBeMoved) {
+        e.preventDefault();
 
-    if (this.draggable && src && src.classList.contains('draggable') && !this.dragging && src && canBeMoved) {
-      e.preventDefault();
+        this.dragging = true;
 
-      this.dragging = true;
+        this.positionX = e.clientX;
+        this.positionY = e.clientY;
 
-      this.positionX = e.clientX;
-      this.positionY = e.clientY;
-
-      return false;
+        return false;
+      }
     }
   }
 
