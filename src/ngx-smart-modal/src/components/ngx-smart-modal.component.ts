@@ -136,36 +136,52 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     this._sendEvent('delete');
   }
 
-  private offsetX = 0;
-  private offsetY = 0;
   private positionX = 0;
   private positionY = 0;
   private dragging = false;
 
   /**
+  * Set positionX and positionY to save last position of dragged modal
+  */
+  public setPosition(posX: number, posY: number) {
+    this.positionX = posX;
+    this.positionY = posY;
+  }
+
+  /**
+  * Moves dialog by changing top and left style of modal dialog by offset
+  */
+  public moveDialog(offsetX: number, offsetY: number) {
+    if (!this.nsmDialog.length) {
+      return false;
+    }
+    this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - offsetY) + "px";
+    this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - offsetX) + "px";
+    return true;
+  }
+
+  /**
   * Listens for mouse down event to initiate dragging of the modal
   */
   @HostListener('document:mousedown', ['$event'])
-  onMouseDown(e: MouseEvent) {
-    if (!this.nsmDialog.length) {
+  startDrag(e: MouseEvent) {
+    if (!this.nsmContent.length || !this.draggable) {
       return false;
     }
 
     let src = e.srcElement as HTMLElement;
-    if (src) {
-      let canBeMoved = this.nsmContent.last.nativeElement.contains(src) && this.draggable && !this.dragging;
-
-      if (src.classList.contains('draggable') && canBeMoved) {
+    if (src && src.classList.contains('draggable')) {
+      if (this.nsmContent.last.nativeElement.contains(src) && !this.dragging) {
         e.preventDefault();
 
         this.dragging = true;
+        this.setPosition(e.clientX, e.clientY);
 
-        this.positionX = e.clientX;
-        this.positionY = e.clientY;
-
-        return false;
+        return true;
       }
     }
+
+    return false;
   }
 
   /**
@@ -173,29 +189,27 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   */
   @HostListener('document:mousemove', ['$event'])
   elementDrag(e: MouseEvent) {
-    if (this.dragging) {
-      if (!this.nsmDialog.length) {
-        return false;
-      }
-
-      e.preventDefault();
-
-      this.offsetX = this.positionX - e.clientX;
-      this.offsetY = this.positionY - e.clientY;
-      this.positionX = e.clientX;
-      this.positionY = e.clientY;
-
-
-      this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - this.offsetY) + "px";
-      this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - this.offsetX) + "px";
+    if (!this.dragging || !this.nsmDialog.length) {
+      return false;
     }
+    e.preventDefault();
+
+    const offsetX = this.positionX - e.clientX;
+    const offsetY = this.positionY - e.clientY;
+
+    this.moveDialog(offsetX, offsetY);
+
+    this.setPosition(e.clientX, e.clientY);
+
+    return true;
   }
+
 
   /**
   * Listens for mouse up event to stop moving dragged modal
   */
   @HostListener('document:mouseup', ['$event'])
-  closeDragElement() {
+  stopDrag() {
     this.dragging = false;
   }
 

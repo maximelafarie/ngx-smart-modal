@@ -249,4 +249,159 @@ describe('NgxSmartModalComponent', () => {
 
     expect((component as any)._sendEvent('test')).toBeFalsy();
   }));
+  
+  it('should setPosition', async(() => {
+    component.setPosition(10, 20);
+    expect((component as any).positionX).toBe(10);
+    expect((component as any).positionY).toBe(20);
+  }));
+
+  it('should not moveDialog if there\'s no nsmDialog', async(() => {
+    (component as any).nsmDialog = { length: 0 };
+
+    const result = component.moveDialog(-30, -50);
+    expect(result).toBeFalsy();
+  }));
+
+  it('should moveDialog', async(() => {
+    (component as any).nsmDialog = { length: 1, last: { nativeElement: { offsetTop: 20, offsetLeft: 30, style: {} } } };
+
+    const result = component.moveDialog(-30, -50);
+    expect((component as any).nsmDialog.last.nativeElement.style.top).toBe('70px');
+    expect((component as any).nsmDialog.last.nativeElement.style.left).toBe('60px');
+    expect(result).toBeTruthy();
+  }));
+
+  it('should not startDrag if modal not draggable', async(() => {
+
+    component.draggable = false;
+
+    //spyOn((component), 'setPosition');
+
+    let result = component.startDrag({} as MouseEvent);
+    expect((component as any).dragging).toBeFalsy();
+    expect(result).toBe(false);
+  }));
+
+  it('should not startDrag if event there is no nsmContent', async(() => {
+    component.draggable = true;
+    (component as any).nsmContent = { length: 0 };
+
+    //spyOn((component), 'setPosition');
+
+    let result = component.startDrag({} as MouseEvent);
+    expect((component as any).dragging).toBeFalsy();
+    expect(result).toBe(false);
+  }));
+
+  it('should not startDrag if event srcElement is null', async(() => {
+    component.draggable = true;
+    (component as any).nsmContent = { length: 1 };
+    const fakeEvent = { srcElement: null };
+
+    //spyOn((component), 'setPosition');
+
+    let result = component.startDrag(fakeEvent as MouseEvent);
+    expect((component as any).dragging).toBeFalsy();
+    expect(result).toBe(false);
+  }));
+
+  it('should not startDrag if clicked element isn\'t .draggable', async(() => {
+    component.draggable = true;
+    (component as any).nsmContent = { length: 1 };
+    const fakeSrcElement = document.createElement('div') as any;
+    const fakeEvent = { srcElement: fakeSrcElement };
+
+    //spyOn((component), 'setPosition');
+
+    const result = component.startDrag(fakeEvent as MouseEvent);
+    expect((component as any).dragging).toBeFalsy();
+    expect(result).toBeFalsy();
+  }));
+
+  it('should not startDrag if content doesn\'t contain clicked element', async(() => {
+    component.draggable = true;
+    const fakeSrcElement1 = document.createElement('div') as any;
+    fakeSrcElement1.classList.add('draggable');
+    const fakeSrcElement2 = document.createElement('div') as any;
+    (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement1 } } };
+    const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement2 };
+
+    //spyOn((component), 'setPosition');
+
+    const result = component.startDrag(fakeEvent as MouseEvent);
+    expect((component as any).dragging).toBeFalsy();
+    expect(result).toBeFalsy();
+  }));
+
+  it('should startDrag', async(() => {
+    component.draggable = true;
+    const fakeSrcElement = document.createElement('div') as any;
+    (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement } } };
+    fakeSrcElement.classList.add('draggable');
+    const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement, preventDefault: () => { } };
+
+    (component as any).setPosition = (positionX: any, positionY: any) => {
+      //nothing
+    };
+
+    spyOn(component, 'setPosition');
+
+    const result = component.startDrag(fakeEvent as MouseEvent);
+    expect(result).toBeTruthy();
+    expect((component as any).dragging).toBeTruthy();
+    expect(component.setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
+  }));
+
+  it('should not elementDrag if not started dragging', async(() => {
+    (component as any).dragging = false;
+
+    const result = component.elementDrag({} as MouseEvent);
+    expect(result).toBeFalsy();
+  }));
+
+  it('should not elementDrag if event there is no nmsDialog', async(() => {
+    (component as any).dragging = true;
+    (component as any).nsmDialog = { length: 0 };
+
+    const result = component.elementDrag({} as MouseEvent);
+    expect(result).toBeFalsy();
+  }));
+
+  it('should elementDrag ', async(() => {
+    (component as any).dragging = true;
+    (component as any).nsmDialog = { 'length': 1 };
+    const positionX = 10;
+    (component as any).positionX = positionX;
+    const positionY = 30;
+    (component as any).positionY = positionY;
+    const fakeEvent = { clientX: 2, clientY: 5, preventDefault: () => { } };
+
+    const offsetX = component['positionX'] - fakeEvent.clientX;
+    const offsetY = component['positionY'] - fakeEvent.clientY;
+
+    (component as any).moveDialog = (positionX: any, positionY: any) => {
+      //nothing
+    };
+
+    (component as any).setPosition = (positionX: any, positionY: any) => {
+      //nothing
+    };
+
+    spyOn((component), 'moveDialog');
+    spyOn((component), 'setPosition');
+
+    const result = component.elementDrag(fakeEvent as MouseEvent);
+
+    expect(component.moveDialog).toHaveBeenCalledWith(offsetX, offsetY);
+    expect(component.setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
+
+    expect(result).toBeTruthy();
+  }));
+
+  it('should stopDrag', async(() => {
+    component.stopDrag();
+    expect((component as any).dragging).toBeFalsy();
+  }));
+
 });
