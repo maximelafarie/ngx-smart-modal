@@ -23,8 +23,9 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" [style.position]="draggable?'absolute':'relative'" #nsmDialog>
-        <div class="nsm-content" #nsmContent  [class.draggable]="draggable && draggableEdges">
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']"
+           [style.position]="draggable?'absolute':'relative'" #nsmDialog>
+        <div class="nsm-content" #nsmContent [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-content></ng-content>
           </div>
