@@ -26,7 +26,7 @@ export class NgxSmartModalService {
     private _appRef: ApplicationRef,
     private _injector: Injector,
     @Inject(DOCUMENT) private _document: any,
-    @Inject(PLATFORM_ID) private _platformId: object,
+    @Inject(PLATFORM_ID) private _platformId: Object,
     private _modalStack: NgxSmartModalStackService
   ) {
     this._addEvents();
