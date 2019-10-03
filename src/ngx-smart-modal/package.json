@@ -1,6 +1,6 @@
 {
   "name": "ngx-smart-modal",
-  "version": "7.1.1",
+  "version": "7.2.1",
   "description": "Smart modal handler to manage modals and data everywhere in Angular apps.",
   "main": "./bundles/ngx-smart-modal.umd.js",
   "module": "./esm5/ngx-smart-modal.js",
@@ -82,7 +82,7 @@
     "stylelint-config-standard": "^18.2.0",
     "ts-loader": "3.1.1",
     "tslint": "5.8.0",
-    "typescript": "~3.4.3",
+    "typescript": "2.4.2",
     "uglify-js": "3.1.6",
     "webpack": "3.8.1",
     "zone.js": "0.8.18"
