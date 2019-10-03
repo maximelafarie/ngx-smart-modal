@@ -24,7 +24,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
            [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']"
-           [style.position]="draggable?'absolute':'relative'" #nsmDialog>
+           [style.position]="draggable ? 'absolute' : 'relative'" #nsmDialog>
         <div class="nsm-content" #nsmContent [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-content></ng-content>
@@ -100,28 +100,28 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-  * Set positionX and positionY to save last position of dragged modal
-  */
+   * Set positionX and positionY to save last position of dragged modal
+   */
   public setPosition(posX: number, posY: number) {
     this.positionX = posX;
     this.positionY = posY;
   }
 
   /**
-  * Moves dialog by changing top and left style of modal dialog by offset
-  */
+   * Moves dialog by changing top and left style of modal dialog by offset
+   */
   public moveDialog(offsetX: number, offsetY: number) {
     if (!this.nsmDialog.length) {
       return false;
     }
-    this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - offsetY) + "px";
-    this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - offsetX) + "px";
+    this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - offsetY) + 'px';
+    this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - offsetX) + 'px';
     return true;
   }
 
   /**
-  * Listens for mouse down event to initiate dragging of the modal
-  */
+   * Listens for mouse down event to initiate dragging of the modal
+   */
   @HostListener('document:mousedown', ['$event'])
   public startDrag(e: MouseEvent) {
     if (!this.nsmContent.length || !this.draggable) {
@@ -144,8 +144,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   }
 
   /**
-  * Listens for mouse move event and reflects the movement of the mouse to modal position
-  */
+   * Listens for mouse move event and reflects the movement of the mouse to modal position
+   */
   @HostListener('document:mousemove', ['$event'])
   public elementDrag(e: MouseEvent) {
     if (!this.dragging || !this.nsmDialog.length) {
@@ -165,8 +165,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
 
   /**
-  * Listens for mouse up event to stop moving dragged modal
-  */
+   * Listens for mouse up event to stop moving dragged modal
+   */
   @HostListener('document:mouseup', ['$event'])
   public stopDrag() {
     this.dragging = false;
