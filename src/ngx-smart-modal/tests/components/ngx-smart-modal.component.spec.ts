@@ -269,7 +269,7 @@ describe('NgxSmartModalComponent', () => {
   it('should not startDrag if modal not draggable', async(() => {
     component.draggable = false;
 
-    let result = component.startDrag({} as MouseEvent);
+    let result = component['startDrag']({} as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBe(false);
   }));
@@ -278,7 +278,7 @@ describe('NgxSmartModalComponent', () => {
     component.draggable = true;
     (component as any).nsmContent = { length: 0 };
 
-    let result = component.startDrag({} as MouseEvent);
+    let result = component['startDrag']({} as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBe(false);
   }));
@@ -288,7 +288,7 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { length: 1 };
     const fakeEvent = { srcElement: null };
 
-    let result = component.startDrag(fakeEvent as MouseEvent);
+    let result = component['startDrag'](fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBe(false);
   }));
@@ -299,7 +299,7 @@ describe('NgxSmartModalComponent', () => {
     const fakeSrcElement = document.createElement('div') as any;
     const fakeEvent = { srcElement: fakeSrcElement };
 
-    const result = component.startDrag(fakeEvent as MouseEvent);
+    const result = component['startDrag'](fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBeFalsy();
   }));
@@ -312,7 +312,7 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement1 } } };
     const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement2 };
 
-    const result = component.startDrag(fakeEvent as MouseEvent);
+    const result = component['startDrag'](fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBeFalsy();
   }));
@@ -326,7 +326,7 @@ describe('NgxSmartModalComponent', () => {
 
     spyOn(component, 'setPosition');
 
-    const result = component.startDrag(fakeEvent as MouseEvent);
+    const result = component['startDrag'](fakeEvent as MouseEvent);
     expect(result).toBeTruthy();
     expect((component as any).dragging).toBeTruthy();
     expect(component.setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
@@ -335,7 +335,7 @@ describe('NgxSmartModalComponent', () => {
   it('should not elementDrag if not started dragging', async(() => {
     (component as any).dragging = false;
 
-    const result = component.elementDrag({} as MouseEvent);
+    const result = component['elementDrag']({} as MouseEvent);
     expect(result).toBeFalsy();
   }));
 
@@ -343,7 +343,7 @@ describe('NgxSmartModalComponent', () => {
     (component as any).dragging = true;
     (component as any).nsmDialog = { length: 0 };
 
-    const result = component.elementDrag({} as MouseEvent);
+    const result = component['elementDrag']({} as MouseEvent);
     expect(result).toBeFalsy();
   }));
 
@@ -362,7 +362,7 @@ describe('NgxSmartModalComponent', () => {
     spyOn((component), 'moveDialog');
     spyOn((component), 'setPosition');
 
-    const result = component.elementDrag(fakeEvent as MouseEvent);
+    const result = component['elementDrag'](fakeEvent as MouseEvent);
 
     expect(component.moveDialog).toHaveBeenCalledWith(offsetX, offsetY);
     expect(component.setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
@@ -371,7 +371,7 @@ describe('NgxSmartModalComponent', () => {
   }));
 
   it('should stopDrag', async(() => {
-    component.stopDrag();
+    component['stopDrag']();
     expect((component as any).dragging).toBeFalsy();
   }));
 

@@ -101,6 +101,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Set positionX and positionY to save last position of dragged modal
+   * @param posX position X
+   * @param posY position Y
    */
   public setPosition(posX: number, posY: number) {
     this.positionX = posX;
@@ -109,6 +111,8 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Moves dialog by changing top and left style of modal dialog by offset
+   * @param offsetX modal's left offset
+   * @param offsetY modal's top offset
    */
   public moveDialog(offsetX: number, offsetY: number) {
     if (!this.nsmDialog.length) {
@@ -121,9 +125,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Listens for mouse down event to initiate dragging of the modal
+   * @param e MouseEvent
    */
   @HostListener('document:mousedown', ['$event'])
-  public startDrag(e: MouseEvent) {
+  private startDrag(e: MouseEvent) {
     if (!this.nsmContent.length || !this.draggable) {
       return false;
     }
@@ -145,9 +150,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   /**
    * Listens for mouse move event and reflects the movement of the mouse to modal position
+   * @param e MouseEvent
    */
   @HostListener('document:mousemove', ['$event'])
-  public elementDrag(e: MouseEvent) {
+  private elementDrag(e: MouseEvent) {
     if (!this.dragging || !this.nsmDialog.length) {
       return false;
     }
@@ -167,7 +173,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    * Listens for mouse up event to stop moving dragged modal
    */
   @HostListener('document:mouseup', ['$event'])
-  public stopDrag() {
+  private stopDrag() {
     this.dragging = false;
   }
 
