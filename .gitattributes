@@ -1,0 +1,6 @@
+# Ignore when calculating language stats
+src/app/* linguist-documentation
+src/assets/* linguist-documentation
+src/environments/* linguist-documentation
+e2e/* linguist-documentation
+
