@@ -78,9 +78,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   private positionY = 0;
   private dragging = false;
 
-  @ViewChildren('nsmContent') private nsmContent!: QueryList<ElementRef>;
-  @ViewChildren('nsmDialog') private nsmDialog!: QueryList<ElementRef>;
-  @ViewChildren('nsmOverlay') private nsmOverlay!: QueryList<ElementRef>;
+  @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
+  @ViewChildren('nsmDialog') private nsmDialog: QueryList<ElementRef>;
+  @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
 
   constructor(
     private _renderer: Renderer2,
