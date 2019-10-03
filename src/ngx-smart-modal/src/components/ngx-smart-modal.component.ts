@@ -80,7 +80,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private _renderer: Renderer2,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
     @Inject(DOCUMENT) private _document: Document,
     @Inject(PLATFORM_ID) private _platformId: object
   ) { }
