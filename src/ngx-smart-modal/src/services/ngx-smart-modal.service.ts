@@ -6,9 +6,10 @@ import {
   EmbeddedViewRef,
   Inject,
   TemplateRef,
-  Type
+  Type,
+  PLATFORM_ID
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 import { NgxSmartModalComponent } from '../../src/components/ngx-smart-modal.component';
 import { NgxSmartModalConfig, INgxSmartModalOptions } from '../../src/config/ngx-smart-modal.config';
@@ -24,7 +25,8 @@ export class NgxSmartModalService {
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _appRef: ApplicationRef,
     private _injector: Injector,
-    @Inject(DOCUMENT) private _document: any,
+    @Inject(DOCUMENT) private _document: Document,
+    @Inject(PLATFORM_ID) private _platformId: object,
     private _modalStack: NgxSmartModalStackService
   ) {
     this._addEvents();
@@ -238,38 +240,40 @@ export class NgxSmartModalService {
       this._appRef.attachView(componentRef.hostView);
 
       const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-      document.body.appendChild(domElem);
+      this._document.body.appendChild(domElem);
 
       return componentRef.instance;
     }
   }
 
   private _addEvents() {
-    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'create', ((e: CustomEvent) => {
-      this._initModal(e.detail.instance);
-    }) as EventListener);
+    if (this.isBrowser) {
+      window.addEventListener(NgxSmartModalConfig.prefixEvent + 'create', ((e: CustomEvent) => {
+        this._initModal(e.detail.instance);
+      }) as EventListener);
 
-    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'delete', ((e: CustomEvent) => {
-      this._deleteModal(e.detail.instance);
-    }) as EventListener);
+      window.addEventListener(NgxSmartModalConfig.prefixEvent + 'delete', ((e: CustomEvent) => {
+        this._deleteModal(e.detail.instance);
+      }) as EventListener);
 
-    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'open', ((e: CustomEvent) => {
-      this._openModal(e.detail.instance.modal, e.detail.top);
-    }) as EventListener);
+      window.addEventListener(NgxSmartModalConfig.prefixEvent + 'open', ((e: CustomEvent) => {
+        this._openModal(e.detail.instance.modal, e.detail.top);
+      }) as EventListener);
 
-    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'toggle', ((e: CustomEvent) => {
-      this._toggleModal(e.detail.instance.modal, e.detail.top);
-    }) as EventListener);
+      window.addEventListener(NgxSmartModalConfig.prefixEvent + 'toggle', ((e: CustomEvent) => {
+        this._toggleModal(e.detail.instance.modal, e.detail.top);
+      }) as EventListener);
 
-    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'close', ((e: CustomEvent) => {
-      this._closeModal(e.detail.instance.modal);
-    }) as EventListener);
+      window.addEventListener(NgxSmartModalConfig.prefixEvent + 'close', ((e: CustomEvent) => {
+        this._closeModal(e.detail.instance.modal);
+      }) as EventListener);
 
-    window.addEventListener(NgxSmartModalConfig.prefixEvent + 'dismiss', ((e: CustomEvent) => {
-      this._dismissModal(e.detail.instance.modal);
-    }) as EventListener);
+      window.addEventListener(NgxSmartModalConfig.prefixEvent + 'dismiss', ((e: CustomEvent) => {
+        this._dismissModal(e.detail.instance.modal);
+      }) as EventListener);
 
-    window.addEventListener('keyup', this._escapeKeyboardEvent);
+      window.addEventListener('keyup', this._escapeKeyboardEvent);
+    }
   }
 
   private _initModal(modalInstance: ModalInstance) {
@@ -421,5 +425,12 @@ export class NgxSmartModalService {
     }
 
     return false;
+  }
+
+  /**
+   * Is current platform browser
+   */
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this._platformId);
   }
 }
