@@ -273,10 +273,7 @@ describe('NgxSmartModalComponent', () => {
   }));
 
   it('should not startDrag if modal not draggable', async(() => {
-
     component.draggable = false;
-
-    //spyOn((component), 'setPosition');
 
     let result = component.startDrag({} as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
@@ -286,8 +283,6 @@ describe('NgxSmartModalComponent', () => {
   it('should not startDrag if event there is no nsmContent', async(() => {
     component.draggable = true;
     (component as any).nsmContent = { length: 0 };
-
-    //spyOn((component), 'setPosition');
 
     let result = component.startDrag({} as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
@@ -299,8 +294,6 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { length: 1 };
     const fakeEvent = { srcElement: null };
 
-    //spyOn((component), 'setPosition');
-
     let result = component.startDrag(fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBe(false);
@@ -311,8 +304,6 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { length: 1 };
     const fakeSrcElement = document.createElement('div') as any;
     const fakeEvent = { srcElement: fakeSrcElement };
-
-    //spyOn((component), 'setPosition');
 
     const result = component.startDrag(fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
@@ -327,8 +318,6 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement1 } } };
     const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement2 };
 
-    //spyOn((component), 'setPosition');
-
     const result = component.startDrag(fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBeFalsy();
@@ -340,10 +329,6 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement } } };
     fakeSrcElement.classList.add('draggable');
     const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement, preventDefault: () => { } };
-
-    (component as any).setPosition = (positionX: any, positionY: any) => {
-      //nothing
-    };
 
     spyOn(component, 'setPosition');
 
@@ -370,7 +355,7 @@ describe('NgxSmartModalComponent', () => {
 
   it('should elementDrag ', async(() => {
     (component as any).dragging = true;
-    (component as any).nsmDialog = { 'length': 1 };
+    (component as any).nsmDialog = { length: 1, last: { nativeElement: { offsetTop: 0, offsetLeft: 0, style: {} } } };
     const positionX = 10;
     (component as any).positionX = positionX;
     const positionY = 30;
@@ -379,14 +364,6 @@ describe('NgxSmartModalComponent', () => {
 
     const offsetX = component['positionX'] - fakeEvent.clientX;
     const offsetY = component['positionY'] - fakeEvent.clientY;
-
-    (component as any).moveDialog = (positionX: any, positionY: any) => {
-      //nothing
-    };
-
-    (component as any).setPosition = (positionX: any, positionY: any) => {
-      //nothing
-    };
 
     spyOn((component), 'moveDialog');
     spyOn((component), 'setPosition');

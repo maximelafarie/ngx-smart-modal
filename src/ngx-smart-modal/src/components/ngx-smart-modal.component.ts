@@ -35,7 +35,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
            [attr.aria-label]="ariaLabel"
            [attr.aria-labelledby]="ariaLabelledBy"
            [attr.aria-describedby]="ariaDescribedBy"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog>
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" [style.position]="draggable?'absolute':'relative'" #nsmDialog>
         <div class="nsm-content" #nsmContent  [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-template #dynamicContent></ng-template>
@@ -101,9 +101,13 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private _data: any;
 
-  @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
-  @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
-  @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
+  private positionX = 0;
+  private positionY = 0;
+  private dragging = false;
+
+  @ViewChildren('nsmContent') private nsmContent!: QueryList<ElementRef>;
+  @ViewChildren('nsmDialog') private nsmDialog!: QueryList<ElementRef>;
+  @ViewChildren('nsmOverlay') private nsmOverlay!: QueryList<ElementRef>;
   @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContentContainer: QueryList<ViewContainerRef>;
 
   constructor(
@@ -136,10 +140,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     this._sendEvent('delete');
   }
 
-  private positionX = 0;
-  private positionY = 0;
-  private dragging = false;
-
   /**
   * Set positionX and positionY to save last position of dragged modal
   */
@@ -169,7 +169,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
       return false;
     }
 
-    let src = e.srcElement as HTMLElement;
+    const src = e.srcElement as HTMLElement;
     if (src && src.classList.contains('draggable')) {
       if (this.nsmContent.last.nativeElement.contains(src) && !this.dragging) {
         e.preventDefault();
