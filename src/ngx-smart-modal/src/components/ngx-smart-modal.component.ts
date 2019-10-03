@@ -165,7 +165,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   * Listens for mouse down event to initiate dragging of the modal
   */
   @HostListener('document:mousedown', ['$event'])
-  startDrag(e: MouseEvent) {
+  public startDrag(e: MouseEvent) {
     if (!this.nsmContent.length || !this.draggable) {
       return false;
     }
@@ -189,7 +189,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   * Listens for mouse move event and reflects the movement of the mouse to modal position
   */
   @HostListener('document:mousemove', ['$event'])
-  elementDrag(e: MouseEvent) {
+  public elementDrag(e: MouseEvent) {
     if (!this.dragging || !this.nsmDialog.length) {
       return false;
     }
@@ -210,7 +210,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   * Listens for mouse up event to stop moving dragged modal
   */
   @HostListener('document:mouseup', ['$event'])
-  stopDrag() {
+  public stopDrag() {
     this.dragging = false;
   }
 
