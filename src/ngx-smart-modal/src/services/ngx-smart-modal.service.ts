@@ -25,7 +25,7 @@ export class NgxSmartModalService {
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _appRef: ApplicationRef,
     private _injector: Injector,
-    @Inject(DOCUMENT) private _document: Document,
+    @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: object,
     private _modalStack: NgxSmartModalStackService
   ) {
