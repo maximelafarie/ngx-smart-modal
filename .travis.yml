@@ -6,7 +6,7 @@ env:
     - CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
 addons:
   apt:
-    update: true
+    # update: true
     sources:
       - google-chrome
     packages:

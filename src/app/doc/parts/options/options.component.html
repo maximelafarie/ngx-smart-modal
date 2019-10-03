@@ -1,0 +1,34 @@
+<div>
+    <div class="theme-content-title">Options</div>
+    <div class="theme-content-description">List of available options</div>
+</div>
+
+<div class="siimple-paragraph">
+    <code>ngx-smart-modal</code> comes with some parameters / options in order to make it fit your needs. The
+    following parameters / options have to be used like this:
+</div>
+
+<pre class="siimple-pre">{{ CODES?.MARKUP_OPTION_EXAMPLE }}</pre>
+
+
+<div class="siimple-h4">List of available options</div>
+
+<div class="siimple-table">
+    <div class="siimple-table-header">
+        <div class="siimple-table-row">
+            <div class="siimple-table-cell">Option</div>
+            <div class="siimple-table-cell">Type</div>
+            <div class="siimple-table-cell">Default</div>
+            <div class="siimple-table-cell">Description</div>
+        </div>
+    </div>
+    <div class="siimple-table-body"
+         *ngFor="let option of OPTIONS">
+        <div class="siimple-table-row">
+            <div class="siimple-table-cell">{{ option?.name }}</div>
+            <div class="siimple-table-cell"><code>{{ option?.type }}</code></div>
+            <div class="siimple-table-cell"><code>{{ option?.defaultValue }}</code></div>
+            <div class="siimple-table-cell">{{ option?.description }}</div>
+        </div>
+    </div>
+</div>

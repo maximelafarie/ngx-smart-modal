@@ -1,6 +1,6 @@
 {
   "name": "ngx-smart-modal",
-  "version": "7.1.1",
+  "version": "7.2.1",
   "description": "Smart modal handler to manage modals and data everywhere in Angular apps.",
   "main": "./bundles/ngx-smart-modal.umd.js",
   "module": "./esm5/ngx-smart-modal.js",

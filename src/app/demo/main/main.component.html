@@ -1,0 +1,333 @@
+<ng-template #tpl>
+    <h1>Hello</h1>
+    <p>I'm TemplateRef content !</p>
+</ng-template>
+
+<div class="container">
+    <h1 class="title">ngx-smart-modal</h1>
+    <div class="buttons">
+        <button class="button -regular"
+                (click)="classicModal.open()">Classic modal</button>
+        <button class="button -regular"
+                (click)="modalInception.open()">Modal inception</button>
+        <button class="button -regular"
+                (click)="modalData.open()">Data in modal</button>
+        <button class="button -regular"
+                (click)="modalEvents.open()">Events on modal</button>
+        <button class="button -regular"
+                (click)="videoModal.open()">Rickroll events</button>
+        <button class="button -regular"
+                (click)="longTextModal.open()">Big content modal</button>
+        <button class="button -regular"
+                (click)="ngxSmartModalService.open('remoteModal')">
+            Open modal remotely
+        </button>
+        <button class="button -regular"
+                (click)="goFeature()">Lazy load feature module</button>
+        <button class="button -regular"
+                (click)="undismissable.open()">Undismissable modal</button>
+        <button class="button -regular"
+                (click)="inescapable.open()">Inescapable modal</button>
+        <button class="button -regular"
+                (click)="goAutoStart()">Autostart modal</button>
+        <button class="button -regular"
+                id="targetElement"
+                (click)="customTarget.open()"
+                style="position:absolute;top: 300px;left: 900px;">Custom target modal</button>
+        <button class="button -regular"
+                (click)="goNewDynamic()">Create dynamic modal<span>new</span></button>
+    </div>
+
+    <h3 class="title">Examples with CSS frameworks</h3>
+    <p class="small-p">⚠️ Please note that only CSS files are imported without JS.
+        <br> Some effects won't appear (e.g.: wave effects on Materialize buttons)</p>
+    <div class="buttons">
+        <button class="button -regular"
+                (click)="goBootstrap()">Bootstrap Modal</button>
+        <button class="button -regular"
+                (click)="goMaterialize()">Materialize Modal</button>
+        <button class="button -regular"
+                (click)="goFoundation()">Foundation Modal</button>
+    </div>
+
+    <footer class="footer">
+        <div class="go-back-doc">
+            <span class="back-txt-content"
+                  (click)="goBackToDoc()">
+                <span class="emoji-back">🚪🏃</span>
+                <span class="txt-back">Back to documentation</span>
+            </span>
+        </div>
+
+        Demo using Angular {{ version }}
+        <br> Released under the
+        <a href="https://github.com/biig-io/ngx-smart-modal/blob/master/LICENSE">MIT</a> license.
+        <a href="https://github.com/biig-io/ngx-smart-modal">View source</a>.
+        <div>
+            <a id="biig-link"
+               title="BiiG GitHub"
+               href="https://github.com/biig-io">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 183.12 183.12">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #fff;
+                            }
+                        </style>
+                    </defs>
+                    <title>biig_black_icon</title>
+                    <g id="Calque_2"
+                       data-name="Calque 2">
+                        <g id="Calque_1-2"
+                           data-name="Calque 1">
+                            <path class="cls-1"
+                                  d="M135.39,57.32a11.75,11.75,0,1,0,11.75,11.75A11.76,11.76,0,0,0,135.39,57.32Zm0,17.38A5.63,5.63,0,1,1,141,69.07,5.63,5.63,0,0,1,135.39,74.7Z" />
+                            <path class="cls-1"
+                                  d="M109.91,91.92a15.41,15.41,0,0,0,6.9-7.91,17.26,17.26,0,0,0,1.33-5.64,14.67,14.67,0,0,0,0-1.48A17.64,17.64,0,0,0,112,63.1c-4.07-3.59-9.85-5.41-17.17-5.41H67.46v71.44h28.7c7.12,0,12.89-1.8,17.16-5.35a17.17,17.17,0,0,0,6.49-13.73,25,25,0,0,0-1-7.82C117.36,97.12,114.28,93.58,109.91,91.92Zm-7.65-8.12c-2,1.71-4.84,2.58-8.44,2.58H80.2V67.9H93.84c3.6,0,6.44.89,8.44,2.63a8.93,8.93,0,0,1,0,13.27Zm1.85,17.55a8.78,8.78,0,0,1,2.13,2.69,11.27,11.27,0,0,1,.83,4.42,9.62,9.62,0,0,1-3.13,7.68h0c-2.1,1.84-5,2.78-8.79,2.78h-15V98.56H95C98.89,98.56,102,99.5,104.11,101.35Z" />
+                            <path class="cls-1"
+                                  d="M91.56,9.86a81.66,81.66,0,0,1,57.77,139.47A81.72,81.72,0,1,1,91.56,9.86m0-9.86a91.56,91.56,0,1,0,91.56,91.56A91.56,91.56,0,0,0,91.56,0Z" />
+                        </g>
+                    </g>
+                </svg>
+            </a>
+        </div>
+    </footer>
+</div>
+
+<!-- Classic modal -->
+<ngx-smart-modal #classicModal
+                 identifier="classicModal">
+    <h1>Hey, I'm a simple modal!</h1>
+    <img class="modal-image"
+         src="https://placeimg.com/627/200/tech"
+         alt="Lorem picsum">
+    <p>{{ sampleText[0] }}</p>
+    <button class="button -dark"
+            (click)="classicModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal inception -->
+<ngx-smart-modal #modalInception
+                 identifier="modalInception">
+    <h1>Howdy how, I'm a modal that opens another one!</h1>
+    <p>{{ sampleText[1] }}</p>
+
+    <div class="buttons">
+        <button class="button -green"
+                (click)="sampleModal.open()">Open another modal!</button>
+        <button class="button -dark"
+                (click)="modalInception.close()">Close</button>
+    </div>
+</ngx-smart-modal>
+
+<!-- Data in modal -->
+<ngx-smart-modal #modalData
+                 identifier="modalData"
+                 customClass="nsm-dialog-animation-ltr">
+    <h1>Hey, I'm a modal with some data!</h1>
+    <p>
+        <strong>Code below comes from
+            <code>NgxSmartModalService</code>. It was set from the
+            <code>AppComponent</code>!</strong>
+    </p>
+    <div *ngIf="modalData.hasData()">
+        <pre>{{ modalData.getData() | json }}</pre>
+    </div>
+    <p>Learn more in
+        <a href="https://github.com/biig-io/ngx-smart-modal#manipulate-data">the documentation</a>!</p>
+    <p>Btw, you can check your console, I echoed my data inside too!</p>
+    <button class="button -dark"
+            (click)="modalData.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal events -->
+<ngx-smart-modal #modalEvents
+                 identifier="modalEvents"
+                 customClass="nsm-dialog-animation-ttb nsm-centered"
+                 (onOpen)="log('Modal opened!')"
+                 (onClose)="log('Modal closed!')"
+                 (onOpenFinished)="log('Modal open finished!')"
+                 (onCloseFinished)="log('Modal close finished!')"
+                 (onDismiss)="log('Modal dismissed!')"
+                 (onDismissFinished)="log('Modal dismiss finished!')">
+    <h1>Hi! I'm a modal with events</h1>
+    <h2>And with customClass 'nsm-dialog-animation-ttb nsm-centered'</h2>
+    <p>Look at your console, I'm linked to some events (onOpen, onClose and onDismiss)!</p>
+
+    <button class="button -dark"
+            (click)="modalEvents.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Modal video events -->
+<ngx-smart-modal #videoModal
+                 identifier="videoModal"
+                 customClass="nsm-dialog-animation-btt medium-modal"
+                 [closable]="false"
+                 [dismissable]="false"
+                 [escapable]="false">
+    <h1>Hey, I Rickrolled You!</h1>
+    <p>
+        Btw, the following options has been applied to disable modal closing:
+        <code>
+    [closable]="false" [dismissable]="false" [escapable]="false"</code>
+    </p>
+    <div class="rickroll-container">
+        <iframe *ngIf="videoModal.isVisible()"
+                #rickroll
+                width="1280"
+                height="720"
+                style="max-width: 100%;"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1&controls=0&showinfo=0&ecver=1&enablejsapi=1"
+                frameborder="0"
+                allowfullscreen></iframe>
+        <div class="rickroll-mask"></div>
+    </div>
+</ngx-smart-modal>
+
+<!-- Remote modal -->
+<ngx-smart-modal #remoteModal
+                 identifier="remoteModal">
+    <h1>Yo, I'm a remotely opened modal!</h1>
+    <img class="modal-image"
+         src="https://placeimg.com/627/200/tech"
+         alt="Lorem picsum">
+    <p>
+        To interact with a modal remotely, you simply need to retrieve the desired modal instance via the
+        <strong>
+            <code>NgxSmartModalService</code>
+        </strong>
+    </p>
+    <p>For example:</p>
+    <pre>ngxSmartModalService.open('remoteModal')</pre>
+    <button class="button -dark"
+            (click)="ngxSmartModalService.close('remoteModal')">Close</button>
+</ngx-smart-modal>
+
+<!-- Another sample modal -->
+<ngx-smart-modal #sampleModal
+                 identifier="sampleModal"
+                 customClass="large-modal"
+                 [backdrop]="false"
+                 [hideDelay]="0">
+    <h1>Hello! I'm a modal with a custom class, without backdrop, without animation effect and without delay!</h1>
+    <p>That's why I'm larger than the others</p>
+    <p>Even if I have no backdrop, you can dismiss me by simple click out of me.</p>
+
+    <button class="button -dark"
+            (click)="sampleModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Big content modal -->
+<ngx-smart-modal #longTextModal
+                 identifier="longTextModal">
+    <h1>You wanna see my big content?</h1>
+    <img class="modal-image"
+         src="https://placeimg.com/627/200/tech"
+         alt="Lorem picsum">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt dolore ex labore nesciunt, non quam
+        quas
+        quasi, repellat unde veritatis vitae. Atque ipsam quaerat quam soluta, sunt totam! Aperiam eos est ipsam nemo
+        veritatis.
+        Accusamus consequatur corporis debitis dolorem eos error explicabo, magnam minus non odio optio porro quia quis
+        quisquam
+        suscipit tempora velit! Aliquid aperiam autem cumque cupiditate dicta, dolore dolores doloribus earum enim est
+        facere
+        facilis ipsa iure nam nobis nostrum pariatur perspiciatis quae quas quo quod reprehenderit sunt, suscipit
+        tempore,
+        unde vitae voluptates voluptatibus. Fugiat obcaecati saepe voluptatibus? Aliquam dolores enim est et harum,
+        itaque
+        odio provident quaerat quam quasi quis recusandae repellat sapiente soluta vitae. Accusamus aliquid autem
+        commodi
+        consequatur, dignissimos dolorem error eum fuga fugiat illum ipsum iure magnam minima minus obcaecati officia
+        porro
+        possimus praesentium quasi quibusdam repudiandae soluta veniam! Ad alias amet animi architecto aspernatur atque
+        commodi
+        consectetur cum debitis dolorem eius est illo illum ipsa iste iure laboriosam minima nemo nihil non nostrum
+        nulla
+        obcaecati perspiciatis provident quae quas, quasi quidem sapiente suscipit unde veritatis vitae voluptatem
+        voluptatum.
+        Ab aliquid, animi aspernatur atque aut, beatae corporis cupiditate debitis dolorem doloremque earum facere illo
+        ipsam
+        labore nesciunt nostrum officia quaerat quas quisquam rerum soluta tempora temporibus ullam! Blanditiis commodi
+        consequuntur
+        cumque error necessitatibus numquam, possimus? Ad aut, doloremque ducimus hic, molestiae praesentium provident
+        quas
+        quo sint suscipit, temporibus vel veniam veritatis! Atque commodi cum ipsa iure voluptatum. Assumenda atque
+        autem
+        debitis ducimus eos et iusto laudantium libero non obcaecati, officia quaerat repellendus, voluptates! Dolor,
+        dolorem
+        explicabo facilis id illum necessitatibus quidem quisquam tenetur. Consequatur ea inventore ipsum iusto maxime
+        quidem
+        quod sit soluta totam! Aliquam beatae cum cumque dolorem eligendi, eos error id iste maiores neque nisi nobis
+        quam
+        recusandae repellat repudiandae sapiente tempore ut vel velit voluptates. Aliquid aperiam consequuntur, deserunt
+        doloribus earum eum eveniet excepturi expedita incidunt iste, natus nihil quibusdam quis sint voluptatum?
+        Blanditiis
+        deleniti dolor doloremque ducimus error facere harum itaque magni nulla rerum, veritatis voluptatem? A
+        accusantium
+        adipisci aperiam assumenda beatae blanditiis consequatur cum delectus dolore doloribus eaque enim et, ex
+        expedita
+        facilis harum illo inventore laboriosam magnam maxime mollitia nesciunt nobis officiis porro quae quia quibusdam
+        ratione reiciendis rem sed sequi sit suscipit tempore ullam ut velit voluptates. Ab accusamus accusantium animi,
+        atque corporis culpa cum cupiditate delectus ea enim eos et eum fugit harum illo impedit ipsum maxime modi natus
+        neque non pariatur perspiciatis praesentium quasi quis quo recusandae repellendus reprehenderit sapiente sequi,
+        sunt
+        ut veniam vero! Adipisci earum facilis illo minima nulla perspiciatis qui quia ratione repellat voluptatibus?
+        Assumenda
+        aut debitis delectus dicta, dignissimos dolor ducimus eum eveniet ipsam magnam minima minus molestias numquam
+        odio
+        quasi qui quis quod repellat repellendus, ut vitae voluptas voluptates? Adipisci aliquam dignissimos doloribus
+        eius
+        eveniet, in iste molestias odio officia, possimus, quam soluta ullam veritatis. Atque explicabo suscipit
+        voluptates!
+        Accusamus adipisci aspernatur blanditiis dolore, maiores mollitia neque praesentium repellat! Accusantium,
+        beatae
+        deserunt eligendi impedit in ipsa iste laborum mollitia quaerat quasi reprehenderit soluta suscipit, unde ut
+        voluptate!
+        Assumenda.</p>
+    <button class="button -dark"
+            (click)="longTextModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Undismissable modal -->
+<ngx-smart-modal #undismissable
+                 identifier="undismissable"
+                 [dismissable]="false">
+    <h1>Hey, I'm a not dismissable modal!</h1>
+    <p>Clicking on my backdrop
+        <strong>won't</strong> close me.</p>
+    <img class="modal-image"
+         src="https://placeimg.com/627/350/tech"
+         alt="Lorem picsum">
+    <p>{{ sampleText[2] }}</p>
+    <button class="button -dark"
+            (click)="undismissable.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Inescapable modal -->
+<ngx-smart-modal #inescapable
+                 identifier="inescapable"
+                 [escapable]="false">
+    <h1>Hey, I'm an unescapable modal!</h1>
+    <p>Pressing the escape key
+        <strong>won't</strong> close me.</p>
+    <img class="modal-image"
+         src="https://placeimg.com/627/450/tech"
+         alt="Lorem picsum">
+    <p>{{ sampleText[3] }}</p>
+    <button class="button -dark"
+            (click)="inescapable.close()">Close</button>
+</ngx-smart-modal>
+
+<!-- Custom target -->
+<ngx-smart-modal #customTarget
+                 identifier="customTarget"
+                 target="button#targetElement">
+    <h1>Hey, I am a modal placed relatively to an element!</h1>
+    <p>How to use : </p>
+    <code>target="myElementSelector"</code>
+    <p>{{ sampleText[3] }}</p>
+    <button class="button -dark"
+            (click)="customTarget.close()">Close</button>
+</ngx-smart-modal>

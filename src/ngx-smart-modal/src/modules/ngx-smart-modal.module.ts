@@ -1,22 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
+
 import { NgxSmartModalService } from '../services/ngx-smart-modal.service';
+import { NgxSmartModalStackService } from '../services/ngx-smart-modal-stack.service';
 import { NgxSmartModalComponent } from '../components/ngx-smart-modal.component';
 
 @NgModule({
   declarations: [NgxSmartModalComponent],
+  entryComponents: [NgxSmartModalComponent],
   exports: [NgxSmartModalComponent],
   imports: [CommonModule]
 })
 export class NgxSmartModalModule {
-
   /**
    * Use in AppModule: new instance of NgxSmartModal.
    */
   public static forRoot(): ModuleWithProviders {
     return {
       ngModule: NgxSmartModalModule,
-      providers: [NgxSmartModalService]
+      providers: [
+        NgxSmartModalService,
+        NgxSmartModalStackService
+      ]
     };
   }
 
@@ -26,8 +31,13 @@ export class NgxSmartModalModule {
   public static forChild(): ModuleWithProviders {
     return {
       ngModule: NgxSmartModalModule,
-      providers: [NgxSmartModalService]
+      providers: [
+        NgxSmartModalService,
+        NgxSmartModalStackService
+      ]
     };
   }
 
+  constructor(private serivce: NgxSmartModalService) {
+  }
 }

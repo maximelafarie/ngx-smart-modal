@@ -1,0 +1,26 @@
+.contributors-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .siimple-card {
+    max-width: 196px;
+    flex-grow: 1;
+
+    .siimple-card-header {
+      padding: 0 !important;
+      line-height: 0;
+    }
+
+    .siimple-card-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .siimple-tag {
+        height: fit-content;
+        cursor: default;
+      }
+    }
+  }
+}

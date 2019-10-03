@@ -1,0 +1,71 @@
+$roboto-font-path: "~materialize-sass/fonts/roboto/";
+$materialize-font-path: "~material-design-icons/iconfont/material-icons.css";
+
+@import url("#{$materialize-font-path}");
+@import "~materialize-sass/sass/materialize";
+
+.material-icons {
+  font-family: 'Material Icons', sans-serif;
+}
+
+.demo-container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  height: 70vh;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+  }
+}
+
+.h-block {
+  color: white;
+
+  h1 {
+    color: white;
+  }
+}
+
+/* Avoid unexpected behavior of Materialize `.modal` class */
+.modal {
+  display: block;
+  max-height: none;
+
+  .modal-content {
+    padding: 0;
+
+    .card {
+      margin: 0;
+    }
+  }
+
+  .modal-footer {
+    width: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.go-back {
+  margin-top: 10px;
+
+  a {
+    color: white;
+  }
+}
