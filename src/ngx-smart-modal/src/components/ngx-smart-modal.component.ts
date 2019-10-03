@@ -35,8 +35,9 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
            [attr.aria-label]="ariaLabel"
            [attr.aria-labelledby]="ariaLabelledBy"
            [attr.aria-describedby]="ariaDescribedBy"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" [style.position]="draggable?'absolute':'relative'" #nsmDialog>
-        <div class="nsm-content" #nsmContent  [class.draggable]="draggable && draggableEdges">
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']"
+           [style.position]="draggable?'absolute':'relative'" #nsmDialog>
+        <div class="nsm-content" #nsmContent [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-template #dynamicContent></ng-template>
             <ng-content></ng-content>
