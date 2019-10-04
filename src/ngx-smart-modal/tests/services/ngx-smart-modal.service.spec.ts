@@ -91,7 +91,7 @@ describe('NgxSmartModalService', () => {
 
   it('should add events ( _private and no browser )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     spyOnProperty(service as any, 'isBrowser', 'get').and.returnValue(false);
-    
+
     expect((service as any)._addEvents()).toBeFalsy();
   }));
 
@@ -412,5 +412,49 @@ describe('NgxSmartModalService', () => {
     window.dispatchEvent(event);
     tick(500);
     expect((service as any)._trapFocusModal(event)).toBeFalsy();
+  })));
+
+  it('should closeAll', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const firstFixture = TestBed.createComponent(NgxSmartModalComponent);
+    const secFixture = TestBed.createComponent(NgxSmartModalComponent);
+    const thirdFixture = TestBed.createComponent(NgxSmartModalComponent);
+    const firstApp = firstFixture.debugElement.componentInstance;
+    const secApp = secFixture.debugElement.componentInstance;
+    const thirdApp = thirdFixture.debugElement.componentInstance;
+
+    firstApp.identifier = 'myFirstModal';
+    secApp.identifier = 'mySecModal';
+    thirdApp.identifier = 'myThirdModal';
+
+    service.addModal({ id: 'myFirstModal', modal: firstApp });
+    service.addModal({ id: 'mySecModal', modal: secApp });
+    service.addModal({ id: 'myThirdModal', modal: thirdApp });
+
+    spyOn(service, 'closeAll').and.callThrough();
+    spyOn(service, 'getOpenedModals').and.callThrough();
+    spyOn(service as any, '_closeModal').and.callThrough();
+
+    service.open(firstApp.identifier);
+    service.open(secApp.identifier);
+    service.open(thirdApp.identifier);
+
+    expect(firstApp.visible).toBeTruthy();
+    expect(secApp.visible).toBeTruthy();
+    expect(thirdApp.visible).toBeTruthy();
+
+    tick(501);
+
+    service.closeAll();
+
+    tick(501);
+
+    expect(service.closeAll).toHaveBeenCalled();
+    expect(service.getOpenedModals).toHaveBeenCalled();
+    expect(service['_closeModal']).toHaveBeenCalledWith(firstApp);
+    expect(service['_closeModal']).toHaveBeenCalledWith(secApp);
+    expect(service['_closeModal']).toHaveBeenCalledWith(thirdApp);
+    expect(firstApp.visible).toBeFalsy();
+    expect(secApp.visible).toBeFalsy();
+    expect(thirdApp.visible).toBeFalsy();
   })));
 });

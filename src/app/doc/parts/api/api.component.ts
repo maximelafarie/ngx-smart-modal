@@ -91,6 +91,14 @@ export class AppComponent {
       }
     },
     {
+      name: ['closeAll()'],
+      description: 'Close all opened modals',
+      params: [],
+      return: {
+        type: 'void'
+      }
+    },
+    {
       name: ['toggle(id: string, force?: boolean)'],
       description: 'Toggle (open <strong>or</strong> close) a given modal',
       params: [

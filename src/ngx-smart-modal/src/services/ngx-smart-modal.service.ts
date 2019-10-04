@@ -84,6 +84,15 @@ export class NgxSmartModalService {
   }
 
   /**
+   * Close all opened modals
+   */
+  public closeAll(): void {
+    this.getOpenedModals().forEach((instance: ModalInstance) => {
+      this._closeModal(instance.modal);
+    });
+  }
+
+  /**
    * Toggles a given modal
    * If the retrieved modal is opened it closes it, else it opens it.
    *
