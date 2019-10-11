@@ -59,6 +59,10 @@ export class AppComponent {
       description: 'modal is opening'
     },
     {
+      name: 'onOpenFinished',
+      description: 'modal has been opened'
+    },
+    {
       name: 'onClose',
       description: 'modal is closing'
     },
