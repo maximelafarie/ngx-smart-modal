@@ -13,5 +13,5 @@ export interface INgxSmartModalOptions {
     hideDelay?: number;
     autostart?: boolean;
     target?: string;
-    icon?: string;
+    closeIconColor?: string;
 }
