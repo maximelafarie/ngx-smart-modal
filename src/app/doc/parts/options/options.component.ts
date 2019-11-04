@@ -75,6 +75,12 @@ export class OptionsComponent implements OnInit {
       defaultValue: 'undefined',
       description: 'Displays the modal relatively to the targeted element. ⚠️ Only for NgxSmartModal >= 7.0.0!'
     },
+    {
+      name: 'closeIconColor',
+      type: 'string',
+      defaultValue: "'inherit'",
+      description: 'Changes the color of the close icon'
+    }
   ];
   // tslint:enable:max-line-length
 
