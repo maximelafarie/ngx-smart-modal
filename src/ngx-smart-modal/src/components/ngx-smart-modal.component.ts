@@ -28,8 +28,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
           <div class="nsm-body">
             <ng-content></ng-content>
           </div>
-          <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close"
-                  [style.color]="closeIconColor">
+          <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
               <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
                    xml:space="preserve" width="16px" height="16px">
                   <g>
@@ -59,7 +58,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
-  @Input() public closeIconColor: string = 'inherit';
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
