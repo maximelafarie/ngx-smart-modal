@@ -22,3 +22,4 @@
 * [Andreas Bissinger](https://github.com/be-ndee)
 * [Yosbel Marín](https://github.com/yosbelms)
 * [Thomas Chang](https://github.com/thomascsd)
+* [Marc Reichel](https://github.com/marcreichel)
