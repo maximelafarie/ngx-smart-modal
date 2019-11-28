@@ -97,7 +97,8 @@
 
 <!-- Classic modal -->
 <ngx-smart-modal #classicModal
-                 identifier="classicModal">
+                 identifier="classicModal"
+                 ariaLabel="Classic modal">
     <h1>Hey, I'm a simple modal!</h1>
     <img class="modal-image"
          src="https://placeimg.com/627/200/tech"
@@ -109,7 +110,8 @@
 
 <!-- Modal inception -->
 <ngx-smart-modal #modalInception
-                 identifier="modalInception">
+                 identifier="modalInception"
+                 arialLabel="Inception modal">
     <h1>Howdy how, I'm a modal that opens another one!</h1>
     <p>{{ sampleText[1] }}</p>
 
@@ -124,7 +126,8 @@
 <!-- Data in modal -->
 <ngx-smart-modal #modalData
                  identifier="modalData"
-                 customClass="nsm-dialog-animation-ltr">
+                 customClass="nsm-dialog-animation-ltr"
+                 ariaLabel="Data modal">
     <h1>Hey, I'm a modal with some data!</h1>
     <p>
         <strong>Code below comes from
@@ -145,6 +148,7 @@
 <ngx-smart-modal #modalEvents
                  identifier="modalEvents"
                  customClass="nsm-dialog-animation-ttb nsm-centered"
+                 ariaLabel="Events modal"
                  (onOpen)="log('Modal opened!')"
                  (onClose)="log('Modal closed!')"
                  (onOpenFinished)="log('Modal open finished!')"
@@ -163,6 +167,7 @@
 <ngx-smart-modal #videoModal
                  identifier="videoModal"
                  customClass="nsm-dialog-animation-btt medium-modal"
+                 ariaLabel="Video modal"
                  [closable]="false"
                  [dismissable]="false"
                  [escapable]="false">
@@ -187,7 +192,8 @@
 
 <!-- Remote modal -->
 <ngx-smart-modal #remoteModal
-                 identifier="remoteModal">
+                 identifier="remoteModal"
+                 ariaLabel="Remote modal">
     <h1>Yo, I'm a remotely opened modal!</h1>
     <img class="modal-image"
          src="https://placeimg.com/627/200/tech"
@@ -208,6 +214,7 @@
 <ngx-smart-modal #sampleModal
                  identifier="sampleModal"
                  customClass="large-modal"
+                 ariaLabel="Sample modal"
                  [backdrop]="false"
                  [hideDelay]="0">
     <h1>Hello! I'm a modal with a custom class, without backdrop, without animation effect and without delay!</h1>
@@ -220,7 +227,8 @@
 
 <!-- Big content modal -->
 <ngx-smart-modal #longTextModal
-                 identifier="longTextModal">
+                 identifier="longTextModal"
+                 ariaLabel="Big content modal">
     <h1>You wanna see my big content?</h1>
     <img class="modal-image"
          src="https://placeimg.com/627/200/tech"
@@ -293,7 +301,8 @@
 <!-- Undismissable modal -->
 <ngx-smart-modal #undismissable
                  identifier="undismissable"
-                 [dismissable]="false">
+                 aria-label="Undismissable modal">
+                 [dismissable]="false"
     <h1>Hey, I'm a not dismissable modal!</h1>
     <p>Clicking on my backdrop
         <strong>won't</strong> close me.</p>
@@ -308,6 +317,7 @@
 <!-- Inescapable modal -->
 <ngx-smart-modal #inescapable
                  identifier="inescapable"
+                 ariaLabel="Inescapable modal"
                  [escapable]="false">
     <h1>Hey, I'm an unescapable modal!</h1>
     <p>Pressing the escape key
@@ -323,7 +333,8 @@
 <!-- Custom target -->
 <ngx-smart-modal #customTarget
                  identifier="customTarget"
-                 target="button#targetElement">
+                 target="button#targetElement"
+                 ariaLabel="Custom target modal">
     <h1>Hey, I am a modal placed relatively to an element!</h1>
     <p>How to use : </p>
     <code>target="myElementSelector"</code>

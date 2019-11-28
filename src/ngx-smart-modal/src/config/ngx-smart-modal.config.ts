@@ -13,4 +13,7 @@ export interface INgxSmartModalOptions {
     hideDelay?: number;
     autostart?: boolean;
     target?: string;
+    ariaLabel?: string;
+    ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
 }
