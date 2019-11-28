@@ -1,3 +1,4 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Input,
   Output,
@@ -10,7 +11,9 @@ import {
   ChangeDetectorRef,
   ViewChildren,
   ElementRef,
-  QueryList
+  QueryList,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
 
 import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
@@ -86,7 +89,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private _renderer: Renderer2,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    @Inject(DOCUMENT) private _document: any,
+    @Inject(PLATFORM_ID) private _platformId: any
   ) { }
 
   public ngOnInit() {
@@ -241,7 +246,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    * @returns the modal component
    */
   public addBodyClass(): NgxSmartModalComponent {
-    this._renderer.addClass(document.body, NgxSmartModalConfig.bodyClassOpen);
+    this._renderer.addClass(this._document.body, NgxSmartModalConfig.bodyClassOpen);
 
     return this;
   }
@@ -252,7 +257,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    * @returns the modal component
    */
   public removeBodyClass(): NgxSmartModalComponent {
-    this._renderer.removeClass(document.body, NgxSmartModalConfig.bodyClassOpen);
+    this._renderer.removeClass(this._document.body, NgxSmartModalConfig.bodyClassOpen);
 
     return this;
   }
@@ -271,10 +276,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    */
   @HostListener('window:resize')
   public targetPlacement(): boolean | void {
-    if (!this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
+    if (!this.isBrowser || !this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
       return false;
     }
-    const targetElement = document.querySelector(this.target);
+    const targetElement = this._document.querySelector(this.target);
 
     if (!targetElement) {
       return false;
@@ -306,13 +311,25 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this._renderer.setStyle(this.nsmContent.first.nativeElement, 'left', offsetLeft + 'px');
   }
 
-  private _sendEvent(name: string, extraData?: any): void {
+  private _sendEvent(name: string, extraData?: any): boolean {
+    if (!this.isBrowser) {
+      return false;
+    }
+
     const data = {
       extraData: extraData,
       instance: { id: this.identifier, modal: this }
     };
 
     const event = new CustomEvent(NgxSmartModalConfig.prefixEvent + name, { detail: data });
-    window.dispatchEvent(event);
+    
+    return window.dispatchEvent(event);
+  }
+
+  /**
+   * Is current platform browser
+   */
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this._platformId);
   }
 }

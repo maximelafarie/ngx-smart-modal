@@ -6,9 +6,10 @@ import {
   EmbeddedViewRef,
   Inject,
   TemplateRef,
-  Type
+  Type,
+  PLATFORM_ID
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 import { NgxSmartModalComponent } from '../../src/components/ngx-smart-modal.component';
 import { NgxSmartModalConfig, INgxSmartModalOptions } from '../../src/config/ngx-smart-modal.config';
@@ -25,7 +26,8 @@ export class NgxSmartModalService {
     private _appRef: ApplicationRef,
     private _injector: Injector,
     @Inject(DOCUMENT) private _document: any,
-    private _modalStack: NgxSmartModalStackService
+    private _modalStack: NgxSmartModalStackService,
+    @Inject(PLATFORM_ID) private _platformId: any
   ) {
     this._addEvents();
   }
@@ -238,13 +240,17 @@ export class NgxSmartModalService {
       this._appRef.attachView(componentRef.hostView);
 
       const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-      document.body.appendChild(domElem);
+      this._document.body.appendChild(domElem);
 
       return componentRef.instance;
     }
   }
 
-  private _addEvents() {
+  private _addEvents(): boolean {
+    if (!this.isBrowser) {
+      return false;
+    }
+
     window.addEventListener(NgxSmartModalConfig.prefixEvent + 'create', ((e: CustomEvent) => {
       this._initModal(e.detail.instance);
     }) as EventListener);
@@ -270,6 +276,8 @@ export class NgxSmartModalService {
     }) as EventListener);
 
     window.addEventListener('keyup', this._escapeKeyboardEvent);
+
+    return true;
   }
 
   private _initModal(modalInstance: ModalInstance) {
@@ -421,5 +429,12 @@ export class NgxSmartModalService {
     }
 
     return false;
+  }
+
+  /**
+   * Is current platform browser
+   */
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this._platformId);
   }
 }

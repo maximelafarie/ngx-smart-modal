@@ -89,6 +89,12 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._dismissModal).toHaveBeenCalledWith('fake modal');
   }));
 
+  it('should add events ( _private and no browser )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    spyOnProperty(service as any, 'isBrowser', 'get').and.returnValue(false);
+    
+    expect((service as any)._addEvents()).toBeFalsy();
+  }));
+
   it('should init modal ( _private ) ( with autostart )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
