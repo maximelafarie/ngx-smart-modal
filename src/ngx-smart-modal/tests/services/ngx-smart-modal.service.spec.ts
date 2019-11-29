@@ -89,6 +89,12 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._dismissModal).toHaveBeenCalledWith('fake modal');
   }));
 
+  it('should add events ( _private and no browser )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    spyOnProperty(service as any, 'isBrowser', 'get').and.returnValue(false);
+
+    expect((service as any)._addEvents()).toBeFalsy();
+  }));
+
   it('should init modal ( _private ) ( with autostart )', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
@@ -161,8 +167,17 @@ describe('NgxSmartModalService', () => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'test';
-    app.openedClass = true;
-    app.visible = true;
+    app.nsmDialog = {
+      first: {
+        nativeElement: {
+          removeAttribute: () => { return; }
+        }
+      }
+    };
+
+    (service as any)._openModal(app, true); // To set lastElementFocused
+
+    tick(501);
 
     (service as any)._closeModal(app);
 
@@ -190,7 +205,7 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._dismissModal(app)).toBeFalsy();
   })));
 
-  it('should add modal ( force )', inject([NgxSmartModalService, NgxSmartModalStackService], 
+  it('should add modal ( force )', inject([NgxSmartModalService, NgxSmartModalStackService],
     (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
     spyOn(stackService, 'addModal');
 
@@ -285,7 +300,7 @@ describe('NgxSmartModalService', () => {
     expect((service as any)._toggleModal).toHaveBeenCalledWith('fake', true);
   }));
 
-  it('should get modal stack', inject([NgxSmartModalService, NgxSmartModalStackService], 
+  it('should get modal stack', inject([NgxSmartModalService, NgxSmartModalStackService],
     (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
     spyOn(stackService, 'getModalStack').and.returnValue('fake');
 
@@ -296,14 +311,14 @@ describe('NgxSmartModalService', () => {
     expect(() => { service.getModal('fake'); }).toThrow(new Error('Cannot find modal with identifier fake'));
   }));
 
-  it('should get top opened modal', inject([NgxSmartModalService, NgxSmartModalStackService], 
+  it('should get top opened modal', inject([NgxSmartModalService, NgxSmartModalStackService],
     (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
     spyOn(stackService, 'getTopOpenedModal').and.returnValue('fake');
 
     expect(service.getTopOpenedModal()).toEqual('fake' as any);
   }));
 
-  it('should get higher index', inject([NgxSmartModalService, NgxSmartModalStackService], 
+  it('should get higher index', inject([NgxSmartModalService, NgxSmartModalStackService],
     (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
     spyOn(stackService, 'getHigherIndex').and.returnValue(777);
 
@@ -329,7 +344,10 @@ describe('NgxSmartModalService', () => {
       escapable: false,
       force: false,
       hideDelay: 0,
-      target: 'test'
+      target: 'test',
+      ariaLabel: 'test',
+      ariaLabelledBy: 'test',
+      ariaDescribedBy: 'test',
     };
     service.create('test', 'test content', options);
 
@@ -344,7 +362,7 @@ describe('NgxSmartModalService', () => {
 
   it('should escape keyboard event', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     const event = {
-      keyCode: 27
+      key: 'Escape'
     };
 
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -368,11 +386,75 @@ describe('NgxSmartModalService', () => {
     tick(500);
     expect((service as any)._escapeKeyboardEvent(event)).toBeFalsy();
 
-    event.keyCode = 28;
+    event.key = 'Tab';
     expect((service as any)._escapeKeyboardEvent(event)).toBeFalsy();
 
-    event.keyCode = 27;
+    event.key = 'Escape';
     spyOn(service, 'getTopOpenedModal').and.throwError('fake error');
     expect((service as any)._escapeKeyboardEvent(event)).toBeFalsy();
+  })));
+
+  it('should trap focus on tab keyboard event', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    let event: KeyboardEvent = new KeyboardEvent('keydown', { key: 'Tab' });
+
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+
+    service.addModal({ id: 'test', modal: app });
+    service.open('test');
+
+    window.dispatchEvent(event);
+    tick(500);
+    expect((service as any)._trapFocusModal(event)).toBeTruthy();
+
+    event = new KeyboardEvent('keydown', { key: 'Escape' });
+    window.dispatchEvent(event);
+    tick(500);
+    expect((service as any)._trapFocusModal(event)).toBeFalsy();
+  })));
+
+  it('should closeAll', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const firstFixture = TestBed.createComponent(NgxSmartModalComponent);
+    const secFixture = TestBed.createComponent(NgxSmartModalComponent);
+    const thirdFixture = TestBed.createComponent(NgxSmartModalComponent);
+    const firstApp = firstFixture.debugElement.componentInstance;
+    const secApp = secFixture.debugElement.componentInstance;
+    const thirdApp = thirdFixture.debugElement.componentInstance;
+
+    firstApp.identifier = 'myFirstModal';
+    secApp.identifier = 'mySecModal';
+    thirdApp.identifier = 'myThirdModal';
+
+    service.addModal({ id: 'myFirstModal', modal: firstApp });
+    service.addModal({ id: 'mySecModal', modal: secApp });
+    service.addModal({ id: 'myThirdModal', modal: thirdApp });
+
+    spyOn(service, 'closeAll').and.callThrough();
+    spyOn(service, 'getOpenedModals').and.callThrough();
+    spyOn(service as any, '_closeModal').and.callThrough();
+
+    service.open(firstApp.identifier);
+    service.open(secApp.identifier);
+    service.open(thirdApp.identifier);
+
+    expect(firstApp.visible).toBeTruthy();
+    expect(secApp.visible).toBeTruthy();
+    expect(thirdApp.visible).toBeTruthy();
+
+    tick(501);
+
+    service.closeAll();
+
+    tick(501);
+
+    expect(service.closeAll).toHaveBeenCalled();
+    expect(service.getOpenedModals).toHaveBeenCalled();
+    expect(service['_closeModal']).toHaveBeenCalledWith(firstApp);
+    expect(service['_closeModal']).toHaveBeenCalledWith(secApp);
+    expect(service['_closeModal']).toHaveBeenCalledWith(thirdApp);
+    expect(firstApp.visible).toBeFalsy();
+    expect(secApp.visible).toBeFalsy();
+    expect(thirdApp.visible).toBeFalsy();
   })));
 });

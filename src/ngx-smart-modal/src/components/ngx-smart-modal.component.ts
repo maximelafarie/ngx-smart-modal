@@ -1,3 +1,4 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   Input,
   Output,
@@ -10,7 +11,9 @@ import {
   ChangeDetectorRef,
   ViewChildren,
   ElementRef,
-  QueryList
+  QueryList,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
 
 import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
@@ -23,15 +26,28 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          [ngClass]="{'transparent':!backdrop, 'overlay':true, 'nsm-overlay-open':openedClass}"
          (mousedown)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
-           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']"
-           [style.position]="draggable ? 'absolute' : 'relative'" #nsmDialog>
+           [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog
+           [style.position]="draggable ? 'absolute' : 'relative'" 
+           [attr.aria-hidden]="openedClass ? false : true"
+           [attr.aria-label]="ariaLabel"
+           [attr.aria-labelledby]="ariaLabelledBy"
+           [attr.aria-describedby]="ariaDescribedBy">
         <div class="nsm-content" #nsmContent [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-content></ng-content>
           </div>
           <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
-            <img
-              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDMsNi4wNThjLTguMDc3LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDksMEw2LjA1OCw0NzYuNjkzYy04LjA3Nyw4LjA3Ny04LjA3NywyMS4xNzIsMCwyOS4yNDkgICAgQzEwLjA5Niw1MDkuOTgyLDE1LjM5LDUxMiwyMC42ODMsNTEyYzUuMjkzLDAsMTAuNTg2LTIuMDE5LDE0LjYyNS02LjA1OUw1MDUuOTQzLDM1LjMwNiAgICBDNTE0LjAxOSwyNy4yMyw1MTQuMDE5LDE0LjEzNSw1MDUuOTQzLDYuMDU4eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNS45NDIsNDc2LjY5NEwzNS4zMDYsNi4wNTljLTguMDc2LTguMDc3LTIxLjE3Mi04LjA3Ny0yOS4yNDgsMGMtOC4wNzcsOC4wNzYtOC4wNzcsMjEuMTcxLDAsMjkuMjQ4bDQ3MC42MzYsNDcwLjYzNiAgICBjNC4wMzgsNC4wMzksOS4zMzIsNi4wNTgsMTQuNjI1LDYuMDU4YzUuMjkzLDAsMTAuNTg3LTIuMDE5LDE0LjYyNC02LjA1N0M1MTQuMDE4LDQ5Ny44NjYsNTE0LjAxOCw0ODQuNzcxLDUwNS45NDIsNDc2LjY5NHoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
+                 xml:space="preserve" width="16px" height="16px">
+              <g>
+                <path d="M505.943,6.058c-8.077-8.077-21.172-8.077-29.249,0L6.058,476.693c-8.077,8.077-8.077,21.172,0,29.249    C10.096,509.982,15.39,512,20.683,512c5.293,0,10.586-2.019,14.625-6.059L505.943,35.306    C514.019,27.23,514.019,14.135,505.943,6.058z"
+                      fill="currentColor"/>
+              </g>
+              <g>
+                <path d="M505.942,476.694L35.306,6.059c-8.076-8.077-21.172-8.077-29.248,0c-8.077,8.076-8.077,21.171,0,29.248l470.636,470.636    c4.038,4.039,9.332,6.058,14.625,6.058c5.293,0,10.587-2.019,14.624-6.057C514.018,497.866,514.018,484.771,505.942,476.694z"
+                      fill="currentColor"/>
+              </g>
+            </svg>
           </button>
         </div>
       </div>
@@ -50,8 +66,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
+  
   @Input() public draggable: boolean = false;
   @Input() public draggableEdges: boolean = false;
+
+  @Input() public ariaLabel: string | null = null;
+  @Input() public ariaLabelledBy: string | null = null;
+  @Input() public ariaDescribedBy: string | null = null;
+
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
@@ -79,12 +101,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   private dragging = false;
 
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
-  @ViewChildren('nsmDialog') private nsmDialog: QueryList<ElementRef>;
+  @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
 
   constructor(
     private _renderer: Renderer2,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    @Inject(DOCUMENT) private _document: any,
+    @Inject(PLATFORM_ID) private _platformId: any
   ) { }
 
   public ngOnInit() {
@@ -317,7 +341,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    * @returns the modal component
    */
   public addBodyClass(): NgxSmartModalComponent {
-    this._renderer.addClass(document.body, NgxSmartModalConfig.bodyClassOpen);
+    this._renderer.addClass(this._document.body, NgxSmartModalConfig.bodyClassOpen);
 
     return this;
   }
@@ -328,7 +352,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    * @returns the modal component
    */
   public removeBodyClass(): NgxSmartModalComponent {
-    this._renderer.removeClass(document.body, NgxSmartModalConfig.bodyClassOpen);
+    this._renderer.removeClass(this._document.body, NgxSmartModalConfig.bodyClassOpen);
 
     return this;
   }
@@ -347,10 +371,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    */
   @HostListener('window:resize')
   public targetPlacement(): boolean | void {
-    if (!this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
+    if (!this.isBrowser || !this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
       return false;
     }
-    const targetElement = document.querySelector(this.target);
+    const targetElement = this._document.querySelector(this.target);
 
     if (!targetElement) {
       return false;
@@ -382,13 +406,25 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this._renderer.setStyle(this.nsmContent.first.nativeElement, 'left', offsetLeft + 'px');
   }
 
-  private _sendEvent(name: string, extraData?: any): void {
+  private _sendEvent(name: string, extraData?: any): boolean {
+    if (!this.isBrowser) {
+      return false;
+    }
+
     const data = {
       extraData: extraData,
       instance: { id: this.identifier, modal: this }
     };
 
     const event = new CustomEvent(NgxSmartModalConfig.prefixEvent + name, { detail: data });
-    window.dispatchEvent(event);
+    
+    return window.dispatchEvent(event);
+  }
+
+  /**
+   * Is current platform browser
+   */
+  private get isBrowser(): boolean {
+    return isPlatformBrowser(this._platformId);
   }
 }

@@ -375,4 +375,10 @@ describe('NgxSmartModalComponent', () => {
     expect((component as any).dragging).toBeFalsy();
   }));
 
+  it('should targetPlacement ( no browser )', async(() => {
+    spyOnProperty(component as any, 'isBrowser', 'get').and.returnValue(false);
+
+    expect((component as any)._sendEvent('test')).toBeFalsy();
+  }));
+
 });
