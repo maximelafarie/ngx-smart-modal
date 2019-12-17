@@ -1,19 +1,23 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
-  Input,
-  Output,
-  OnInit,
-  OnDestroy,
-  Renderer2,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  ComponentFactoryResolver,
+  ElementRef,
   EventEmitter,
   HostListener,
-  ChangeDetectorRef,
-  ViewChildren,
-  ElementRef,
-  QueryList,
   Inject,
-  PLATFORM_ID
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+  QueryList,
+  Renderer2,
+  Type,
+  ViewChildren,
+  ViewContainerRef
 } from '@angular/core';
 
 import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
@@ -33,7 +37,9 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
            [attr.aria-describedby]="ariaDescribedBy">
         <div class="nsm-content" #nsmContent>
           <div class="nsm-body">
+            <ng-template #dynamicContent></ng-template>
             <ng-content></ng-content>
+            
           </div>
           <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
@@ -53,7 +59,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
     </div>
   `
 })
-export class NgxSmartModalComponent implements OnInit, OnDestroy {
+export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public closable: boolean = true;
   @Input() public escapable: boolean = true;
   @Input() public dismissable: boolean = true;
@@ -81,7 +87,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Output() public onEscape: EventEmitter<any> = new EventEmitter();
   @Output() public onDataAdded: EventEmitter<any> = new EventEmitter();
   @Output() public onDataRemoved: EventEmitter<any> = new EventEmitter();
-
+  public contentComponent: Type<Component>;
   public layerPosition: number = 1041;
   public overlayVisible: boolean = false;
   public openedClass: boolean = false;
@@ -93,12 +99,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
+  @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContent: QueryList<ViewContainerRef>;
 
   constructor(
     private _renderer: Renderer2,
     private _changeDetectorRef: ChangeDetectorRef,
     @Inject(DOCUMENT) private _document: any,
-    @Inject(PLATFORM_ID) private _platformId: any
+    @Inject(PLATFORM_ID) private _platformId: any,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
   public ngOnInit() {
@@ -107,6 +115,16 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     }
 
     this._sendEvent('create');
+  }
+
+  public ngAfterViewInit(): void {
+    if (this.dynamicContent && this.contentComponent) {
+      const factory = this.componentFactoryResolver.resolveComponentFactory(this.contentComponent);
+      const viewContainerRef: ViewContainerRef = this.dynamicContent.first;
+      viewContainerRef.clear();
+      viewContainerRef.createComponent(factory);
+      this.markForCheck();
+    }
   }
 
   public ngOnDestroy() {
@@ -329,7 +347,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     };
 
     const event = new CustomEvent(NgxSmartModalConfig.prefixEvent + name, { detail: data });
-    
+
     return window.dispatchEvent(event);
   }
 
