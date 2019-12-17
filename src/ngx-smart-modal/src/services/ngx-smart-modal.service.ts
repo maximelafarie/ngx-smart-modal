@@ -235,6 +235,10 @@ export class NgxSmartModalService {
 
       const componentRef = componentFactory.create(this._injector, ngContent);
 
+      if (content instanceof Type) {
+        componentRef.instance.contentComponent = content;
+      }
+
       componentRef.instance.identifier = id;
       componentRef.instance.createFrom = 'service';
 
@@ -421,7 +425,7 @@ export class NgxSmartModalService {
    * Resolve content according to the types
    * @param content The modal content ( string, templateRef or Component )
    */
-  private _resolveNgContent<T>(content: Content<T>) {
+  private _resolveNgContent<T>(content: Content<T>): any[][] | Text[][] {
     if (typeof content === 'string') {
       const element = this._document.createTextNode(content);
       return [[element]];
@@ -433,10 +437,7 @@ export class NgxSmartModalService {
       return [viewRef.rootNodes];
     }
 
-    const factory = this._componentFactoryResolver.resolveComponentFactory(content);
-    const componentRef = factory.create(this._injector);
-
-    return [[componentRef.location.nativeElement], [this._document.createTextNode('')]];
+    return [];
   }
 
   /**
