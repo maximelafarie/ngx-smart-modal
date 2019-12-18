@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  ComponentFactory,
   ComponentFactoryResolver,
   ElementRef,
   EventEmitter,
@@ -39,7 +40,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
           <div class="nsm-body">
             <ng-template #dynamicContent></ng-template>
             <ng-content></ng-content>
-            
+
           </div>
           <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
@@ -99,7 +100,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
-  @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContent: QueryList<ViewContainerRef>;
+  @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContentContainer: QueryList<ViewContainerRef>;
 
   constructor(
     private _renderer: Renderer2,
@@ -118,12 +119,12 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   public ngAfterViewInit(): void {
-    if (this.dynamicContent && this.contentComponent) {
+    if (this.contentComponent) {
       const factory = this.componentFactoryResolver.resolveComponentFactory(this.contentComponent);
-      const viewContainerRef: ViewContainerRef = this.dynamicContent.first;
-      viewContainerRef.clear();
-      viewContainerRef.createComponent(factory);
-      this.markForCheck();
+      this.createDynamicContent(this.dynamicContentContainer, factory);
+      this.dynamicContentContainer.changes.subscribe((contentViewContainers: QueryList<ViewContainerRef>) => {
+        this.createDynamicContent(contentViewContainers, factory);
+      });
     }
   }
 
@@ -356,5 +357,16 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    */
   private get isBrowser(): boolean {
     return isPlatformBrowser(this._platformId);
+  }
+
+  /**
+   * Creates content inside provided ViewContainerRef
+   */
+  private createDynamicContent(changes: QueryList<ViewContainerRef>, factory: ComponentFactory<Component>): void {
+    changes.forEach((viewContainerRef: ViewContainerRef) => {
+      viewContainerRef.clear();
+      viewContainerRef.createComponent(factory);
+      this.markForCheck();
+    });
   }
 }
