@@ -74,7 +74,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Input() public ariaLabelledBy: string | null = null;
   @Input() public ariaDescribedBy: string | null = null;
 
-
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();
   @Output() public onCloseFinished: EventEmitter<any> = new EventEmitter();
