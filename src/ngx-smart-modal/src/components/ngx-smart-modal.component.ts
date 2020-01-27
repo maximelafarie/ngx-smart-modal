@@ -88,6 +88,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @Output() public onEscape: EventEmitter<any> = new EventEmitter();
   @Output() public onDataAdded: EventEmitter<any> = new EventEmitter();
   @Output() public onDataRemoved: EventEmitter<any> = new EventEmitter();
+
   public contentComponent: Type<Component>;
   public layerPosition: number = 1041;
   public overlayVisible: boolean = false;
@@ -105,12 +106,12 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   constructor(
     private _renderer: Renderer2,
     private _changeDetectorRef: ChangeDetectorRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any,
-    private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     if (!this.identifier || !this.identifier.length) {
       throw new Error('identifier field isn’t set. Please set one before calling <ngx-smart-modal> in a template.');
     }
@@ -128,7 +129,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     }
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this._sendEvent('delete');
   }
 

@@ -27,8 +27,9 @@ export class NgxSmartModalService {
     private _componentFactoryResolver: ComponentFactoryResolver,
     private _appRef: ApplicationRef,
     private _injector: Injector,
-    @Inject(DOCUMENT) private _document: any,
     private _modalStack: NgxSmartModalStackService,
+    private applicationRef: ApplicationRef,
+    @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any
   ) {
     this._addEvents();
@@ -433,7 +434,7 @@ export class NgxSmartModalService {
 
     if (content instanceof TemplateRef) {
       const viewRef = content.createEmbeddedView(null as any);
-
+      this.applicationRef.attachView(viewRef);
       return [viewRef.rootNodes];
     }
 
