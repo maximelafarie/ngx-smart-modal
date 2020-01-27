@@ -11,10 +11,11 @@ import { FakeComponent } from '../fake/fake.component';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements AfterViewInit {
-  version = VERSION.full;
+  public version = VERSION.full;
+  public name = 'Bobby';
 
   // tslint:disable:max-line-length
-  sampleText: string[] = [
+  public sampleText: string[] = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper neque ac ullamcorper scelerisque. Proin molestie erat sapien, ac dapibus tortor placerat a. Vivamus quis tempor mauris. Ut porta ultricies nisi in eleifend. In magna nisi, tempor pharetra consequat in, sagittis id augue. Aliquam eu lectus id mi vulputate convallis. Nam facilisis nisl quis urna gravida tempus.',
     'Nulla nulla metus, posuere nec magna vitae, volutpat fermentum turpis. Cras blandit orci adipiscing est volutpat euismod. Mauris condimentum in urna in malesuada. Sed adipiscing tellus accumsan commodo fermentum. Duis augue nisi, euismod eget faucibus sed, luctus sit amet libero. Ut rutrum diam vel tellus luctus varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed leo mauris. Etiam nec aliquam lacus. Suspendisse ac nulla libero. In consectetur elementum urna, at dignissim nulla convallis congue. Nulla ligula mauris, imperdiet id ultricies eget, vulputate vel neque. Praesent porta elit eu elit feugiat lobortis. Sed nec ullamcorper neque, lacinia consequat sem. Aenean id tellus at quam pellentesque molestie. Vivamus vitae pharetra magna, sit amet elementum nulla.',
     'Sed ut purus congue odio euismod blandit at ac odio. Nunc rhoncus ut arcu sed vestibulum. Duis lobortis aliquam mollis. Nam elementum rhoncus sem, at aliquet mauris semper posuere. Quisque tortor elit, fringilla ut hendrerit nec, tristique nec arcu. Aenean lacus turpis, fermentum ullamcorper vulputate eu, pulvinar eu mi. Donec in ligula sollicitudin sapien aliquet euismod. Vivamus vulputate libero in enim auctor iaculis vel sit amet felis. Vestibulum feugiat lectus vel est posuere tristique.',

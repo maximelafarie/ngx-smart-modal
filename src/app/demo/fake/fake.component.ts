@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FakeComponent implements OnInit {
 
+  public name = 'Jack';
+
   constructor() {
   }
 
