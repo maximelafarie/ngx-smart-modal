@@ -5,18 +5,11 @@ env:
     - CODECLIMATE_REPO_TOKEN=$CC_TEST_REPORTER_ID
     - CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
 addons:
-  apt:
-    # update: true
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+    chrome: stable
 language: node_js
 node_js:
   - stable
 before_install:
-  - npm i -g npm
-  - npm i -g codecov
   - npm i -g codeclimate-test-reporter
   - npm i -g codacy-coverage
   - npm i -g live-server@1
@@ -32,7 +25,6 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
 after_success:
-  - codecov -t $CODECOV_TOKEN
   - codeclimate-test-reporter < 'coverage/lcov.info'
   - cat coverage/lcov.info | codacy-coverage
   - rm -r node_modules
