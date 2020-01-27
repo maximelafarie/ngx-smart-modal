@@ -5,12 +5,7 @@ env:
     - CODECLIMATE_REPO_TOKEN=$CC_TEST_REPORTER_ID
     - CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN
 addons:
-  apt:
-    # update: true
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+    chrome: stable
 language: node_js
 node_js:
   - stable
