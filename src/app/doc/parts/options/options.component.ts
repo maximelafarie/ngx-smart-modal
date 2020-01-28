@@ -19,25 +19,25 @@ export class OptionsComponent implements OnInit {
       name: 'closable',
       type: 'boolean',
       defaultValue: 'true',
-      description: 'Show / hide the cross icon at the top right corner of the modal'
+      description: 'Show / hide the cross icon at the top right corner of the modal.'
     },
     {
       name: 'escapable',
       type: 'boolean',
       defaultValue: 'true',
-      description: 'Enable / disable the modal for listening to the escape keypress event (if pressed and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time).  ⚠️ NOT RECOMMANDED for accessibility reasons.'
+      description: 'Enable / disable the modal for listening to the escape keypress event (if pressed and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time).  ⚠️ NOT RECOMMENDED for accessibility reasons.'
     },
     {
       name: 'dismissable',
       type: 'boolean',
       defaultValue: 'true',
-      description: 'Enable / disable the modal backdrop for listening to the click event (if backdrop is clicked and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time)'
+      description: 'Enable / disable the modal backdrop for listening to the click event (if backdrop is clicked and this option is set to true, it will close the current opened modal or the latest opened if you have several modals opened at the same time).'
     },
     {
       name: 'identifier',
       type: 'string',
       defaultValue: 'undefined',
-      description: 'REQUIRED ― The identifiant of the modal instance. Retrieve a modal easily by its identifier'
+      description: 'REQUIRED ― The identifier of the modal instance. Retrieve a modal easily by its identifier.'
     },
     {
       name: 'force',
@@ -49,7 +49,7 @@ export class OptionsComponent implements OnInit {
       name: 'customClass',
       type: 'string',
       defaultValue: "'nsm-dialog-animation-fade'",
-      description: 'All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated class names'
+      description: 'All the additionnal classes you want to add to the modal (e.g.: any bootstrap modal class). You can add several classes by giving a string with space-separated class names.'
     },
     {
       name: 'backdrop',
@@ -79,19 +79,19 @@ export class OptionsComponent implements OnInit {
       name: 'ariaLabel',
       type: 'string',
       defaultValue: 'undefined',
-      description: 'Define a accessible title for your modal.'
+      description: 'Define an accessible title for your modal.'
     },
     {
       name: 'ariaLabelledBy',
       type: 'string',
       defaultValue: 'undefined',
-      description: 'Define a accessible title for your modal. Enter the id of your title content.'
+      description: 'Define an accessible title for your modal. Enter the id of your title content.'
     },
     {
       name: 'ariaDescribedBy',
       type: 'string',
       defaultValue: 'undefined',
-      description: 'Define a accessible description for your modal. Enter the id of your description content.'
+      description: 'Define an accessible description for your modal. Enter the id of your description content.'
     }
   ];
   // tslint:enable:max-line-length
