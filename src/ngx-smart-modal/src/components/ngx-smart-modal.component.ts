@@ -146,9 +146,11 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    * @param posX position X
    * @param posY position Y
    */
-  public setPosition(posX: number, posY: number) {
+  public setPosition(posX: number, posY: number): NgxSmartModalComponent {
     this.positionX = posX;
     this.positionY = posY;
+
+    return this;
   }
 
   /**
@@ -156,13 +158,13 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    * @param offsetX modal's left offset
    * @param offsetY modal's top offset
    */
-  public moveDialog(offsetX: number, offsetY: number) {
-    if (!this.nsmDialog.length) {
-      return false;
+  public moveDialog(offsetX: number, offsetY: number): NgxSmartModalComponent {
+    if (this.nsmDialog.length) {
+      this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - offsetY) + 'px';
+      this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - offsetX) + 'px';
     }
-    this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - offsetY) + 'px';
-    this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - offsetX) + 'px';
-    return true;
+
+    return this;
   }
 
   /**
@@ -172,7 +174,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @HostListener('document:mousedown', ['$event'])
   private startDrag(e: MouseEvent) {
     if (!this.nsmContent.length || !this.draggable) {
-      return false;
+      return;
     }
 
     const src = e.srcElement as HTMLElement;
@@ -183,11 +185,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
         this.dragging = true;
         this.setPosition(e.clientX, e.clientY);
 
-        return true;
+        return;
       }
     }
-
-    return false;
   }
 
   /**
@@ -197,8 +197,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @HostListener('document:mousemove', ['$event'])
   private elementDrag(e: MouseEvent) {
     if (!this.dragging || !this.nsmDialog.length) {
-      return false;
+      return;
     }
+
     e.preventDefault();
 
     const offsetX = this.positionX - e.clientX;
@@ -207,8 +208,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     this.moveDialog(offsetX, offsetY);
 
     this.setPosition(e.clientX, e.clientY);
-
-    return true;
   }
 
   /**
