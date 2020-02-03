@@ -1,19 +1,24 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
-  Input,
-  Output,
-  OnInit,
-  OnDestroy,
-  Renderer2,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  ElementRef,
   EventEmitter,
   HostListener,
-  ChangeDetectorRef,
-  ViewChildren,
-  ElementRef,
-  QueryList,
   Inject,
-  PLATFORM_ID
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+  QueryList,
+  Renderer2,
+  Type,
+  ViewChildren,
+  ViewContainerRef
 } from '@angular/core';
 
 import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
@@ -34,7 +39,9 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
            [attr.aria-describedby]="ariaDescribedBy">
         <div class="nsm-content" #nsmContent [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
+            <ng-template #dynamicContent></ng-template>
             <ng-content></ng-content>
+
           </div>
           <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
@@ -54,7 +61,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
     </div>
   `
 })
-export class NgxSmartModalComponent implements OnInit, OnDestroy {
+export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() public closable: boolean = true;
   @Input() public escapable: boolean = true;
   @Input() public dismissable: boolean = true;
@@ -87,6 +94,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @Output() public onDataAdded: EventEmitter<any> = new EventEmitter();
   @Output() public onDataRemoved: EventEmitter<any> = new EventEmitter();
 
+  public contentComponent: Type<Component>;
   public layerPosition: number = 1041;
   public overlayVisible: boolean = false;
   public openedClass: boolean = false;
@@ -102,15 +110,17 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
+  @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContentContainer: QueryList<ViewContainerRef>;
 
   constructor(
     private _renderer: Renderer2,
     private _changeDetectorRef: ChangeDetectorRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(DOCUMENT) private _document: any,
-    @Inject(PLATFORM_ID) private _platformId: any
+    @Inject(PLATFORM_ID) private _platformId: any,
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     if (!this.identifier || !this.identifier.length) {
       throw new Error('identifier field isn’t set. Please set one before calling <ngx-smart-modal> in a template.');
     }
@@ -118,7 +128,17 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     this._sendEvent('create');
   }
 
-  public ngOnDestroy() {
+  public ngAfterViewInit(): void {
+    if (this.contentComponent) {
+      const factory = this.componentFactoryResolver.resolveComponentFactory(this.contentComponent);
+      this.createDynamicContent(this.dynamicContentContainer, factory);
+      this.dynamicContentContainer.changes.subscribe((contentViewContainers: QueryList<ViewContainerRef>) => {
+        this.createDynamicContent(contentViewContainers, factory);
+      });
+    }
+  }
+
+  public ngOnDestroy(): void {
     this._sendEvent('delete');
   }
 
@@ -416,7 +436,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
     };
 
     const event = new CustomEvent(NgxSmartModalConfig.prefixEvent + name, { detail: data });
-    
+
     return window.dispatchEvent(event);
   }
 
@@ -425,5 +445,16 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
    */
   private get isBrowser(): boolean {
     return isPlatformBrowser(this._platformId);
+  }
+
+  /**
+   * Creates content inside provided ViewContainerRef
+   */
+  private createDynamicContent(changes: QueryList<ViewContainerRef>, factory: ComponentFactory<Component>): void {
+    changes.forEach((viewContainerRef: ViewContainerRef) => {
+      viewContainerRef.clear();
+      viewContainerRef.createComponent(factory);
+      this.markForCheck();
+    });
   }
 }
