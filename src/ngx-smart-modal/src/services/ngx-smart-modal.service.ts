@@ -383,7 +383,9 @@ export class NgxSmartModalService {
       modal.markForCheck();
       modal.onCloseFinished.emit(modal);
       modal.onAnyCloseEventFinished.emit(modal);
-      this.lastElementFocused.focus();
+      if (modal.refocus) {
+        this.lastElementFocused.focus();
+      }
     }, modal.hideDelay);
 
     return true;
