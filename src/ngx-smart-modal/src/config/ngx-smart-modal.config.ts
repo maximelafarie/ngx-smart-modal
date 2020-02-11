@@ -16,4 +16,5 @@ export interface INgxSmartModalOptions {
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
+    refocus?: boolean;
 }

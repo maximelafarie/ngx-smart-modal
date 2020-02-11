@@ -255,6 +255,7 @@ export class NgxSmartModalService {
       if (typeof options.ariaLabel === 'string') { componentRef.instance.ariaLabel = options.ariaLabel; }
       if (typeof options.ariaLabelledBy === 'string') { componentRef.instance.ariaLabelledBy = options.ariaLabelledBy; }
       if (typeof options.ariaDescribedBy === 'string') { componentRef.instance.ariaDescribedBy = options.ariaDescribedBy; }
+      if (typeof options.refocus === 'boolean') { componentRef.instance.refocus = options.refocus; }
 
       this._appRef.attachView(componentRef.hostView);
 
