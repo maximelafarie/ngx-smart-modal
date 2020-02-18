@@ -92,6 +92,12 @@ export class OptionsComponent implements OnInit {
       type: 'string',
       defaultValue: 'undefined',
       description: 'Define an accessible description for your modal. Enter the id of your description content.'
+    },
+    {
+      name: 'refocus',
+      type: 'boolean',
+      defaultValue: 'true',
+      description: 'Refocus on the last focused element after closing the modal.'
     }
   ];
   // tslint:enable:max-line-length

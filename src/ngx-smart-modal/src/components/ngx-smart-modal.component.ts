@@ -75,6 +75,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input() public ariaLabel: string | null = null;
   @Input() public ariaLabelledBy: string | null = null;
   @Input() public ariaDescribedBy: string | null = null;
+  @Input() public refocus: boolean = true;
 
   @Output() public visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public onClose: EventEmitter<any> = new EventEmitter();

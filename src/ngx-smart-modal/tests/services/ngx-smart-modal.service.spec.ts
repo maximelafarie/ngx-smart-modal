@@ -354,6 +354,53 @@ describe('NgxSmartModalService', () => {
     service.create('test2', 'test content');
   }));
 
+  it('should refocus on close', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const focusElement = fixture.nativeElement.appendChild(document.createElement('input'));
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+    app.target = 'test-target';
+
+    service.addModal({ id: 'test', modal: app });
+    focusElement.focus();
+
+    expect(document.activeElement === focusElement).toBeTruthy();
+
+    service.open('test');
+    tick(501);
+
+    expect(document.activeElement === focusElement).toBeFalsy();
+
+    service.close('test');
+    tick(501);
+
+    expect(document.activeElement === focusElement).toBeTruthy();
+  })));
+
+  it('should not refocus on close if refocus is turned off', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
+    const fixture = TestBed.createComponent(NgxSmartModalComponent);
+    const focusElement = fixture.nativeElement.appendChild(document.createElement('input'));
+    const app = fixture.debugElement.componentInstance;
+    app.identifier = 'test';
+    app.target = 'test-target';
+    app.refocus = false;
+
+    service.addModal({ id: 'test', modal: app });
+    focusElement.focus();
+
+    expect(document.activeElement === focusElement).toBeTruthy();
+
+    service.open('test');
+    tick(501);
+
+    expect(document.activeElement === focusElement).toBeFalsy();
+
+    service.close('test');
+    tick(501);
+
+    expect(document.activeElement === focusElement).toBeFalsy();
+  })));
+
   it('should resolve content', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
     (service as any)._resolveNgContent('test content');
     (service as any)._resolveNgContent(FakeComponent);
