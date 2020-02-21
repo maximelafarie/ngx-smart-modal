@@ -251,7 +251,7 @@ describe('NgxSmartModalComponent', () => {
   }));
   
   it('should setPosition', async(() => {
-    component.setPosition(10, 20);
+    (component as any).setPosition(10, 20);
     expect((component as any).positionX).toBe(10);
     expect((component as any).positionY).toBe(20);
   }));
@@ -275,18 +275,18 @@ describe('NgxSmartModalComponent', () => {
   it('should not startDrag if modal not draggable', async(() => {
     component.draggable = false;
 
-    let result = component['startDrag']({} as MouseEvent);
+    const result = (component as any).startDrag({} as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
-    expect(result).toBe(false);
+    expect(result).toBeUndefined();
   }));
 
   it('should not startDrag if event there is no nsmContent', async(() => {
     component.draggable = true;
     (component as any).nsmContent = { length: 0 };
 
-    let result = component['startDrag']({} as MouseEvent);
+    const result = (component as any).startDrag({} as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
-    expect(result).toBe(false);
+    expect(result).toBeUndefined();
   }));
 
   it('should not startDrag if event srcElement is null', async(() => {
@@ -294,9 +294,9 @@ describe('NgxSmartModalComponent', () => {
     (component as any).nsmContent = { length: 1 };
     const fakeEvent = { srcElement: null };
 
-    let result = component['startDrag'](fakeEvent as MouseEvent);
+    const result = (component as any).startDrag(fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
-    expect(result).toBe(false);
+    expect(result).toBeUndefined();
   }));
 
   it('should not startDrag if clicked element isn\'t .draggable', async(() => {
@@ -305,7 +305,7 @@ describe('NgxSmartModalComponent', () => {
     const fakeSrcElement = document.createElement('div') as any;
     const fakeEvent = { srcElement: fakeSrcElement };
 
-    const result = component['startDrag'](fakeEvent as MouseEvent);
+    const result = (component as any).startDrag(fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBeFalsy();
   }));
@@ -315,10 +315,10 @@ describe('NgxSmartModalComponent', () => {
     const fakeSrcElement1 = document.createElement('div') as any;
     fakeSrcElement1.classList.add('draggable');
     const fakeSrcElement2 = document.createElement('div') as any;
-    (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement1 } } };
+    (component as any).nsmContent = { length: 1, last: { nativeElement: { contains: (el: any) => el === fakeSrcElement1 } } };
     const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement2 };
 
-    const result = component['startDrag'](fakeEvent as MouseEvent);
+    const result = (component as any).startDrag(fakeEvent as MouseEvent);
     expect((component as any).dragging).toBeFalsy();
     expect(result).toBeFalsy();
   }));
@@ -326,22 +326,22 @@ describe('NgxSmartModalComponent', () => {
   it('should startDrag', async(() => {
     component.draggable = true;
     const fakeSrcElement = document.createElement('div') as any;
-    (component as any).nsmContent = { 'length': 1, 'last': { 'nativeElement': { 'contains': (el: any) => el == fakeSrcElement } } };
+    (component as any).nsmContent = { length: 1, last: { nativeElement: { contains: (el: any) => el === fakeSrcElement } } };
     fakeSrcElement.classList.add('draggable');
-    const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement, preventDefault: () => { } };
+    const fakeEvent = { clientX: 10, clientY: 30, srcElement: fakeSrcElement, preventDefault: () => { return ; } };
 
-    spyOn(component, 'setPosition');
+    spyOn((component as any), 'setPosition');
 
-    const result = component['startDrag'](fakeEvent as MouseEvent);
+    const result = (component as any).startDrag(fakeEvent as MouseEvent);
     expect(result).toBeTruthy();
     expect((component as any).dragging).toBeTruthy();
-    expect(component.setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
+    expect((component as any).setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
   }));
 
   it('should not elementDrag if not started dragging', async(() => {
     (component as any).dragging = false;
 
-    const result = component['elementDrag']({} as MouseEvent);
+    const result = (component as any).elementDrag({} as MouseEvent);
     expect(result).toBeFalsy();
   }));
 
@@ -349,7 +349,7 @@ describe('NgxSmartModalComponent', () => {
     (component as any).dragging = true;
     (component as any).nsmDialog = { length: 0 };
 
-    const result = component['elementDrag']({} as MouseEvent);
+    const result = (component as any).elementDrag({} as MouseEvent);
     expect(result).toBeFalsy();
   }));
 
@@ -360,24 +360,24 @@ describe('NgxSmartModalComponent', () => {
     (component as any).positionX = positionX;
     const positionY = 30;
     (component as any).positionY = positionY;
-    const fakeEvent = { clientX: 2, clientY: 5, preventDefault: () => { } };
+    const fakeEvent = { clientX: 2, clientY: 5, preventDefault: () => { return; } };
 
-    const offsetX = component['positionX'] - fakeEvent.clientX;
-    const offsetY = component['positionY'] - fakeEvent.clientY;
+    const offsetX = (component as any).positionX - fakeEvent.clientX;
+    const offsetY = (component as any).positionY - fakeEvent.clientY;
 
     spyOn((component), 'moveDialog');
-    spyOn((component), 'setPosition');
+    spyOn((component as any), 'setPosition');
 
-    const result = component['elementDrag'](fakeEvent as MouseEvent);
+    const result = (component as any).elementDrag(fakeEvent as MouseEvent);
 
     expect(component.moveDialog).toHaveBeenCalledWith(offsetX, offsetY);
-    expect(component.setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
+    expect((component as any).setPosition).toHaveBeenCalledWith(fakeEvent.clientX, fakeEvent.clientY);
 
     expect(result).toBeTruthy();
   }));
 
   it('should stopDrag', async(() => {
-    component['stopDrag']();
+    (component as any).stopDrag();
     expect((component as any).dragging).toBeFalsy();
   }));
 

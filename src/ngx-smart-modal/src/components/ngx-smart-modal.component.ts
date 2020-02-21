@@ -93,23 +93,23 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @Output() public onDataAdded: EventEmitter<any> = new EventEmitter();
   @Output() public onDataRemoved: EventEmitter<any> = new EventEmitter();
 
-  public contentComponent: Type<Component>;
+  public contentComponent: Type<Component> | undefined;
   public layerPosition: number = 1041;
   public overlayVisible: boolean = false;
   public openedClass: boolean = false;
 
   public createFrom = 'html';
 
+  @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef> = new QueryList();
+  @ViewChildren('nsmContent') public nsmContent: QueryList<ElementRef> = new QueryList();
+  @ViewChildren('nsmOverlay') public nsmOverlay: QueryList<ElementRef> = new QueryList();
+  @ViewChildren('dynamicContent', { read: ViewContainerRef }) public dynamicContentContainer: QueryList<ViewContainerRef> = new QueryList();
+
   private _data: any;
 
   private positionX = 0;
   private positionY = 0;
   private dragging = false;
-
-  @ViewChildren('nsmContent') private nsmContent!: QueryList<ElementRef>;
-  @ViewChildren('nsmDialog') private nsmDialog!: QueryList<ElementRef>;
-  @ViewChildren('nsmOverlay') private nsmOverlay!: QueryList<ElementRef>;
-  @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContentContainer: QueryList<ViewContainerRef>;
 
   constructor(
     private _renderer: Renderer2,
@@ -128,7 +128,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   public ngAfterViewInit(): void {
-    if (this.contentComponent) {
+    if (this.contentComponent && this.dynamicContentContainer) {
       const factory = this.componentFactoryResolver.resolveComponentFactory(this.contentComponent);
       this.createDynamicContent(this.dynamicContentContainer, factory);
       this.dynamicContentContainer.changes.subscribe((contentViewContainers: QueryList<ViewContainerRef>) => {
@@ -139,18 +139,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   public ngOnDestroy(): void {
     this._sendEvent('delete');
-  }
-
-  /**
-   * Set positionX and positionY to save last position of dragged modal
-   * @param posX position X
-   * @param posY position Y
-   */
-  public setPosition(posX: number, posY: number): NgxSmartModalComponent {
-    this.positionX = posX;
-    this.positionY = posY;
-
-    return this;
   }
 
   /**
@@ -165,57 +153,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     return this;
-  }
-
-  /**
-   * Listens for mouse down event to initiate dragging of the modal
-   * @param e MouseEvent
-   */
-  @HostListener('document:mousedown', ['$event'])
-  private startDrag(e: MouseEvent) {
-    if (!this.nsmContent.length || !this.draggable) {
-      return;
-    }
-
-    const src = e.srcElement as HTMLElement;
-    if (src && src.classList.contains('draggable')) {
-      if (this.nsmContent.last.nativeElement.contains(src) && !this.dragging) {
-        e.preventDefault();
-
-        this.dragging = true;
-        this.setPosition(e.clientX, e.clientY);
-
-        return;
-      }
-    }
-  }
-
-  /**
-   * Listens for mouse move event and reflects the movement of the mouse to modal position
-   * @param e MouseEvent
-   */
-  @HostListener('document:mousemove', ['$event'])
-  private elementDrag(e: MouseEvent) {
-    if (!this.dragging || !this.nsmDialog.length) {
-      return;
-    }
-
-    e.preventDefault();
-
-    const offsetX = this.positionX - e.clientX;
-    const offsetY = this.positionY - e.clientY;
-
-    this.moveDialog(offsetX, offsetY);
-
-    this.setPosition(e.clientX, e.clientY);
-  }
-
-  /**
-   * Listens for mouse up event to stop moving dragged modal
-   */
-  @HostListener('document:mouseup', ['$event'])
-  private stopDrag() {
-    this.dragging = false;
   }
 
   /**
@@ -384,6 +321,18 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   /**
+   * Set positionX and positionY to save last position of dragged modal
+   * @param posX position X
+   * @param posY position Y
+   */
+  public setPosition(posX: number, posY: number): NgxSmartModalComponent {
+    this.positionX = posX;
+    this.positionY = posY;
+
+    return this;
+  }
+
+  /**
    * Listens for window resize event and recalculates modal instance position if it is element-relative
    */
   @HostListener('window:resize')
@@ -454,5 +403,56 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
       viewContainerRef.createComponent(factory);
       this.markForCheck();
     });
+  }
+
+  /**
+   * Listens for mouse down event to initiate dragging of the modal
+   * @param e MouseEvent
+   */
+  @HostListener('document:mousedown', ['$event'])
+  private startDrag(e: MouseEvent) {
+    if (!this.nsmContent.length || !this.draggable) {
+      return;
+    }
+
+    const src = e.srcElement as HTMLElement;
+    if (src && src.classList.contains('draggable')) {
+      if (this.nsmContent.last.nativeElement.contains(src) && !this.dragging) {
+        e.preventDefault();
+
+        this.dragging = true;
+        this.setPosition(e.clientX, e.clientY);
+
+        return;
+      }
+    }
+  }
+
+  /**
+   * Listens for mouse move event and reflects the movement of the mouse to modal position
+   * @param e MouseEvent
+   */
+  @HostListener('document:mousemove', ['$event'])
+  private elementDrag(e: MouseEvent) {
+    if (!this.dragging || !this.nsmDialog.length) {
+      return;
+    }
+
+    e.preventDefault();
+
+    const offsetX = this.positionX - e.clientX;
+    const offsetY = this.positionY - e.clientY;
+
+    this.moveDialog(offsetX, offsetY);
+
+    this.setPosition(e.clientX, e.clientY);
+  }
+
+  /**
+   * Listens for mouse up event to stop moving dragged modal
+   */
+  @HostListener('document:mouseup', ['$event'])
+  private stopDrag() {
+    this.dragging = false;
   }
 }
