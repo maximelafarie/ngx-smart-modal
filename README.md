@@ -7,7 +7,7 @@
 
 `ngx-smart-modal` is a lightweight and very complete Angular library for managing modals inside any Angular project. It was built for modern browsers using TypeScript, HTML5 and Angular >=2.4.0.
 
-## [Documentation 📖](https://maximelafarie/ngx-smart-modal) &middot; [Demo 🕹️](https://maximelafarie/ngx-smart-modal/#/demo)
+## [Documentation 📖](https://maximelafarie.com/ngx-smart-modal) &middot; [Demo 🕹️](https://maximelafarie.com/ngx-smart-modal/#/demo)
 
 ## Author and Maintainer
 
