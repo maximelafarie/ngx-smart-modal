@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public getContributors() {
-    this.sub = this.http.get('https://api.github.com/repos/biig-io/ngx-smart-modal/contributors')
+    this.sub = this.http.get('https://api.github.com/repos/maximelafarie/ngx-smart-modal/contributors')
       .pipe(finalize(() => { this.loading = false; }))
       .subscribe(res => {
         this.contributors = res;

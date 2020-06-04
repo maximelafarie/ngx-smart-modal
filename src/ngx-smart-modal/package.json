@@ -19,12 +19,12 @@
   "author": "Maxime LAFARIE <maxime.lafarie@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/biig-io/ngx-smart-modal.git"
+    "url": "https://github.com/maximelafarie/ngx-smart-modal.git"
   },
   "bugs": {
-    "url": "https://github.com/biig-io/ngx-smart-modal/issues"
+    "url": "https://github.com/maximelafarie/ngx-smart-modal/issues"
   },
-  "homepage": "https://github.com/biig-io/ngx-smart-modal",
+  "homepage": "https://github.com/maximelafarie/ngx-smart-modal",
   "keywords": [
     "ngx-smart-modal",
     "ngx",
