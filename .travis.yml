@@ -10,6 +10,8 @@ language: node_js
 node_js:
   - stable
 before_install:
+  - echo "$TRAVIS_BRANCH"
+  - echo "$TRAVIS_PULL_REQUEST"
   - npm i -g codeclimate-test-reporter
   - npm i -g codacy-coverage
   - npm i -g live-server@1
@@ -29,7 +31,7 @@ after_success:
   - cat coverage/lcov.info | codacy-coverage
   - rm -r node_modules
   - cd ../..
-  - npm run ghpages
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == false ]; then npm run ghpages; fi
 notifications:
   email: false
 deploy:
