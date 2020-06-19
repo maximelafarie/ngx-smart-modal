@@ -44,7 +44,9 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
           </div>
           <button type="button" *ngIf="closable" (click)="close()" aria-label="Close" class="nsm-dialog-btn-close">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512"
-                 xml:space="preserve" width="16px" height="16px">
+                 xml:space="preserve" width="16px" height="16px" role="img" aria-labelledby="closeIconTitle closeIconDesc">
+              <title id="closeIconTitle">Close Icon</title>
+              <desc id="closeIconDesc">A light-gray close icon used to close the modal</desc>
               <g>
                 <path d="M505.943,6.058c-8.077-8.077-21.172-8.077-29.249,0L6.058,476.693c-8.077,8.077-8.077,21.172,0,29.249    C10.096,509.982,15.39,512,20.683,512c5.293,0,10.586-2.019,14.625-6.059L505.943,35.306    C514.019,27.23,514.019,14.135,505.943,6.058z"
                       fill="currentColor"/>
