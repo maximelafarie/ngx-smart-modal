@@ -33,20 +33,6 @@ $coal-dust: #edeeee;
   }
 }
 
-#biig-link {
-  display: block;
-  opacity: .5;
-  margin: 0 auto;
-  margin-top: 10px;
-  width: 30px;
-
-  &:hover,
-  &:focus,
-  &:active {
-    opacity: 1;
-  }
-}
-
 pre {
   display: block;
   unicode-bidi: embed;
