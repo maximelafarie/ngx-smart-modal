@@ -9,17 +9,16 @@
 
 ## [Documentation 📖](https://maximelafarie.com/ngx-smart-modal) &middot; [Demo 🕹️](https://maximelafarie.com/ngx-smart-modal/#/demo)
 
-## Author and Maintainer
+## Author
 
-* [Maxime LAFARIE](https://github.com/maximelafarie)
+* [Maxime Lafarie](https://github.com/maximelafarie)
+
+## Maintainers
+
+* [Mark Lucas](https://github.com/marco10024)
+* [Kraus Vincent](https://github.com/khylias)
+* [Louis Augry](https://github.com/LouisAugry)
 
 ## Contributors
 
-* [Mark LUCAS](https://github.com/marco10024)
-* [gaetanmarsault](https://github.com/gaetanmarsault)
-* [neromaycry](https://github.com/neromaycry)
-* [Kraus Vincent](https://github.com/khylias)
-* [Andreas Bissinger](https://github.com/be-ndee)
-* [Yosbel Marín](https://github.com/yosbelms)
-* [Thomas Chang](https://github.com/thomascsd)
-* [Marc Reichel](https://github.com/marcreichel)
+Many thanks to our [awesome contributors](https://maximelafarie.com/ngx-smart-modal/#/#contributors)! ♥️ Still not on the list? Let's [contribute](https://github.com/maximelafarie/ngx-smart-modal/issues)!
