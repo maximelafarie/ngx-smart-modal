@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, UrlSegment, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { GoogleAnalyticsService } from '@app/services';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,7 +11,7 @@ export class SidenavComponent implements OnInit {
 
   private currentRoute;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private googleAnalyticsService: GoogleAnalyticsService) {
     this.router.events.subscribe((url: any) => this.currentRoute = this.router.url);
   }
 
@@ -19,6 +20,10 @@ export class SidenavComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public nav(routeName: string): void {
+      this.googleAnalyticsService.eventEmitter('sidenav_route_change', 'routing', 'navigate', 'click', routeName);
   }
 
 }

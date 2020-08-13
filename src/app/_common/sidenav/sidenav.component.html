@@ -1,6 +1,7 @@
 <div class="siimple-list siimple-list--hover">
 
     <a class="siimple-list-item"
+       (click)="nav('/')"
        routerLink="/"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">
@@ -9,6 +10,7 @@
     </a>
 
     <a class="siimple-list-item"
+       (click)="nav('/start')"
        routerLink="/start"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">
@@ -17,18 +19,21 @@
         <div class="siimple-sub-nav"
              *ngIf="routeIs('/start')">
             <a class="siimple-link"
+               (click)="nav('/start#install')"
                routerLink="/start"
                fragment="install">
                 Installation
             </a>
 
             <a class="siimple-link"
+               (click)="nav('/start#modals')"
                routerLink="/start"
                fragment="modals">
                 Manipulate modals
             </a>
 
             <a class="siimple-link"
+               (click)="nav('/start#data')"
                routerLink="/start"
                fragment="data">
                 Manipulate data
@@ -37,6 +42,7 @@
     </a>
 
     <a class="siimple-list-item"
+       (click)="nav('/api')"
        routerLink="/api"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">
@@ -45,6 +51,7 @@
     </a>
 
     <a class="siimple-list-item"
+       (click)="nav('/options')"
        routerLink="/options"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">
@@ -53,6 +60,7 @@
     </a>
 
     <a class="siimple-list-item"
+       (click)="nav('/events')"
        routerLink="/events"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">
@@ -61,12 +69,14 @@
         <div class="siimple-sub-nav"
              *ngIf="routeIs('/events')">
             <a class="siimple-link"
+               (click)="nav('/events#list')"
                routerLink="/events"
                fragment="list">
                 Event list
             </a>
 
             <a class="siimple-link"
+               (click)="nav('/events#handle')"
                routerLink="/events"
                fragment="handle">
                 Handle events
@@ -75,6 +85,7 @@
     </a>
 
     <a class="siimple-list-item"
+       (click)="nav('/style')"
        routerLink="/style"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">
@@ -83,6 +94,7 @@
     </a>
 
     <a class="siimple-list-item"
+       (click)="nav('/misc')"
        routerLink="/misc"
        [routerLinkActiveOptions]="{exact: true}"
        routerLinkActive="siimple-list-item--selected">

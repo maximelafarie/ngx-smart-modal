@@ -30,7 +30,7 @@ const routes: Routes = [
     component: DemoComponent,
     children: [
       { path: '', component: MainComponent },
-      { path: 'feature', loadChildren: () => import(`./demo/feature/feature.module`).then(m => m.FeatureModule) },
+      { path: 'feature', loadChildren: () => import('./demo/feature/feature.module').then(m => m.FeatureModule) },
       { path: 'bootstrap', component: BootstrapComponent },
       { path: 'materialize', component: MaterializeComponent },
       { path: 'foundation', component: FoundationComponent },

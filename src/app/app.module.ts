@@ -22,6 +22,9 @@ import { MiscComponent } from './doc/parts/misc/misc.component';
 import { SafeHtmlPipe } from './_pipes/safe-html.pipe';
 import { EventsComponent } from './doc/parts/events/events.component';
 
+/* Services */
+import { GoogleAnalyticsService } from './_services';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +48,7 @@ import { EventsComponent } from './doc/parts/events/events.component';
     HttpClientModule,
     DemoModule
   ],
-  providers: [],
+  providers: [GoogleAnalyticsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

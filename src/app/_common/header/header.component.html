@@ -11,16 +11,19 @@
 
     <a class="siimple-navbar-item siimple--float-right siimple--display-sm-none"
        href="https://github.com/maximelafarie/ngx-smart-modal"
+       (click)="nav('https://github.com/maximelafarie/ngx-smart-modal')"
        target="_blank">
         GitHub
     </a>
 
     <a class="siimple-navbar-item siimple--float-right siimple--display-sm-none"
+       (click)="nav('/demo')"
        routerLink="/demo">
         Demo
     </a>
 
     <a class="siimple-navbar-item siimple--float-right siimple--display-sm-none"
+       (click)="nav('/')"
        routerLink="/">
         Home
     </a>
