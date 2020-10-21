@@ -306,7 +306,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    */
   @HostListener('window:resize')
   public targetPlacement(): boolean | void {
-    if (!this.isBrowser || !this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
+    if (!this.isBrowser || !this.nsmDialog || !this.nsmDialog.length || !this.nsmContent.length || !this.nsmOverlay.length || !this.target) {
       return false;
     }
     const targetElement = this._document.querySelector(this.target);
