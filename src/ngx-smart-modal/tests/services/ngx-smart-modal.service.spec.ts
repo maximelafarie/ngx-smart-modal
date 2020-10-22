@@ -66,7 +66,9 @@ describe('NgxSmartModalService', () => {
         instance: {
           modal: 'fake modal'
         },
-        top: true
+        extraData: {
+          top: true
+        }
       }
     };
 

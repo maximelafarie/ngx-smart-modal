@@ -280,11 +280,11 @@ export class NgxSmartModalService {
     }) as EventListener);
 
     window.addEventListener(NgxSmartModalConfig.prefixEvent + 'open', ((e: CustomEvent) => {
-      this._openModal(e.detail.instance.modal, e.detail.top);
+      this._openModal(e.detail.instance.modal, e.detail.extraData.top);
     }) as EventListener);
 
     window.addEventListener(NgxSmartModalConfig.prefixEvent + 'toggle', ((e: CustomEvent) => {
-      this._toggleModal(e.detail.instance.modal, e.detail.top);
+      this._toggleModal(e.detail.instance.modal, e.detail.extraData.top);
     }) as EventListener);
 
     window.addEventListener(NgxSmartModalConfig.prefixEvent + 'close', ((e: CustomEvent) => {
