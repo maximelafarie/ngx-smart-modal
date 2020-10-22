@@ -32,11 +32,12 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
          (click)="dismiss($event)" #nsmOverlay>
       <div [style.z-index]="visible ? layerPosition : -1"
            [ngClass]="['nsm-dialog', customClass, openedClass ? 'nsm-dialog-open': 'nsm-dialog-close']" #nsmDialog
+           [style.position]="draggable ? 'absolute' : 'relative'" 
            [attr.aria-hidden]="openedClass ? false : true"
            [attr.aria-label]="ariaLabel"
            [attr.aria-labelledby]="ariaLabelledBy"
            [attr.aria-describedby]="ariaDescribedBy">
-        <div class="nsm-content" #nsmContent>
+        <div class="nsm-content" #nsmContent [class.draggable]="draggable && draggableEdges">
           <div class="nsm-body">
             <ng-template #dynamicContent></ng-template>
             <ng-content></ng-content>
@@ -74,6 +75,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @Input() public hideDelay: number = 500;
   @Input() public autostart: boolean = false;
   @Input() public target: string = '';
+  
+  @Input() public draggable: boolean = false;
+  @Input() public draggableEdges: boolean = false;
+
   @Input() public ariaLabel: string | null = null;
   @Input() public ariaLabelledBy: string | null = null;
   @Input() public ariaDescribedBy: string | null = null;
@@ -100,6 +105,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   public createFrom = 'html';
 
   private _data: any;
+
+  private positionX = 0;
+  private positionY = 0;
+  private dragging = false;
 
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
@@ -134,6 +143,84 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
 
   public ngOnDestroy(): void {
     this._sendEvent('delete');
+  }
+
+  /**
+   * Set positionX and positionY to save last position of dragged modal
+   * @param posX position X
+   * @param posY position Y
+   */
+  public setPosition(posX: number, posY: number) {
+    this.positionX = posX;
+    this.positionY = posY;
+  }
+
+  /**
+   * Moves dialog by changing top and left style of modal dialog by offset
+   * @param offsetX modal's left offset
+   * @param offsetY modal's top offset
+   */
+  public moveDialog(offsetX: number, offsetY: number) {
+    if (!this.nsmDialog.length) {
+      return false;
+    }
+    this.nsmDialog.last.nativeElement.style.top = (this.nsmDialog.last.nativeElement.offsetTop - offsetY) + 'px';
+    this.nsmDialog.last.nativeElement.style.left = (this.nsmDialog.last.nativeElement.offsetLeft - offsetX) + 'px';
+    return true;
+  }
+
+  /**
+   * Listens for mouse down event to initiate dragging of the modal
+   * @param e MouseEvent
+   */
+  @HostListener('document:mousedown', ['$event'])
+  private startDrag(e: MouseEvent) {
+    if (!this.nsmContent.length || !this.draggable) {
+      return false;
+    }
+
+    const src = e.srcElement as HTMLElement;
+    if (src && src.classList.contains('draggable')) {
+      if (this.nsmContent.last.nativeElement.contains(src) && !this.dragging) {
+        e.preventDefault();
+
+        this.dragging = true;
+        this.setPosition(e.clientX, e.clientY);
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Listens for mouse move event and reflects the movement of the mouse to modal position
+   * @param e MouseEvent
+   */
+  @HostListener('document:mousemove', ['$event'])
+  private elementDrag(e: MouseEvent) {
+    if (!this.dragging || !this.nsmDialog.length) {
+      return false;
+    }
+    e.preventDefault();
+
+    const offsetX = this.positionX - e.clientX;
+    const offsetY = this.positionY - e.clientY;
+
+    this.moveDialog(offsetX, offsetY);
+
+    this.setPosition(e.clientX, e.clientY);
+
+    return true;
+  }
+
+  /**
+   * Listens for mouse up event to stop moving dragged modal
+   */
+  @HostListener('document:mouseup', ['$event'])
+  private stopDrag() {
+    this.dragging = false;
   }
 
   /**
