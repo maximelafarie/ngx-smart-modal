@@ -276,6 +276,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    * @returns the modal component
    */
   public addBodyClass(): NgxSmartModalComponent {
+    this._renderer.addClass(this._document.documentElement, NgxSmartModalConfig.bodyClassOpen);
     this._renderer.addClass(this._document.body, NgxSmartModalConfig.bodyClassOpen);
 
     return this;
@@ -287,6 +288,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    * @returns the modal component
    */
   public removeBodyClass(): NgxSmartModalComponent {
+    this._renderer.removeClass(this._document.documentElement, NgxSmartModalConfig.bodyClassOpen);
     this._renderer.removeClass(this._document.body, NgxSmartModalConfig.bodyClassOpen);
 
     return this;

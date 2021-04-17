@@ -20,7 +20,7 @@ $transition-timing-function: ease-in-out !default;
 $opened-modal-body-overflow: hidden !default;
 
 // Body if modal is opened
-body.dialog-open {
+html.dialog-open, body.dialog-open {
   overflow: $opened-modal-body-overflow;
 }
 
