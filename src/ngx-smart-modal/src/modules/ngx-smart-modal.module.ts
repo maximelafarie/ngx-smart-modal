@@ -13,7 +13,7 @@ export class NgxSmartModalModule {
   /**
    * Use in AppModule: new instance of NgxSmartModal.
    */
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<NgxSmartModalModule> {
     return {
       ngModule: NgxSmartModalModule,
       providers: [NgxSmartModalService]
@@ -23,7 +23,7 @@ export class NgxSmartModalModule {
   /**
    * Use in features modules with lazy loading: new instance of NgxSmartModal.
    */
-  public static forChild(): ModuleWithProviders {
+  public static forChild(): ModuleWithProviders<NgxSmartModalModule> {
     return {
       ngModule: NgxSmartModalModule,
       providers: [NgxSmartModalService]
