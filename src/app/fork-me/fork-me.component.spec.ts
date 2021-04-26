@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ForkMeComponent } from './fork-me.component';
 
@@ -6,7 +6,7 @@ describe('ForkMeComponent', () => {
   let component: ForkMeComponent;
   let fixture: ComponentFixture<ForkMeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ForkMeComponent ]
     })

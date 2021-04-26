@@ -1,10 +1,10 @@
-import { inject, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
+import { inject, TestBed, tick, fakeAsync, waitForAsync } from '@angular/core/testing';
 
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
 describe('NgxSmartModalComponent', () => {
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         NgxSmartModalComponent
@@ -15,7 +15,7 @@ describe('NgxSmartModalComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create a modal', async(() => {
+  it('should create a modal', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
@@ -23,7 +23,7 @@ describe('NgxSmartModalComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should open and close the modal directly', async(() => {
+  it('should open and close the modal directly', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
@@ -35,7 +35,7 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
-  it('should toggle the modal directly', async(() => {
+  it('should toggle the modal directly', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
@@ -48,7 +48,7 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
-  it('should close the modal by escape keyup', async(() => {
+  it('should close the modal by escape keyup', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     const event = new KeyboardEvent('keyup', { key: 'Escape' });
@@ -180,7 +180,7 @@ describe('NgxSmartModalComponent', () => {
     expect(app.openedClass).toBeFalsy();
   });
 
-  it('should not close the modal by escape keyup', async(() => {
+  it('should not close the modal by escape keyup', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     const event = new KeyboardEvent('keyup', { key: 'Escape' });
@@ -192,7 +192,7 @@ describe('NgxSmartModalComponent', () => {
     expect(app.visible).toBeTruthy();
   }));
 
-  it('should close the modal by clicking on its close cross button', async(() => {
+  it('should close the modal by clicking on its close cross button', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
@@ -352,7 +352,7 @@ describe('NgxSmartModalComponent', () => {
     });
   }));
 
-  it('should open modal when visible setting is true', async(() => {
+  it('should open modal when visible setting is true', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';

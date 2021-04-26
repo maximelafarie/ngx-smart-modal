@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AutostartComponent } from './autostart.component';
 
@@ -6,7 +6,7 @@ describe('AutostartComponent', () => {
   let component: AutostartComponent;
   let fixture: ComponentFixture<AutostartComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AutostartComponent ]
     })

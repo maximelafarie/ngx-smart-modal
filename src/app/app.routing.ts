@@ -14,4 +14,4 @@ const routes: Routes = [
   { path: 'autostart', component: AutostartComponent }
 ];
 
-export const AppRoutes = RouterModule.forRoot(routes);
+export const AppRoutes = RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' });

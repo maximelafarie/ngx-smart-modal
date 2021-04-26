@@ -1,10 +1,10 @@
-import { inject, TestBed, async, tick } from '@angular/core/testing';
+import { inject, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { NgxSmartModalComponent, NgxSmartModalService } from '../../';
 
 describe('NgxSmartModalService', () => {
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         NgxSmartModalComponent
@@ -15,14 +15,14 @@ describe('NgxSmartModalService', () => {
     }).compileComponents();
   }));
 
-  it('should create a modal', async(() => {
+  it('should create a modal', waitForAsync(() => {
     const fixture = TestBed.createComponent(NgxSmartModalComponent);
     const app = fixture.debugElement.componentInstance;
     app.identifier = 'myModal';
     expect(app).toBeTruthy();
   }));
 
-  it('should retrieve the created modal', async(() => {
+  it('should retrieve the created modal', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -33,7 +33,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should retrieve the created modal with method shortened alias', async(() => {
+  it('should retrieve the created modal with method shortened alias', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -44,7 +44,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should create and remove a modal, then re-add the deleted modal', async(() => {
+  it('should create and remove a modal, then re-add the deleted modal', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -67,7 +67,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should override an existing modal', async(() => {
+  it('should override an existing modal', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -87,7 +87,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should open and close the modal remotely', async(() => {
+  it('should open and close the modal remotely', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -110,7 +110,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should toggle the modal remotely', async(() => {
+  it('should toggle the modal remotely', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -135,7 +135,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should retrieve several modals', async(() => {
+  it('should retrieve several modals', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -149,7 +149,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should set and retrieve modal data', async(() => {
+  it('should set and retrieve modal data', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -176,7 +176,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should reset modal data', async(() => {
+  it('should reset modal data', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
@@ -196,7 +196,7 @@ describe('NgxSmartModalService', () => {
       });
   }));
 
-  it('should close the latest opened modal', async(() => {
+  it('should close the latest opened modal', waitForAsync(() => {
     inject([NgxSmartModalService],
       (ngxSmartModalService: NgxSmartModalService) => {
         const fixture = TestBed.createComponent(NgxSmartModalComponent);
