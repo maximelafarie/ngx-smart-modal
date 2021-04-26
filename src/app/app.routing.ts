@@ -7,7 +7,7 @@ import { AutostartComponent } from './autostart/autostart.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
-  { path: 'feature', loadChildren: './feature/feature.module#FeatureModule' },
+  { path: 'feature', loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule) },
   { path: 'bootstrap', component: BootstrapComponent },
   { path: 'materialize', component: MaterializeComponent },
   { path: 'foundation', component: FoundationComponent },

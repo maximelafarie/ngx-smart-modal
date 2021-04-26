@@ -65,9 +65,9 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy {
 
   private _data: any;
 
-  @ViewChild('nsmContent') private nsmContent: ElementRef | undefined;
-  @ViewChild('nsmDialog') private nsmDialog: ElementRef | undefined;
-  @ViewChild('nsmOverlay') private nsmOverlay: ElementRef | undefined;
+  @ViewChild('nsmContent', { static: false }) private nsmContent: ElementRef | undefined;
+  @ViewChild('nsmDialog', { static: false }) private nsmDialog: ElementRef | undefined;
+  @ViewChild('nsmOverlay', { static: false }) private nsmOverlay: ElementRef | undefined;
 
   constructor(
     private _renderer: Renderer2,
