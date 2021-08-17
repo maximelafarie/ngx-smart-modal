@@ -23,7 +23,7 @@ export class MainComponent implements AfterViewInit {
     'In vel lorem sollicitudin, aliquet nunc vel, rutrum libero. Vivamus eu leo at odio sodales rutrum id a erat. Integer pellentesque condimentum velit a sollicitudin. Maecenas lectus neque, interdum at leo ut, molestie iaculis mauris. Sed ut nisl lorem. Mauris vitae dolor in lorem fringilla suscipit vel sed ligula. Nullam sodales blandit faucibus. Nulla dignissim mollis aliquam. Vivamus lacinia aliquam diam vitae vulputate. Pellentesque nec vulputate lorem, vel volutpat odio. Duis eleifend ipsum eros, quis dapibus lectus condimentum gravida. Nunc blandit leo lacus, a ultrices tellus fermentum et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla eu blandit nunc.'
   ];
 
-  @ViewChild(TemplateRef, { static: false }) tpl: TemplateRef<any>;
+  @ViewChild(TemplateRef) tpl: TemplateRef<any>;
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private router: Router, private cdr: ChangeDetectorRef) {
   }
