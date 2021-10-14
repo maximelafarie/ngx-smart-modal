@@ -158,7 +158,10 @@ export class NgxSmartModalService {
    * @returns the removed modal instance.
    */
   public removeModal(id: string): void {
-    this._modalStack.removeModal(id);
+    const modalInstance = this._modalStack.removeModal(id);
+    if (modalInstance) {
+      this._destroyModal(modalInstance.modal);
+    }
   }
 
   /**
@@ -498,5 +501,17 @@ export class NgxSmartModalService {
     }
 
     return false;
+  }
+
+  /**
+   * Remove dynamically created modal from DOM
+   */
+  private _destroyModal(modal: NgxSmartModalComponent): void {
+    // Prevent destruction of the inline modals
+    if (modal.createFrom !== "service") {
+      return;
+    }
+
+    this._document.body.removeChild(modal.elementRef.nativeElement);
   }
 }

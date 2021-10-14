@@ -102,14 +102,18 @@ export class NgxSmartModalStackService {
 
   /**
    * Remove a modal instance from the modal stack.
+   * Returns the removed modal instance or undefined if no modal was found
    *
    * @param id The modal identifier.
    * @returns the removed modal instance.
    */
-  public removeModal(id: string): void {
+  public removeModal(id: string): undefined | ModalInstance {
     const i: number = this._modalStack.findIndex((o: any) => o.id === id);
-    if (i > -1) {
-      this._modalStack.splice(i, 1);
+    if (i < 0) {
+      return;
     }
+
+    const modalInstance = this._modalStack.splice(i, 1)[0];
+    return modalInstance;
   }
 }

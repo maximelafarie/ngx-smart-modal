@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { inject, TestBed, async } from '@angular/core/testing';
 
 import { NgxSmartModalStackService } from '../../src/services/ngx-smart-modal-stack.service';
+import {ModalInstance} from "../../src/services/modal-instance";
+import {NgxSmartModalComponent} from "../../src/ngx-smart-modal";
 
 describe('NgxSmartModalStackService', () => {
   beforeEach(async(() => {
@@ -59,5 +61,26 @@ describe('NgxSmartModalStackService', () => {
     ];
 
     expect(service.getHigherIndex()).toEqual(2001);
+  }));
+
+  it("should return the removed modal instance", inject([NgxSmartModalStackService], (service: NgxSmartModalStackService) => {
+    const modalStack: ModalInstance[] = [
+      { id: "testModal1", modal: { layerPosition: 900, visible: true } as NgxSmartModalComponent },
+      { id: "testModal2", modal: { layerPosition: 2000, visible: true } as NgxSmartModalComponent },
+      { id: "testModal3", modal: { layerPosition: 1000, visible: true } as NgxSmartModalComponent }
+    ];
+    (service as any)._modalStack = modalStack;
+
+    modalStack.forEach((modalInstance) => {
+      expect(service.removeModal(modalInstance.id)).toEqual(modalInstance);
+    });
+  }));
+
+  it("should return undefined when the removed modal id does not exist", inject([NgxSmartModalStackService], (service: NgxSmartModalStackService) => {
+    (service as any)._modalStack = [
+      { id: "testModal1", modal: { layerPosition: 900, visible: true } },
+    ];
+
+    expect(service.removeModal("testModal2")).toBeUndefined();
   }));
 });
