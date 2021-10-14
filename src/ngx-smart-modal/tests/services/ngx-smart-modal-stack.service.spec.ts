@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { inject, TestBed, async } from '@angular/core/testing';
 
 import { NgxSmartModalStackService } from '../../src/services/ngx-smart-modal-stack.service';
-import {ModalInstance} from "../../src/services/modal-instance";
-import {NgxSmartModalComponent} from "../../src/ngx-smart-modal";
+import { ModalInstance } from "../../src/services/modal-instance";
+import { NgxSmartModalComponent } from "../../src/ngx-smart-modal";
 
 describe('NgxSmartModalStackService', () => {
   beforeEach(async(() => {
