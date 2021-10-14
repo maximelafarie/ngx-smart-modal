@@ -66,7 +66,9 @@ describe('NgxSmartModalService', () => {
         instance: {
           modal: 'fake modal'
         },
-        top: true
+        extraData: {
+          top: true
+        }
       }
     };
 
@@ -352,6 +354,38 @@ describe('NgxSmartModalService', () => {
     service.create('test', 'test content', options);
 
     service.create('test2', 'test content');
+  }));
+
+  it('should destroy modal', inject([NgxSmartModalService, NgxSmartModalStackService], (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
+    const fakeModalId = 'testModal1';
+    const fakeModal = {
+      createFrom: 'service',
+      elementRef: {
+        nativeElement: {}
+      }
+    };
+    spyOn(stackService, "removeModal").and.returnValue({id: fakeModalId, modal: fakeModal});
+    spyOn(document.body, "removeChild");
+
+    service.removeModal(fakeModalId);
+
+    expect(document.body.removeChild).toHaveBeenCalledWith(fakeModal.elementRef.nativeElement);
+  }));
+
+  it('should not destroy inline modal', inject([NgxSmartModalService, NgxSmartModalStackService], (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
+    const fakeModalId = 'testModal1';
+    const fakeModal = {
+      createFrom: 'html',
+      elementRef: {
+        nativeElement: {}
+      }
+    };
+    spyOn(stackService, "removeModal").and.returnValue({id: fakeModalId, modal: fakeModal});
+    spyOn(document.body, "removeChild");
+
+    service.removeModal(fakeModalId);
+
+    expect(document.body.removeChild).not.toHaveBeenCalled();
   }));
 
   it('should refocus on close', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
