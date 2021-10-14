@@ -508,7 +508,7 @@ export class NgxSmartModalService {
    */
   private _destroyModal(modal: NgxSmartModalComponent): void {
     // Prevent destruction of the inline modals
-    if (modal.createFrom !== 'service') {
+    if (modal.createFrom !== "service") {
       return;
     }
 

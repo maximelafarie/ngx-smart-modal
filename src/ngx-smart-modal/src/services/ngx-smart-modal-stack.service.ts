@@ -110,11 +110,10 @@ export class NgxSmartModalStackService {
   public removeModal(id: string): undefined | ModalInstance {
     const i: number = this._modalStack.findIndex((o: any) => o.id === id);
     if (i < 0) {
-      return undefined;
+      return;
     }
 
-    const modalInstance = this._modalStack[i];
-    this._modalStack.splice(i, 1);
+    const modalInstance = this._modalStack.splice(i, 1)[0];
     return modalInstance;
   }
 }
