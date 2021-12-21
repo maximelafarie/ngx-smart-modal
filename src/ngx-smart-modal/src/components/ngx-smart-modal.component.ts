@@ -5,6 +5,7 @@ import {
   Component,
   ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -370,8 +371,17 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   private createDynamicContent(changes: QueryList<ViewContainerRef>, factory: ComponentFactory<Component>): void {
     changes.forEach((viewContainerRef: ViewContainerRef) => {
       viewContainerRef.clear();
-      viewContainerRef.createComponent(factory);
+      this.bindDataToComponent(viewContainerRef.createComponent(factory));
       this.markForCheck();
     });
+  }
+
+  /**
+   * Binds the modal data to the instance of the provided ComponentRef
+   */
+  private bindDataToComponent(componentRef: ComponentRef<any>): void {
+    for(const key in this._data) {
+      componentRef.instance[key] = this._data[key];
+    }
   }
 }
