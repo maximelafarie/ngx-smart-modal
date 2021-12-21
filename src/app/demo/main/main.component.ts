@@ -97,10 +97,15 @@ export class MainComponent implements AfterViewInit {
 
     this.ngxSmartModalService.create('dynamicModal3', FakeComponent, opts).open();
 
-    this.ngxSmartModalService
+    const modal = this.ngxSmartModalService
       .create('dynamicModal4', FakeComponent, opts)
       .setData({ lastname: "Frost" })
       .open();
+    
+    setTimeout(() => {
+      modal.setData({ lastname: "Frost (Updated)" }, true);
+    }, 1000);
+    
   }
 
 }

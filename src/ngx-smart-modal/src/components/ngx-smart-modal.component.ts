@@ -18,6 +18,7 @@ import {
   QueryList,
   Renderer2,
   Type,
+  ViewChild,
   ViewChildren,
   ViewContainerRef
 } from '@angular/core';
@@ -101,11 +102,12 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   public createFrom = 'html';
 
   private _data: any;
+  private _componentRef: ComponentRef<any>;
 
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
-  @ViewChildren('dynamicContent', { read: ViewContainerRef }) dynamicContentContainer: QueryList<ViewContainerRef>;
+  @ViewChild('dynamicContent', { static: false, read: ViewContainerRef }) private dynamicContentContainer: ViewContainerRef;
 
   constructor(
     private _renderer: Renderer2,
@@ -128,9 +130,6 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     if (this.contentComponent) {
       const factory = this.componentFactoryResolver.resolveComponentFactory(this.contentComponent);
       this.createDynamicContent(this.dynamicContentContainer, factory);
-      this.dynamicContentContainer.changes.subscribe((contentViewContainers: QueryList<ViewContainerRef>) => {
-        this.createDynamicContent(contentViewContainers, factory);
-      });
     }
   }
 
@@ -245,6 +244,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   public setData(data: any, force?: boolean): NgxSmartModalComponent {
     if (!this.hasData() || (this.hasData() && force)) {
       this._data = data;
+      this.assignModalDataToComponentData(this._componentRef);
       this.onDataAdded.emit(this._data);
       this.markForCheck();
     }
@@ -256,6 +256,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
    * Retrieve the data attached to the modal instance
    */
   public getData(): any {
+    this.assignComponentDataToModalData(this._componentRef);
     return this._data;
   }
 
@@ -368,20 +369,28 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   /**
    * Creates content inside provided ViewContainerRef
    */
-  private createDynamicContent(changes: QueryList<ViewContainerRef>, factory: ComponentFactory<Component>): void {
-    changes.forEach((viewContainerRef: ViewContainerRef) => {
-      viewContainerRef.clear();
-      this.bindDataToComponent(viewContainerRef.createComponent(factory));
-      this.markForCheck();
-    });
+  private createDynamicContent(viewContainerRef: ViewContainerRef, factory: ComponentFactory<Component>): void {
+    viewContainerRef.clear();
+    this._componentRef = viewContainerRef.createComponent(factory);
+    this.assignModalDataToComponentData(this._componentRef);
+    this.markForCheck();
   }
 
   /**
-   * Binds the modal data to the instance of the provided ComponentRef
+   * Assigns the modal data to the ComponentRef instance properties
    */
-  private bindDataToComponent(componentRef: ComponentRef<any>): void {
-    for(const key in this._data) {
-      componentRef.instance[key] = this._data[key];
+  private assignModalDataToComponentData(componentRef: ComponentRef<any>): void {
+    if(componentRef) {
+      Object.assign(componentRef.instance, this._data);
+    }
+  }
+
+  /**
+   * Assigns the ComponentRef instance properties to the modal data object
+   */
+  private assignComponentDataToModalData(componentRef: ComponentRef<any>): void {
+    if(componentRef) {
+      Object.assign(this._data, componentRef.instance);
     }
   }
 }
