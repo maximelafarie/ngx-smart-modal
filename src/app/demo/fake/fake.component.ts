@@ -1,3 +1,4 @@
+import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fake.component.scss']
 })
 export class FakeComponent implements OnInit {
-
-  public name = 'Jack';
+  firstname: string = 'Jack';
+  @Input() lastname: string;
 
   constructor() {
   }
