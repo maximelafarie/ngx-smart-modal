@@ -107,7 +107,7 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   @ViewChildren('nsmContent') private nsmContent: QueryList<ElementRef>;
   @ViewChildren('nsmDialog') public nsmDialog: QueryList<ElementRef>;
   @ViewChildren('nsmOverlay') private nsmOverlay: QueryList<ElementRef>;
-  @ViewChild('dynamicContent', { static: false, read: ViewContainerRef }) private dynamicContentContainer: ViewContainerRef;
+  @ViewChild('dynamicContent', { read: ViewContainerRef }) private dynamicContentContainer: ViewContainerRef;
 
   constructor(
     private _renderer: Renderer2,
