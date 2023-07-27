@@ -1,4 +1,0 @@
-/**
- * @license ngx-smart-modal
- * MIT license
- */
