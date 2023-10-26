@@ -1,5 +1,5 @@
 import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
-import { NgxSmartModalComponent, NgxSmartModalService } from '../../public-api';
+import { NgxSmartModalComponent, NgxSmartModalConfig, NgxSmartModalService } from '../../public-api';
 
 describe('NgxSmartModalComponent', () => {
   let component: NgxSmartModalComponent;
@@ -174,10 +174,19 @@ describe('NgxSmartModalComponent', () => {
 
   it('should add body class', waitForAsync(() => {
     component.addBodyClass();
+
+    const body = document.body;
+
+    expect(body.classList.contains(NgxSmartModalConfig.bodyClassOpen)).toBeTrue();
   }));
 
   it('should remove body class', waitForAsync(() => {
+    const body = document.body;
+    body.classList.add(NgxSmartModalConfig.bodyClassOpen);
+
     component.removeBodyClass();
+
+    expect(body.classList.contains(NgxSmartModalConfig.bodyClassOpen)).toBeFalse();
   }));
 
   it('should targetPlacement if no target', waitForAsync(() => {

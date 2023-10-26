@@ -8,10 +8,12 @@ import { NgxSmartModalStackService } from '../../lib/services/ngx-smart-modal-st
 
 @Component({
   selector: 'ngx-smart-modal-test-fake',
-  template: 'test fake component<ng-template #tpl></ng-template>'
+  template: 'test fake component<ng-template #tpl><div>test fake tpl content div</div>test fake tpl content</ng-template>'
 })
 export class FakeComponent {
   @ViewChild(TemplateRef) public tpl: TemplateRef<any> = {} as any;
+
+  constructor(public viewRef: ViewContainerRef) {}
 }
 
 describe('NgxSmartModalService', () => {
@@ -30,19 +32,13 @@ describe('NgxSmartModalService', () => {
         NgxSmartModalService,
         NgxSmartModalStackService
       ],
-    }).overrideModule(BrowserDynamicTestingModule, {
-      set: {
-        entryComponents: [
-          NgxSmartModalComponent,
-          FakeComponent
-        ],
-      }
-    });
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     const fixture = TestBed.createComponent(FakeComponent);
     fakeComponent = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should add events (_private)', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
@@ -352,14 +348,19 @@ describe('NgxSmartModalService', () => {
       ariaDescribedBy: 'test',
     };
 
-    const fixture = TestBed.createComponent(NgxSmartModalComponent);
-    const vcr = {
-      createComponent: () => fixture.componentRef
-    } as any;
+    const fixture = TestBed.createComponent(FakeComponent);
+    fixture.detectChanges();
+    const vcr = fixture.componentInstance.viewRef;
 
     service.create('test', 'test content', vcr, options);
 
     service.create('test2', 'test content', vcr);
+
+    const tmp = document.querySelectorAll('body > ngx-smart-modal:nth-last-child(-n + 2)');
+
+    expect(tmp).toBeInstanceOf(NodeList);
+    expect(tmp.length).toBe(2);
+
   }));
 
   it('should destroy modal', inject([NgxSmartModalService, NgxSmartModalStackService], (service: NgxSmartModalService, stackService: NgxSmartModalStackService) => {
@@ -442,9 +443,21 @@ describe('NgxSmartModalService', () => {
   })));
 
   it('should resolve content', inject([NgxSmartModalService], (service: NgxSmartModalService) => {
-    (service as any)._resolveNgContent('test content');
-    (service as any)._resolveNgContent(FakeComponent);
-    (service as any)._resolveNgContent(fakeComponent.tpl);
+    const strRes = (service as any)._resolveNgContent('test content');
+    const compRes = (service as any)._resolveNgContent(FakeComponent);
+    const tplRes = (service as any)._resolveNgContent(fakeComponent.tpl);
+
+    expect(strRes).toHaveSize(1);
+    expect(strRes[0]).toHaveSize(1);
+    expect(strRes[0][0]).toBeInstanceOf(Node);
+    expect(strRes[0][0].nodeType).toBe(Node.TEXT_NODE);
+
+    expect(tplRes).toHaveSize(1);
+    expect(tplRes[0]).toHaveSize(2);
+    expect(tplRes[0][0].nodeType).toEqual(Node.ELEMENT_NODE);
+    expect(tplRes[0][1].nodeType).toEqual(Node.TEXT_NODE);
+
+    expect(compRes).toHaveSize(0);
   }));
 
   it('should escape keyboard event', fakeAsync(inject([NgxSmartModalService], (service: NgxSmartModalService) => {
