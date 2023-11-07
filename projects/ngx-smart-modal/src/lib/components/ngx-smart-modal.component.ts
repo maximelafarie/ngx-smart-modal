@@ -1,6 +1,6 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
-  AfterViewInit,
+  AfterViewChecked,
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -62,7 +62,7 @@ import { NgxSmartModalConfig } from '../config/ngx-smart-modal.config';
   styles: [
   ]
 })
-export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @Input() public closable = true;
   @Input() public escapable = true;
@@ -125,10 +125,14 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
     this._sendEvent('create');
   }
 
-  public ngAfterViewInit() {
-    if (this.contentComponent) {
-      const componentRef = this._viewContainerRef.createComponent(this.contentComponent);
-      this.createDynamicContent(this.dynamicContentContainer, componentRef);
+  public ngAfterViewChecked() {
+    if (
+      this.overlayVisible &&
+      this.contentComponent &&
+      this.dynamicContentContainer &&
+      this.dynamicContentContainer.length === 0
+    ) {
+      this.createDynamicContent();
     }
   }
 
@@ -367,9 +371,10 @@ export class NgxSmartModalComponent implements OnInit, OnDestroy, AfterViewInit 
   /**
    * Creates content inside provided ViewContainerRef
    */
-  private createDynamicContent(viewContainerRef: ViewContainerRef, componentRef: ComponentRef<Component>): void {
-    viewContainerRef.clear();
-    this.assignModalDataToComponentData(componentRef);
+  private createDynamicContent(): void {
+    this.dynamicContentContainer.clear();
+    this._componentRef = this.dynamicContentContainer.createComponent(this.contentComponent);
+    this.assignModalDataToComponentData(this._componentRef);
     this.markForCheck();
   }
 
