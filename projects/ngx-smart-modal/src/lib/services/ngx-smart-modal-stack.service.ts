@@ -70,14 +70,16 @@ export class NgxSmartModalStackService {
    *
    * @returns the opened modal with highest z-index.
    */
-  public getTopOpenedModal(): NgxSmartModalComponent {
-    if (!this.getOpenedModals().length) {
-      throw new Error('No modal is opened');
+  public getTopOpenedModal(): NgxSmartModalComponent | undefined {
+    const openedModals = this.getOpenedModals();
+
+    if (!openedModals.length) {
+      return undefined;
     }
 
-    return this.getOpenedModals()
+    return openedModals
       .map((o: ModalInstance) => o.modal)
-      .reduce((highest, item) => item.layerPosition > highest.layerPosition ? item : highest, this.getOpenedModals()[0].modal);
+      .reduce((highest, item) => item.layerPosition > highest.layerPosition ? item : highest, openedModals[0].modal);
   }
 
   /**
@@ -107,13 +109,8 @@ export class NgxSmartModalStackService {
    * @param id The modal identifier.
    * @returns the removed modal instance.
    */
-  public removeModal(id: string): undefined | ModalInstance {
+  public removeModal(id: string): ModalInstance | undefined {
     const i: number = this._modalStack.findIndex((o: any) => o.id === id);
-    if (i < 0) {
-      return;
-    }
-
-    const modalInstance = this._modalStack.splice(i, 1)[0];
-    return modalInstance;
+    return i >= 0 ? this._modalStack.splice(i, 1)[0] : undefined;
   }
 }
