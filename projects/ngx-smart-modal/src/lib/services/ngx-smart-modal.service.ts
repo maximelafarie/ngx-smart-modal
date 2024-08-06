@@ -17,7 +17,6 @@ export class NgxSmartModalService {
     private _appRef: ApplicationRef,
     private _injector: Injector,
     private _modalStack: NgxSmartModalStackService,
-    private applicationRef: ApplicationRef,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any
   ) {
@@ -116,7 +115,7 @@ export class NgxSmartModalService {
    *
    * @returns the opened modal with highest z-index.
    */
-  public getTopOpenedModal(): NgxSmartModalComponent {
+  public getTopOpenedModal(): NgxSmartModalComponent | undefined {
     return this._modalStack.getTopOpenedModal();
   }
 
@@ -209,7 +208,7 @@ export class NgxSmartModalService {
    * Close the latest opened modal
    */
   public closeLatestModal(): void {
-    this.getTopOpenedModal().close();
+    this.getTopOpenedModal()?.close();
   }
 
   /**
@@ -426,7 +425,7 @@ export class NgxSmartModalService {
 
     if (content instanceof TemplateRef) {
       const viewRef = content.createEmbeddedView(null as any);
-      this.applicationRef.attachView(viewRef);
+      this._appRef.attachView(viewRef);
       return [viewRef.rootNodes];
     }
 
@@ -442,7 +441,7 @@ export class NgxSmartModalService {
       try {
         const modal = this.getTopOpenedModal();
 
-        if (!modal.escapable) {
+        if (!modal?.escapable) {
           return false;
         }
 
@@ -474,7 +473,7 @@ export class NgxSmartModalService {
       try {
         const modal = this.getTopOpenedModal();
 
-        if (!modal.nsmDialog.first.nativeElement.contains(document.activeElement)) {
+        if (modal && !modal.nsmDialog.first.nativeElement.contains(document.activeElement)) {
           event.preventDefault();
           event.stopPropagation();
           modal.nsmDialog.first.nativeElement.focus();
@@ -498,6 +497,8 @@ export class NgxSmartModalService {
       return;
     }
 
-    this._document.body.removeChild(modal.elementRef.nativeElement);
+    if (modal.elementRef.nativeElement && this._document.body.contains(modal.elementRef.nativeElement)) {
+      this._document.body.removeChild(modal.elementRef.nativeElement);
+    }
   }
 }
