@@ -14,10 +14,8 @@ export class NgxSmartModalService {
   private lastElementFocused: any;
 
   constructor(
-    private _appRef: ApplicationRef,
     private _injector: Injector,
     private _modalStack: NgxSmartModalStackService,
-    private applicationRef: ApplicationRef,
     @Inject(DOCUMENT) private _document: any,
     @Inject(PLATFORM_ID) private _platformId: any
   ) {
@@ -426,7 +424,7 @@ export class NgxSmartModalService {
 
     if (content instanceof TemplateRef) {
       const viewRef = content.createEmbeddedView(null as any);
-      this.applicationRef.attachView(viewRef);
+      this.appRef.attachView(viewRef);
       return [viewRef.rootNodes];
     }
 
@@ -499,5 +497,13 @@ export class NgxSmartModalService {
     }
 
     this._document.body.removeChild(modal.elementRef.nativeElement);
+  }
+
+  /**
+   * getter function to avoid circular dependency error
+   * @returns ApplicationRef instance
+   * */
+  private get appRef(): ApplicationRef {
+    return this._injector.get(ApplicationRef);
   }
 }
